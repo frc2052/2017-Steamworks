@@ -1,7 +1,9 @@
+.gradle
 /bin/
 /dist/
 /build/
 *.iml
+*.ipr
+*.iws
 /.idea/
-*~
-/sysProps.xml
+
