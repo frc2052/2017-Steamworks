@@ -1,4 +1,7 @@
-build/
-dist/
-bin/
-sysProps.xml
+/bin/
+/dist/
+/build/
+*.iml
+/.idea/
+*~
+/sysProps.xml
