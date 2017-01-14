@@ -1,27 +1,41 @@
 package com.first.team2052.steamworks;
 
+import com.first.team2052.lib.ControlLoop;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 
 public class Robot extends IterativeRobot {
-	@Override
-	public void robotInit() {
-	}
+    private ControlLoop controlLoop = new ControlLoop(Constants.kControlLoopPeriod);
 
-	@Override
-	public void autonomousInit() {
-	}
+    @Override
+    public void robotInit() {
+    }
 
-	@Override
-	public void autonomousPeriodic() {
-	}
+    @Override
+    public void autonomousInit() {
+        controlLoop.start();
+    }
 
-	@Override
-	public void teleopPeriodic() {
-	}
+    @Override
+    public void autonomousPeriodic() {
+    }
 
-	@Override
-	public void testPeriodic() {
-	}
+    @Override
+    public void teleopInit() {
+        controlLoop.start();
+    }
+
+    @Override
+    public void teleopPeriodic() {
+    }
+
+    @Override
+    public void testPeriodic() {
+    }
+
+    @Override
+    public void disabledInit() {
+        controlLoop.stop();
+    }
 }
 
