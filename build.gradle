@@ -5,6 +5,10 @@ plugins {
     id "jaci.openrio.gradle.GradleRIO" version "2017.1.0"
 }
 
+repositories {
+    mavenCentral()
+}
+
 frc {
     team = "2052"
     robotClass = "com.first.team2052.steamworks.Robot"
@@ -13,6 +17,7 @@ frc {
 dependencies {
     compile wpilib()
     compile talonSrx()
+    compile group: 'com.google.guava', name: 'guava', version: '19.0'
 }
 
 def robotManifest = {
