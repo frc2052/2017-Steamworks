@@ -9,6 +9,7 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void robotInit() {
+        controlLoop.addLoopable(() -> System.out.println("Hello 2017"));
     }
 
     @Override
