@@ -1,8 +1,17 @@
 plugins {
-    id "java"
-    id "eclipse"
-    id "idea"
-    id "jaci.openrio.gradle.GradleRIO" version "2017.1.0"
+    id "jaci.openrio.gradle.GradleRIO" version "2017.1.1" apply false
+}
+
+allprojects {
+    apply plugin: "java"
+    apply plugin: "eclipse"
+    apply plugin: "idea"
+    apply plugin: "jaci.openrio.gradle.GradleRIO"
+
+    frc {
+        team = 2052
+        deploy = false
+    }
 }
 
 repositories {
@@ -10,15 +19,15 @@ repositories {
 }
 
 frc {
-    team = "2052"
+    deploy = true
     robotClass = "com.first.team2052.steamworks.Robot"
     //rioIP = "10.20.52.2"
 }
 
+compileJava.dependsOn tasks.getByPath(":PathGenerator:run")
+
 dependencies {
-    compile wpilib()
-    compile talonSrx()
-    compile group: 'com.google.guava', name: 'guava', version: '19.0'
+    compile project(path: ":Robot")
 }
 
 def robotManifest = {

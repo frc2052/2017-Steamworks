@@ -1,0 +1,8 @@
+project(":Robot") {
+    dependencies {
+        compile wpilib()
+        compile talonSrx()
+        compile project(":TrajectoryLib")
+        compile fileTree(dir: '../libs', include: ['*.jar'])
+    }
+}

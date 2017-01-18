@@ -1,0 +1,27 @@
+project(':PathGenerator') {
+    apply plugin: 'application'
+    apply plugin: 'java'
+
+    mainClassName = "com.first.team2052.steamworks.PathGenMain"
+
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    def outputDir = "../Robot/src/main/resources/"
+
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile project(":TrajectoryLib")
+        compile project(":Robot")
+        compile fileTree(dir: '../libs', include: ['*.jar'])
+    }
+
+    run {
+        args outputDir
+    }
+}
+

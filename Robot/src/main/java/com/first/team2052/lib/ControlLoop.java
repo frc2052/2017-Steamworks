@@ -6,9 +6,8 @@ import edu.wpi.first.wpilibj.Notifier;
 import java.util.List;
 
 public class ControlLoop {
-    private double period = 1.0 / 100.0;
     private final Object runningThread = new Object();
-
+    private double period = 1.0 / 100.0;
     private List<Loopable> loopables = Lists.newArrayList();
 
     private Runnable runnable = () -> {

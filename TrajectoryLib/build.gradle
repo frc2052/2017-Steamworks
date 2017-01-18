@@ -1,0 +1,3 @@
+project(":TrajectoryLib") {
+    apply plugin: 'java'
+}

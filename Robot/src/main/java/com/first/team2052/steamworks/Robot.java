@@ -1,6 +1,7 @@
 package com.first.team2052.steamworks;
 
 import com.first.team2052.lib.ControlLoop;
+import com.first.team2052.trajectory.common.Path;
 import edu.wpi.first.wpilibj.IterativeRobot;
 
 
@@ -14,6 +15,7 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void autonomousInit() {
+        Path path = new Path(null, null);
         controlLoop.start();
     }
 
