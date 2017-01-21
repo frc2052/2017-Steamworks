@@ -1,1 +1,1 @@
-include "PathGenerator", "TrajectoryLib"
+include "PathGenerator", "TrajectoryLib", "Robot"

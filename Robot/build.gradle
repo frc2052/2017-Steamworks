@@ -1,0 +1,10 @@
+project(":Robot") {
+    apply plugin: "java"
+
+    dependencies {
+        compile wpilib()
+        compile project(":TrajectoryLib")
+        compile fileTree(dir: '../libs', include: ['*.jar'])
+        nativeLib fileTree(dir: '../libs', include: '*.so')
+    }
+}

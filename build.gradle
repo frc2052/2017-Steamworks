@@ -27,10 +27,7 @@ frc {
 compileJava.dependsOn tasks.getByPath(":PathGenerator:run")
 
 dependencies {
-    compile wpilib()
-    compile talonSrx()
-    compile project(":TrajectoryLib")
-    compile fileTree(dir: '/libs', include: ['*.jar'])
+    compile project(":Robot")
 }
 
 def robotManifest = {
