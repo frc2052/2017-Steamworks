@@ -35,7 +35,7 @@ public class WaypointSequence {
         }
     }
 
-    pu
+
 
     public static class Waypoint {
 
@@ -56,9 +56,7 @@ public class WaypointSequence {
         }
     }
 
-    blic WaypointSequence
-
-    invertY() {
+    public WaypointSequence invertY() {
         WaypointSequence inverted = new WaypointSequence(waypoints_.length);
         inverted.num_waypoints_ = num_waypoints_;
         for (int i = 0; i < num_waypoints_; ++i) {

@@ -1,21 +1,30 @@
 package com.first.team2052.steamworks;
 
 import com.first.team2052.lib.ControlLoop;
-import com.first.team2052.trajectory.common.Path;
+import com.first.team2052.lib.Loopable;
+import com.first.team2052.steamworks.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick;
 
 
 public class Robot extends IterativeRobot {
     private ControlLoop controlLoop = new ControlLoop(Constants.kControlLoopPeriod);
+    DriveTrain driveTrain = new DriveTrain();
+    Joystick joystick0 = new Joystick(0);
 
     @Override
     public void robotInit() {
-        controlLoop.addLoopable(() -> System.out.println("Hello 2017"));
+        controlLoop.addLoopable(driveTrain);
+        controlLoop.addLoopable(new Loopable() {
+            @Override
+            public void update() {
+                System.out.println("Hello 2017");
+            }
+        });
     }
 
     @Override
     public void autonomousInit() {
-        Path path = new Path(null, null);
         controlLoop.start();
     }
 
@@ -30,6 +39,10 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void teleopPeriodic() {
+        double turn = joystick0.getX();
+        double tank = joystick0.getY();
+
+        driveTrain.setLeftRight(tank + turn, tank - turn);
     }
 
     @Override
