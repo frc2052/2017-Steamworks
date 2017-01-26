@@ -45,8 +45,8 @@ public class DriveTrain implements Loopable {
     }
 
     private void setLeftRight(double leftSpeed, double rightSpeed) {
-        leftMaster.set(leftSpeed);
-        rightMaster.set(-rightSpeed);
+        leftMaster.set(-leftSpeed);
+        rightMaster.set(rightSpeed);
     }
 
     public void setOpenLeftRight(double leftSpeed, double rightSpeed) {

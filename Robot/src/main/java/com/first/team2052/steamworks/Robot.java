@@ -26,11 +26,11 @@ public class Robot extends IterativeRobot {
         driveTrain.resetEncoders();
         driveTrain.setOpenLeftRight(0, 0);
         controlLoop.start();
+        driveTrain.setDistanceTrajectory(12 * 10);
     }
 
     @Override
     public void autonomousPeriodic() {
-        driveTrain.setDistanceTrajectory(12 * 10);
     }
 
     @Override
@@ -56,6 +56,8 @@ public class Robot extends IterativeRobot {
     @Override
     public void disabledInit() {
         controlLoop.stop();
+        driveTrain.resetEncoders();
+        driveTrain.setOpenLeftRight(0, 0);
     }
 }
 
