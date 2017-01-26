@@ -16,7 +16,6 @@ project(':PathGenerator') {
 
     dependencies {
         compile project(":TrajectoryLib")
-        compile project(":Robot")
         compile fileTree(dir: '../libs', include: ['*.jar'])
     }
 
