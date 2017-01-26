@@ -55,7 +55,7 @@ public class PathGenMain {
 
         TrajectoryGenerator.Config config = new TrajectoryGenerator.Config();
         config.dt = 1.0 / 100.0;
-        final double kWheelbaseWidth = 24.375;
+        final double kWheelbaseWidth = 26.841;
 
         {
             final String path_name = "TestPath";

@@ -13,6 +13,7 @@ public class Robot extends IterativeRobot {
     DriveTrain driveTrain = new DriveTrain();
     Joystick joystick0 = new Joystick(0);
     AutoPaths autoPaths = new AutoPaths();
+    Controls controls = Controls.getInstance();
 
     @Override
     public void robotInit() {
@@ -21,24 +22,31 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void autonomousInit() {
+        driveTrain.setHighGear(true);
+        driveTrain.resetEncoders();
+        driveTrain.setOpenLeftRight(0, 0);
         controlLoop.start();
     }
 
     @Override
     public void autonomousPeriodic() {
+        driveTrain.setDistanceTrajectory(12 * 10);
     }
 
     @Override
     public void teleopInit() {
         controlLoop.start();
+        driveTrain.resetEncoders();
     }
 
     @Override
     public void teleopPeriodic() {
-        double turn = joystick0.getX();
-        double tank = joystick0.getY();
+        driveTrain.setHighGear(controls.getHighGear());
 
-        driveTrain.setLeftRight(tank + turn, tank - turn);
+        double turn = controls.getTurn();
+        double tank = controls.getTank();
+
+        driveTrain.setOpenLeftRight(tank + turn, tank - turn);
     }
 
     @Override
