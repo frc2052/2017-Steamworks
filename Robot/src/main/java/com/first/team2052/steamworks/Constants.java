@@ -10,4 +10,8 @@ public class Constants {
     public static int kDriveRight1Id = 3;
     public static int kDriveRight2Id = 4;
     /*public static int kDriveRight3Id = 6;*/
+
+    //intake
+    public static int kIntakeMotorPort = 0;//0 until port number is given
+
 }
