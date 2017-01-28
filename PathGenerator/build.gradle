@@ -7,7 +7,7 @@ project(':PathGenerator') {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 
-    def outputDir = "../Robot/src/main/resources/"
+    def outputDir = "../src/main/resources/"
 
 
     repositories {

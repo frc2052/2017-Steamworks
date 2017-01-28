@@ -3,16 +3,21 @@ package com.first.team2052.steamworks.subsystems;
 import com.ctre.CANTalon;
 import com.first.team2052.lib.ADIS16448_IMU;
 import com.first.team2052.lib.Loopable;
+import com.first.team2052.steamworks.Constants;
+import com.first.team2052.trajectory.common.Path;
 import edu.wpi.first.wpilibj.Solenoid;
 
 public class DriveTrain implements Loopable {
-    ADIS16448_IMU gyro;
-    CANTalon rightMaster, rightSlave, rightSlave1;
-    CANTalon leftMaster, leftSlave, leftSlave1;
-    Solenoid shifterIn, shifterOut;
-    DriveController controller;
+    private ADIS16448_IMU gyro;
+    private CANTalon rightMaster, rightSlave, rightSlave1;
+    private CANTalon leftMaster, leftSlave, leftSlave1;
+    private Solenoid shifterIn, shifterOut;
+    private DriveController controller;
 
-    public DriveTrain() {
+    private static DriveTrain instance = new DriveTrain();
+    private boolean brakeMode = false;
+
+    private DriveTrain() {
         rightMaster = new CANTalon(Constants.kDriveRight1Id);
         rightSlave = new CANTalon(Constants.kDriveRight2Id);
         rightSlave1 = new CANTalon(Constants.kDriveRight3Id);
@@ -35,8 +40,8 @@ public class DriveTrain implements Loopable {
         leftSlave.set(leftMaster.getDeviceID());
         leftSlave1.set(leftMaster.getDeviceID());
 
-        shifterIn = new Solenoid(1);
-        shifterOut = new Solenoid(0);
+        shifterIn = new Solenoid(0);
+        shifterOut = new Solenoid(1);
         setBrakeMode(true);
         setHighGear(true);
 
@@ -54,6 +59,8 @@ public class DriveTrain implements Loopable {
     }
 
     public void setBrakeMode(boolean brake) {
+        if(brakeMode == brake)
+            return;
         rightMaster.enableBrakeMode(brake);
         rightSlave.enableBrakeMode(brake);
         rightSlave1.enableBrakeMode(brake);
@@ -61,6 +68,10 @@ public class DriveTrain implements Loopable {
         leftMaster.enableBrakeMode(brake);
         leftSlave.enableBrakeMode(brake);
         leftSlave1.enableBrakeMode(brake);
+    }
+
+    public void setPathTrajectory(Path pathTrajectory){
+        controller = new DrivePathController(this, pathTrajectory, false);
     }
 
     public void setHighGear(boolean highGear) {
@@ -78,7 +89,17 @@ public class DriveTrain implements Loopable {
         setLeftRight(drive.left, drive.right);
     }
 
-    public void setDistanceTrajectory(double distance){
+    @Override
+    public void start() {
+        setOpenLeftRight(0.0, 0.0);
+    }
+
+    @Override
+    public void stop() {
+        setOpenLeftRight(0.0, 0.0);
+    }
+
+    public void setDistanceTrajectory(double distance) {
         controller = new DriveStraightController(this, Constants.kDriveMaxVelocity, distance);
     }
 
@@ -117,5 +138,9 @@ public class DriveTrain implements Loopable {
 
         rightMaster.setEncPosition(0);
         leftMaster.setEncPosition(0);
+    }
+
+    public static DriveTrain getInstance() {
+        return instance;
     }
 }

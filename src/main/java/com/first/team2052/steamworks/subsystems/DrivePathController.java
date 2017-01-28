@@ -52,7 +52,7 @@ public class DrivePathController extends DriveController {
         // Get the turn error and apply the turn gain
         double angleDiffRad = Util.getDifferenceInAngleRadians(actualHeading, goalHeading);
         double angleDiff = Math.toDegrees(angleDiffRad);
-        double turn = kTurn * angleDiff;
+        double turn = -kTurn * angleDiff;
 
         return new DriveSignal(leftSpeed + turn, rightSpeed - turn);
     }
