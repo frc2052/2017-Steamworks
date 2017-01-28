@@ -4,6 +4,8 @@ import com.first.team2052.lib.ControlLoop;
 import com.first.team2052.lib.Loopable;
 import com.first.team2052.steamworks.auto.AutoPaths;
 import com.first.team2052.steamworks.subsystems.DriveTrain;
+import com.first.team2052.steamworks.subsystems.GearMan;
+import com.first.team2052.steamworks.subsystems.Intake;
 import com.first.team2052.trajectory.common.Path;
 import com.google.common.base.Optional;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -15,6 +17,8 @@ public class Robot extends IterativeRobot {
     private ControlLoop controlLoop = new ControlLoop(Constants.kControlLoopPeriod);
     private DriveTrain driveTrain = DriveTrain.getInstance();
     private Controls controls = Controls.getInstance();
+    private Intake intake = Intake.getInstance();
+    private GearMan gearMan = GearMan.getInstance();
 
     @Override
     public void robotInit() {
@@ -49,9 +53,14 @@ public class Robot extends IterativeRobot {
 
         driveTrain.setOpenLeftRight(tank + turn, tank - turn);
 
+        intake.setIntakeVelocity(controls.getIntakeState());
+        gearMan.setGearState(controls.getGearManState());
+
         SmartDashboard.putNumber("velocity", driveTrain.getAverageVelocity());
         SmartDashboard.putNumber("position", driveTrain.getAverageDistance());
         SmartDashboard.putNumber("gyro", driveTrain.getGyroAngle());
+
+
     }
 
     @Override
