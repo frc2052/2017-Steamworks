@@ -4,10 +4,8 @@ import com.first.team2052.lib.ControlLoop;
 import com.first.team2052.lib.Loopable;
 import com.first.team2052.steamworks.auto.AutoPaths;
 import com.first.team2052.steamworks.subsystems.DriveTrain;
-import com.first.team2052.steamworks.subsystems.Intake;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Solenoid;
 
 
 public class Robot extends IterativeRobot {
@@ -15,9 +13,7 @@ public class Robot extends IterativeRobot {
     DriveTrain driveTrain = new DriveTrain();
     Joystick joystick0 = new Joystick(0);
     AutoPaths autoPaths = new AutoPaths();
-    Intake intake = new Intake();
-
-    public static double INTAKE_VELOCITY = 0.8;//changable variable
+    Controls controls = Controls.getInstance();
 
     @Override
     public void robotInit() {
@@ -26,7 +22,11 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void autonomousInit() {
+        driveTrain.setHighGear(true);
+        driveTrain.resetEncoders();
+        driveTrain.setOpenLeftRight(0, 0);
         controlLoop.start();
+        driveTrain.setDistanceTrajectory(12 * 10);
     }
 
     @Override
@@ -36,42 +36,28 @@ public class Robot extends IterativeRobot {
     @Override
     public void teleopInit() {
         controlLoop.start();
+        driveTrain.resetEncoders();
     }
 
     @Override
     public void teleopPeriodic() {
-        double turn = joystick0.getX();
-        double tank = joystick0.getY();
+        driveTrain.setHighGear(controls.getHighGear());
 
-        driveTrain.setLeftRight(tank + turn, tank - turn);
+        double turn = controls.getTurn();
+        double tank = controls.getTank();
+
+        driveTrain.setOpenLeftRight(tank + turn, tank - turn);
     }
 
     @Override
     public void testPeriodic() {
-        //gear intake control
-        if(joystick0.getRawButton(1)){
-            gearToggle(true);
-        } else {
-            gearToggle(false);
-        }
-
-        //fuel intake control
-        intake.setIntakeVelocity(INTAKE_VELOCITY, joystick0.getRawButton(3));
     }
 
     @Override
     public void disabledInit() {
         controlLoop.stop();
-    }
-
-
-    //creates solenoids for gear
-    Solenoid gearIn = new Solenoid(0); //whats the channels for the gear motors?
-    Solenoid gearOut = new Solenoid(1);
-    public void gearToggle(boolean button){ //if button is pressed, toggle gear holder
-            gearIn.set(button);
-            gearOut.set(!button);
+        driveTrain.resetEncoders();
+        driveTrain.setOpenLeftRight(0, 0);
     }
 }
-
 
