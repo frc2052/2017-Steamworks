@@ -4,6 +4,7 @@ import com.first.team2052.lib.FlipFlopLatch;
 import com.first.team2052.steamworks.subsystems.Climber;
 import com.first.team2052.steamworks.subsystems.GearMan;
 import com.first.team2052.steamworks.subsystems.Intake;
+import com.first.team2052.steamworks.subsystems.Shooter;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class Controls {
@@ -38,13 +39,13 @@ public class Controls {
         }
     }
 
-    public Climber.climberState getClimberState(){
+    public Climber.ClimberState getClimberState(){
         if(secondaryStick.getRawButton(4)){
-            return Climber.climberState.UP;
+            return Climber.ClimberState.UP;
         }else if(secondaryStick.getRawButton(5)){
-            return Climber.climberState.DOWN;
+            return Climber.ClimberState.DOWN;
         }else{
-            return Climber.climberState.STOP;
+            return Climber.ClimberState.STOP;
         }
 
     }
@@ -53,6 +54,26 @@ public class Controls {
         gearManLatch.update(secondaryStick.getRawButton(4));
         return gearManLatch.get() ? GearMan.GearManState.OPEN : GearMan.GearManState.CLOSED;
 
+    }
+
+    public Shooter.ShooterState getShootState(){
+        if(joystick0.getTrigger()){
+            return Shooter.ShooterState.SHOOT;
+        } else if(joystick0.getRawButton(12)){
+            return Shooter.ShooterState.REVERSE;
+        } else {
+            return Shooter.ShooterState.STOP;
+        }
+    }
+
+    public Shooter.AgitatorState getAgitatorState(){
+        if(joystick0.getTrigger()){
+            return Shooter.AgitatorState.FORWARD;
+        } else if(joystick0.getRawButton(12)){
+            return Shooter.AgitatorState.BACK;
+        } else {
+            return Shooter.AgitatorState.STOP;
+        }
     }
 
     public boolean getBrake() {

@@ -18,7 +18,7 @@ public class Intake {
     /**
      * This function takes in a value from the joystick and if the appropriate button (for enabling the intake) is pressed,
      */
-    public void setIntakeVelocity(IntakeState state) {
+    public void setIntakeState(IntakeState state) {
         intakeMotor.set(state.getSpeed());
     }
 

@@ -10,7 +10,7 @@ public class GearMan {
     private GearMan() {
     }
 
-    public void setGearState(GearManState gearManState){
+    public void setGearManState(GearManState gearManState){
         inSolenoid.set(!gearManState.out);
         outSolenoid.set(gearManState.out);
     }

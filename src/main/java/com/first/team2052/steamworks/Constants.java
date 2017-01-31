@@ -15,6 +15,10 @@ public class Constants {
 
     public static int kClimbingMotorPort = 8;
 
+    public static int kLeftAgitatorMotorPort = 9;
+    public static int kRightAgitatorMotorPort = 10;
+    public static int kShooterMotorPort = 11;
+
     public static double kDriveMaxVelocity = 155.0;
     public static double kDriveMaxAcceleration = 100.0;
     public static double kDriveStraightKp = 0.15;
@@ -31,4 +35,9 @@ public class Constants {
 
     public static double kClimberMotorSpeedUp = 1.0;
     public static double kClimberMotorSpeedDown = -1.0;
+
+    public static double kShooterMotorSpeed = 1.0;
+    public static double kShooterMotorBack = -1.0;
+    public static double kTatorSpeed = 0.5;
+    public static double kTatorBack = -0.5;
 }

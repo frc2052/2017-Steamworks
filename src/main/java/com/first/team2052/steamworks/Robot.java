@@ -1,16 +1,8 @@
 package com.first.team2052.steamworks;
 
 import com.first.team2052.lib.ControlLoop;
-import com.first.team2052.lib.Loopable;
-import com.first.team2052.steamworks.auto.AutoPaths;
-import com.first.team2052.steamworks.subsystems.Climber;
-import com.first.team2052.steamworks.subsystems.DriveTrain;
-import com.first.team2052.steamworks.subsystems.GearMan;
-import com.first.team2052.steamworks.subsystems.Intake;
-import com.first.team2052.trajectory.common.Path;
-import com.google.common.base.Optional;
+import com.first.team2052.steamworks.subsystems.*;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -21,6 +13,7 @@ public class Robot extends IterativeRobot {
     private Intake intake = Intake.getInstance();
     private GearMan gearMan = GearMan.getInstance();
     private Climber climber = Climber.getInstance();
+    private Shooter shoot = Shooter.getInstance();
 
     @Override
     public void robotInit() {
@@ -55,15 +48,15 @@ public class Robot extends IterativeRobot {
 
         driveTrain.setOpenLeftRight(tank + turn, tank - turn);
 
-        intake.setIntakeVelocity(controls.getIntakeState());
-        gearMan.setGearState(controls.getGearManState());
-        climber.setClimberSpeed(controls.getClimberState());
+        intake.setIntakeState(controls.getIntakeState());
+        gearMan.setGearManState(controls.getGearManState());
+        climber.setClimberState(controls.getClimberState());
+        shoot.setShooterVelocity(controls.getShootState(), controls.getAgitatorState());
+
 
         SmartDashboard.putNumber("velocity", driveTrain.getAverageVelocity());
         SmartDashboard.putNumber("position", driveTrain.getAverageDistance());
         SmartDashboard.putNumber("gyro", driveTrain.getGyroAngle());
-
-
     }
 
     @Override
