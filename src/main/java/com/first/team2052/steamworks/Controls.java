@@ -1,6 +1,7 @@
 package com.first.team2052.steamworks;
 
 import com.first.team2052.lib.FlipFlopLatch;
+import com.first.team2052.steamworks.subsystems.Climber;
 import com.first.team2052.steamworks.subsystems.GearMan;
 import com.first.team2052.steamworks.subsystems.Intake;
 import edu.wpi.first.wpilibj.Joystick;
@@ -35,6 +36,17 @@ public class Controls {
         } else {
             return Intake.IntakeState.STOP;
         }
+    }
+
+    public Climber.climberState getClimberState(){
+        if(secondaryStick.getRawButton(4)){
+            return Climber.climberState.UP;
+        }else if(secondaryStick.getRawButton(5)){
+            return Climber.climberState.DOWN;
+        }else{
+            return Climber.climberState.STOP;
+        }
+
     }
 
     public GearMan.GearManState getGearManState(){

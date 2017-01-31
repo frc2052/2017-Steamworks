@@ -13,6 +13,8 @@ public class Constants {
 
     public static int kIntakeMotorPort = 7;
 
+    public static int kClimbingMotorPort = 8;
+
     public static double kDriveMaxVelocity = 155.0;
     public static double kDriveMaxAcceleration = 100.0;
     public static double kDriveStraightKp = 0.15;
@@ -26,4 +28,7 @@ public class Constants {
 
     public static double kIntakeMotorSpeedIn = 1.0;
     public static double kIntakeMotorSpeedOut = -1.0;
+
+    public static double kClimberMotorSpeedUp = 1.0;
+    public static double kClimberMotorSpeedDown = -1.0;
 }
