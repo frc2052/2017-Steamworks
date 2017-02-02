@@ -26,6 +26,10 @@ public class ControlLoop {
     }
 
     public synchronized void start() {
+        for (Loopable loopable : loopables) {
+            loopable.start();
+        }
+
         synchronized (runningThread) {
             notifier.startPeriodic(period);
         }
@@ -34,6 +38,10 @@ public class ControlLoop {
     public synchronized void stop() {
         synchronized (runningThread) {
             notifier.stop();
+        }
+
+        for (Loopable loopable : loopables) {
+            loopable.stop();
         }
     }
 

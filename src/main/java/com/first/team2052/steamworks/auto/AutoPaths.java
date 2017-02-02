@@ -13,8 +13,9 @@ import java.util.HashMap;
 public class AutoPaths {
     String[] pathsNames = new String[]{"TestPath"};
     HashMap<String, Path> paths = Maps.newHashMap();
+    private static AutoPaths instance = new AutoPaths();
 
-    public AutoPaths() {
+    private AutoPaths() {
         loadPaths();
     }
 
@@ -44,5 +45,9 @@ public class AutoPaths {
 
     public Optional<Path> getPath(String pathName) {
         return paths.containsKey(pathName) ? Optional.of(paths.get(pathName)) : Optional.absent();
+    }
+
+    public static AutoPaths getInstance() {
+        return instance;
     }
 }

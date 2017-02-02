@@ -55,17 +55,17 @@ public class PathGenMain {
 
         TrajectoryGenerator.Config config = new TrajectoryGenerator.Config();
         config.dt = 1.0 / 100.0;
-        final double kWheelbaseWidth = 24.375;
+        final double kWheelbaseWidth = 26.841;
 
         {
             final String path_name = "TestPath";
-            config.max_acc = 107.0;
-            config.max_jerk = 600.0;
+            config.max_acc = 80.0;
+            config.max_jerk = 300.0;
             config.max_vel = 4 * 12;
 
             WaypointSequence p = new WaypointSequence(2);
             p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(5 * 12, 5 * 12, 0));
+            p.addWaypoint(new WaypointSequence.Waypoint(20 * 12, 0, 0));
 
             Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
             writePath(path, directory, path_name);
