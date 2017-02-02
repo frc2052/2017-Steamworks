@@ -21,4 +21,7 @@ public class Constants {
     public static double kDriveWheelDiameterInches = 4.0;
 
     public static double kDrivePathkTurn = 0.03;
+    public static int kIntakeMotorPort = 99;
+    public static double kIntakeMotorSpeedIn = 1.0;
+    public static double kIntakeMotorSpeedOut = -1.0;
 }

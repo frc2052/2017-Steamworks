@@ -1,13 +1,9 @@
 package com.first.team2052.steamworks;
 
 import com.first.team2052.lib.ControlLoop;
-import com.first.team2052.lib.Loopable;
-import com.first.team2052.steamworks.auto.AutoPaths;
 import com.first.team2052.steamworks.subsystems.DriveTrain;
-import com.first.team2052.trajectory.common.Path;
-import com.google.common.base.Optional;
+import com.first.team2052.steamworks.subsystems.Intake;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -15,6 +11,7 @@ public class Robot extends IterativeRobot {
     private ControlLoop controlLoop = new ControlLoop(Constants.kControlLoopPeriod);
     private DriveTrain driveTrain = DriveTrain.getInstance();
     private Controls controls = Controls.getInstance();
+    private Intake intake = Intake.getInstance();
 
     @Override
     public void robotInit() {
@@ -48,6 +45,8 @@ public class Robot extends IterativeRobot {
         double tank = controls.getTank();
 
         driveTrain.setOpenLeftRight(tank + turn, tank - turn);
+
+        intake.setIntakeState(controls.getIntakeState());
 
         SmartDashboard.putNumber("velocity", driveTrain.getAverageVelocity());
         SmartDashboard.putNumber("position", driveTrain.getAverageDistance());
