@@ -1,8 +1,7 @@
 package com.first.team2052.steamworks;
 
 import com.first.team2052.lib.ControlLoop;
-import com.first.team2052.steamworks.subsystems.DriveTrain;
-import com.first.team2052.steamworks.subsystems.Intake;
+import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -11,57 +10,54 @@ public class Robot extends IterativeRobot {
     private ControlLoop controlLoop = new ControlLoop(Constants.kControlLoopPeriod);
     private DriveTrain driveTrain = DriveTrain.getInstance();
     private Controls controls = Controls.getInstance();
-    private Intake intake = Intake.getInstance();
 
     @Override
     public void robotInit() {
-        controlLoop.addLoopable(driveTrain);
+        controlLoop.addLoopable(driveTrain.getLoopable());
     }
 
     @Override
     public void autonomousInit() {
-        driveTrain.setHighGear(true);
-        driveTrain.resetEncoders();
+        driveTrain.setHighGear(Constants.Drive.kDriveDefaultHighGear);
+        zeroAllSensors();
+
         controlLoop.start();
         driveTrain.setDistanceTrajectory(20 * 12);
     }
 
     @Override
-    public void autonomousPeriodic() {
-    }
-
-    @Override
     public void teleopInit() {
+        zeroAllSensors();
+
         controlLoop.start();
-        driveTrain.resetEncoders();
+
+        driveTrain.setOpenLoop(0.0, 0.0);
+        driveTrain.setHighGear(Constants.Drive.kDriveDefaultHighGear);
+
+        driveTrain.zeroEncoders();
     }
 
     @Override
     public void teleopPeriodic() {
         driveTrain.setHighGear(controls.getHighGear());
-        driveTrain.setBrakeMode(controls.getBrake());
 
         double turn = controls.getTurn();
         double tank = controls.getTank();
 
-        driveTrain.setOpenLeftRight(tank + turn, tank - turn);
+        driveTrain.setOpenLoop(tank + turn, tank - turn);
 
-        intake.setIntakeState(controls.getIntakeState());
-
-        SmartDashboard.putNumber("velocity", driveTrain.getAverageVelocity());
-        SmartDashboard.putNumber("position", driveTrain.getAverageDistance());
-        SmartDashboard.putNumber("gyro", driveTrain.getGyroAngle());
-    }
-
-    @Override
-    public void testPeriodic() {
+        SmartDashboard.putNumber("gyro", driveTrain.getGyroAngleDegrees());
     }
 
     @Override
     public void disabledInit() {
         controlLoop.stop();
-        driveTrain.resetEncoders();
-        driveTrain.setOpenLeftRight(0, 0);
+        zeroAllSensors();
+    }
+
+    public void zeroAllSensors() {
+        driveTrain.zeroEncoders();
+        driveTrain.zeroGyro();
     }
 }
 

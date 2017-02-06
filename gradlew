@@ -2,7 +2,7 @@
 
 ##############################################################################
 ##
-##  Gradle start up script for UN*X
+##  Gradle onStart up script for UN*X
 ##
 ##############################################################################
 
@@ -67,7 +67,7 @@ cd "$SAVED" >&-
 
 CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
 
-# Determine the Java command to use to start the JVM.
+# Determine the Java command to use to onStart the JVM.
 if [ -n "$JAVA_HOME" ] ; then
     if [ -x "$JAVA_HOME/jre/sh/java" ] ; then
         # IBM's JDK on AIX uses strange locations for the executables
@@ -112,8 +112,8 @@ fi
 
 # For Cygwin, switch paths to Windows format before running java
 if $cygwin ; then
-    APP_HOME=`cygpath --path --mixed "$APP_HOME"`
-    CLASSPATH=`cygpath --path --mixed "$CLASSPATH"`
+    APP_HOME=`cygpath --adaptivePath --mixed "$APP_HOME"`
+    CLASSPATH=`cygpath --adaptivePath --mixed "$CLASSPATH"`
 
     # We build the pattern for arguments to be converted via cygpath
     ROOTDIRSRAW=`find -L / -maxdepth 1 -mindepth 1 -type d 2>/dev/null`
@@ -134,7 +134,7 @@ if $cygwin ; then
         CHECK2=`echo "$arg"|egrep -c "^-"`                                 ### Determine if an option
 
         if [ $CHECK -ne 0 ] && [ $CHECK2 -eq 0 ] ; then                    ### Added a condition
-            eval `echo args$i`=`cygpath --path --ignore --mixed "$arg"`
+            eval `echo args$i`=`cygpath --adaptivePath --ignore --mixed "$arg"`
         else
             eval `echo args$i`="\"$arg\""
         fi
