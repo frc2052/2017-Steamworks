@@ -1,14 +1,18 @@
 package com.first.team2052.steamworks;
 
-import com.first.team2052.lib.FlipFlopLatch;
 import edu.wpi.first.wpilibj.Joystick;
 
+/**
+ * All the logic for all the control functions on the robot
+ * This is the interface between the driver station and the real robot values
+ */
 public class Controls {
     public static Controls instance = new Controls();
     private Joystick joystick0 = new Joystick(0);
     private Joystick joystick1 = new Joystick(1);
-    FlipFlopLatch shiftLatch = new FlipFlopLatch();
-    FlipFlopLatch brakeLatch = new FlipFlopLatch();
+
+    private Controls() {
+    }
 
     public double getTank() {
         return -joystick0.getY();
@@ -19,13 +23,7 @@ public class Controls {
     }
 
     public boolean getHighGear() {
-        shiftLatch.update(joystick0.getRawButton(2));
-        return shiftLatch.get();
-    }
-
-    public boolean getBrake() {
-        brakeLatch.update(joystick1.getRawButton(2));
-        return brakeLatch.get();
+        return !joystick0.getRawButton(2);
     }
 
     public static Controls getInstance() {
