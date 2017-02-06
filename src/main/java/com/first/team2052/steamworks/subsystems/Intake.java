@@ -9,7 +9,7 @@ import com.first.team2052.steamworks.Constants;
  */
 public class Intake {
     private static Intake instance = new Intake();
-    CANTalon intakeMotor = new CANTalon(Constants.kIntakeMotorPort);
+    CANTalon intakeMotor = new CANTalon(Constants.CAN.kIntakeMotorPort);
 
     private Intake() {
     }
@@ -26,8 +26,8 @@ public class Intake {
     }
 
     public enum IntakeState {
-        IN(Constants.kIntakeMotorSpeedIn),
-        OUT(Constants.kIntakeMotorSpeedOut),
+        IN(Constants.Intake.kIntakeMotorSpeedIn),
+        OUT(Constants.Intake.kIntakeMotorSpeedOut),
         STOP(0.0);
         double speed;
 

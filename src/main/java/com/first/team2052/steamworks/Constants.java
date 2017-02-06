@@ -11,6 +11,7 @@ public class Constants {
         public static final int kDriveRight1Id = 4;
         public static final int kDriveRight2Id = 5;
         public static final int kDriveRight3Id = 6;
+        public static int kIntakeMotorPort = 11;
     }
 
     public static class Solenoid {
@@ -40,5 +41,10 @@ public class Constants {
 
         public static double kDrivePathkTurn = 0.03;
 
+    }
+
+    public static class Intake {
+        public static final double kIntakeMotorSpeedIn = 1.0;
+        public static final double kIntakeMotorSpeedOut = -1.0;
     }
 }
