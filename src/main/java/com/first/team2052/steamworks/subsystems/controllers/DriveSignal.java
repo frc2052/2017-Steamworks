@@ -1,4 +1,4 @@
-package com.first.team2052.steamworks.subsystems;
+package com.first.team2052.steamworks.subsystems.controllers;
 
 public class DriveSignal {
     public double left, right;
