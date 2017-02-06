@@ -11,6 +11,8 @@ public class Constants {
         public static final int kDriveRight1Id = 4;
         public static final int kDriveRight2Id = 5;
         public static final int kDriveRight3Id = 6;
+
+        public static final int kClimbId = 10;
     }
 
     public static class Solenoid {
@@ -22,8 +24,8 @@ public class Constants {
         // Default state of the drive train transmission when in teleopInit, autoInit, and robotInit
         public static boolean kDriveDefaultHighGear = false;
 
-        private final int kDriveTicksPerRot = 256;
-        private final double kDriveThirdStageGearRatio = 54.0 / 30.0;
+        private static final int kDriveTicksPerRot = 256;
+        private static final double kDriveThirdStageGearRatio = 54.0 / 30.0;
         // VEX 3 CIM ball shift with 3rd stage 3 rotations per gearbox output shaft rotation * ratio for gearbox
         public static int kDriveEncoderTicksPerRot = (int) (3 * kDriveTicksPerRot * kDriveThirdStageGearRatio);
 
@@ -40,5 +42,10 @@ public class Constants {
 
         public static double kDrivePathkTurn = 0.03;
 
+    }
+
+    public static class Climber {
+        public static final double kClimberMotorSpeedUp = 0.5;
+        public static final double kClimberMotorSpeedDown = -0.5;
     }
 }
