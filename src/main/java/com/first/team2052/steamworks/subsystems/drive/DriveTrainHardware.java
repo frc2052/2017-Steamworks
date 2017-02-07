@@ -31,8 +31,8 @@ class DriveTrainHardware {
         rightMaster.configEncoderCodesPerRev(Constants.Drive.kDriveEncoderTicksPerRot);
 
         //Fix sensor polarity
-        leftMaster.reverseSensor(true);
-        rightMaster.reverseSensor(false);
+        leftMaster.reverseSensor(false);
+        rightMaster.reverseSensor(true);
 
         //Configure talons for follower mode
         rightSlave.changeControlMode(CANTalon.TalonControlMode.Follower);

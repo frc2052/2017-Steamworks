@@ -84,8 +84,8 @@ public class DriveTrain extends DriveTrainHardware {
      * This method is used by controllers directly
      */
     protected synchronized void setLeftRightPower(double left_power, double right_power) {
-        leftMaster.set(left_power);
-        rightMaster.set(-right_power);
+        leftMaster.set(-left_power);
+        rightMaster.set(right_power);
     }
 
     public void setHighGear(boolean highGear) {

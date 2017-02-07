@@ -45,7 +45,7 @@ public class DriveStraightController extends DriveController {
     @Override
     public DriveSignal calculate() {
         double output = trajectoryFollower.calculate((driveTrain.getLeftDistanceInches() + driveTrain.getRightDistanceInches()) / 2.0);
-        return DriveSignal.arcadeSignal(output, (driveTrain.getGyroAngleDegrees() - startAngle) * -0.025);
+        return DriveSignal.arcadeSignal(output, (driveTrain.getGyroAngleDegrees() - startAngle) * -0.010);
     }
 
     @Override
