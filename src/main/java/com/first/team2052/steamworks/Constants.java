@@ -13,12 +13,11 @@ public class Constants {
         public static final int kDriveRight3Id = 6;
     }
 
-    public static class Solenoid {
+    public static class Drive {
+        //Solenoid Id's for shifting
         public static int kDriveOutSolenoidId = 1;
         public static int kDriveInSolenoidId = 0;
-    }
 
-    public static class Drive {
         // Default state of the drive train transmission when in teleopInit, autoInit, and robotInit
         public static boolean kDriveDefaultHighGear = false;
 
@@ -39,6 +38,11 @@ public class Constants {
         public static double kDriveWheelDiameterInches = 4.0;
 
         public static double kDrivePathkTurn = 0.03;
+        public static double kDriveStraightTurnKp = -0.025;
+    }
 
+    public static class GearMan {
+        public static int kGearManInSolenoidId = 2;
+        public static int kGearManOutSolenoidId = 3;
     }
 }
