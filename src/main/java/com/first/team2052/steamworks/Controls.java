@@ -27,7 +27,7 @@ public class Controls {
     }
 
     public boolean getHighGear() {
-        return !joystick0.getRawButton(2);
+        return joystick0.getRawButton(2);
     }
 
     public GearMan.GearManState getGearManState(){
