@@ -2,20 +2,28 @@ package com.first.team2052.steamworks;
 
 import com.first.team2052.lib.ControlLoop;
 import com.first.team2052.steamworks.subsystems.GearMan;
+import com.first.team2052.steamworks.subsystems.Pickup;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Robot extends IterativeRobot {
-    private ControlLoop controlLoop = new ControlLoop(Constants.kControlLoopPeriod);
-    private DriveTrain driveTrain = DriveTrain.getInstance();
-    private Controls controls = Controls.getInstance();
-    private GearMan gearMan = GearMan.getInstance();
+    private ControlLoop controlLoop;
+    private DriveTrain driveTrain;
+    private Controls controls;
+    private GearMan gearMan;
+    private Pickup pickup;
 
     @Override
     public void robotInit() {
+        controlLoop = new ControlLoop(Constants.kControlLoopPeriod);
+
         controlLoop.addLoopable(driveTrain.getLoopable());
+        driveTrain = DriveTrain.getInstance();
+        controls = Controls.getInstance();
+        gearMan = GearMan.getInstance();
+        pickup = Pickup.getInstance();
     }
 
     @Override
@@ -39,6 +47,7 @@ public class Robot extends IterativeRobot {
         driveTrain.setHighGear(Constants.Drive.kDriveDefaultHighGear);
 
         gearMan.setGearManState(GearMan.GearManState.CLOSED);
+        pickup.setIntakeState(Pickup.IntakeState.STOP);
 
         driveTrain.zeroEncoders();
     }
@@ -53,6 +62,8 @@ public class Robot extends IterativeRobot {
         driveTrain.setOpenLoop(tank + turn, tank - turn);
         gearMan.setGearManState(controls.getGearManState());
 
+
+        pickup.setIntakeState(controls.getIntakeState());
         SmartDashboard.putNumber("gyro", driveTrain.getGyroAngleDegrees());
         SmartDashboard.putNumber("distance", driveTrain.getLeftDistanceInches());
         SmartDashboard.putNumber("velocity", driveTrain.getLeftVelocityInchesPerSec());
