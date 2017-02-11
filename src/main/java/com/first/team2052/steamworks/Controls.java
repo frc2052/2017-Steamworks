@@ -10,36 +10,43 @@ import edu.wpi.first.wpilibj.Joystick;
  * This is the interface between the driver station and the real robot values
  */
 public class Controls {
+    //Primary joystick constants
+    private static int kPJoy0HighGear = 2;
+    //Secondary joystick constants
+    private static int kSJoyIntakeIn = 2;
+    private static int kSJoyIntakeOut = 3;
+    private static int kSJoyGearLatch = 4;
+
     public static Controls instance = new Controls();
-    private Joystick joystick0 = new Joystick(0);
-    private Joystick joystick1 = new Joystick(1);
-    private Joystick secondaryStick = new Joystick(2);
+    private Joystick primaryJoy0 = new Joystick(0);
+    private Joystick primaryJoy1 = new Joystick(1);
+    private Joystick secondaryJoy = new Joystick(2);
     FlipFlopLatch gearManLatch = new FlipFlopLatch();
 
     private Controls() {
     }
 
     public double getTank() {
-        return -joystick0.getY();
+        return -primaryJoy0.getY();
     }
 
     public double getTurn() {
-        return joystick1.getX();
+        return primaryJoy1.getX();
     }
 
     public boolean getHighGear() {
-        return joystick0.getRawButton(2);
+        return primaryJoy0.getRawButton(kPJoy0HighGear);
     }
 
     public GearMan.GearManState getGearManState(){
-        gearManLatch.update(secondaryStick.getRawButton(4));
+        gearManLatch.update(secondaryJoy.getRawButton(kSJoyGearLatch));
         return gearManLatch.get() ? GearMan.GearManState.OPEN : GearMan.GearManState.CLOSED;
     }
 
     public Pickup.IntakeState getIntakeState() {
-        if(secondaryStick.getRawButton(2)){
+        if(secondaryJoy.getRawButton(kSJoyIntakeIn)){
             return Pickup.IntakeState.IN;
-        } else if(secondaryStick.getRawButton(3)){
+        } else if(secondaryJoy.getRawButton(kSJoyIntakeOut)){
             return Pickup.IntakeState.OUT;
         } else {
             return Pickup.IntakeState.STOP;
