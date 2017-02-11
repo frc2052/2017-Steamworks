@@ -8,8 +8,8 @@ public class GearMan {
     private Solenoid inSolenoid, outSolenoid;
 
     private GearMan() {
-        inSolenoid = new Solenoid(Constants.Drive.kDriveInSolenoidId);
-        outSolenoid = new Solenoid(Constants.Drive.kDriveOutSolenoidId);
+        inSolenoid = new Solenoid(Constants.GearMan.kGearManInSolenoidId);
+        outSolenoid = new Solenoid(Constants.GearMan.kGearManOutSolenoidId);
     }
 
     public void setGearManState(GearManState gearManState) {
