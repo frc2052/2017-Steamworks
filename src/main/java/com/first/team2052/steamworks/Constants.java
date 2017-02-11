@@ -28,18 +28,17 @@ public class Constants {
         public static int kDriveEncoderTicksPerRot = (int) (3 * kDriveTicksPerRot * kDriveThirdStageGearRatio);
 
         // All constants are for LOW GEAR
-        public static double kDriveMaxVelocity = 80.0;
-        public static double kDriveMaxAcceleration = 75.0;
-        public static double kDriveStraightKp = 0.3;
+        public static double kDriveMaxVelocity = 75.0;
+        public static double kDriveMaxAcceleration = 107.0;
+        public static double kDriveStraightKp = 0.0;
         public static double kDriveStraightKi = 0.0;
         public static double kDriveStraightKd = 0.0;
-        public static double kDriveStraightKv = 1.0 / 80.0;
-        public static double kDriveStraightKa = 0.0017;
+        public static double kDriveStraightKv = 1.0 / kDriveMaxVelocity;
+        public static double kDriveStraightKa = 0.0;
 
         public static double kDriveWheelDiameterInches = 4.0;
 
         public static double kDrivePathkTurn = 0.03;
 
-        public static double kDriveStraightTurnKp = -0.025;
     }
 }
