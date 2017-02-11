@@ -198,7 +198,7 @@ public class PathGenMain {
             writePath(path, directory, path_name);
         }
         {
-            final String path_name = "Pos1Gear&Hopper";
+            final String path_name = "Pos1Gear&Hopper&shoot";
             config.max_acc = 80.0;
             config.max_jerk = 300.0;
             config.max_vel = 4 * 12;
@@ -212,6 +212,35 @@ public class PathGenMain {
             p.addWaypoint(new WaypointSequence.Waypoint(105, 8, Math.PI));
             p.addWaypoint(new WaypointSequence.Waypoint(53, 8, Math.PI));
             p.addWaypoint(new WaypointSequence.Waypoint(10, 45, Math.PI/4));
+
+            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
+            writePath(path, directory, path_name);
+        }
+        {
+            final String path_name = "Pos1Shoot";
+            config.max_acc = 80.0;
+            config.max_jerk = 300.0;
+            config.max_vel = 4 * 12;
+
+            WaypointSequence p = new WaypointSequence(2);
+            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
+            p.addWaypoint(new WaypointSequence.Waypoint(30, 0, 0)); //move backwards
+
+            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
+            writePath(path, directory, path_name);
+        }
+        {
+            final String path_name = "Pos1Hopper&Shoot";
+            config.max_acc = 80.0;
+            config.max_jerk = 300.0;
+            config.max_vel = 4 * 12;
+
+            WaypointSequence p = new WaypointSequence(2);
+            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
+            p.addWaypoint(new WaypointSequence.Waypoint(150, 0, 0));
+            p.addWaypoint(new WaypointSequence.Waypoint(150, 30, Math.PI/2));
+            p.addWaypoint(new WaypointSequence.Waypoint(150, 22, Math.PI));
+            p.addWaypoint(new WaypointSequence.Waypoint(98, 22, Math.PI/4));
 
             Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
             writePath(path, directory, path_name);
