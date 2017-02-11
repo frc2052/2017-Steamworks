@@ -7,14 +7,14 @@ import com.first.team2052.steamworks.Constants;
  * This class congregates the functionality of the intake apparatus; this is just the fuel intake.
  * Created by Ben Mildenberger on 1/21/2017.
  */
-public class Intake {
-    private static Intake instance = new Intake();
-    CANTalon intakeMotor = new CANTalon(Constants.CAN.kIntakeMotorPort);
+public class Pickup {
+    private static Pickup instance = new Pickup();
+    CANTalon intakeMotor = new CANTalon(Constants.Pickup.kIntakeMotorPort);
 
-    private Intake() {
+    private Pickup() {
     }
 
-    public static Intake getInstance() {
+    public static Pickup getInstance() {
         return instance;
     }
 
@@ -26,8 +26,8 @@ public class Intake {
     }
 
     public enum IntakeState {
-        IN(Constants.Intake.kIntakeMotorSpeedIn),
-        OUT(Constants.Intake.kIntakeMotorSpeedOut),
+        IN(Constants.Pickup.kIntakeMotorSpeedIn),
+        OUT(Constants.Pickup.kIntakeMotorSpeedOut),
         STOP(0.0);
         double speed;
 
