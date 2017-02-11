@@ -40,5 +40,6 @@ public class Constants {
 
         public static double kDrivePathkTurn = 0.03;
 
+        public static double kDriveStraightTurnKp = -0.025;
     }
 }

@@ -45,7 +45,8 @@ public class DriveStraightController extends DriveController {
     @Override
     public DriveSignal calculate() {
         double output = trajectoryFollower.calculate((driveTrain.getLeftDistanceInches() + driveTrain.getRightDistanceInches()) / 2.0);
-        return DriveSignal.arcadeSignal(output, (driveTrain.getGyroAngleDegrees() - startAngle) * -0.010);
+        //DriveStraightTurnKp is the P gain in a PID loop (multiplied by your error)
+        return DriveSignal.arcadeSignal(output, (driveTrain.getGyroAngleDegrees() - startAngle) * Constants.Drive.kDriveStraightTurnKp);
     }
 
     @Override

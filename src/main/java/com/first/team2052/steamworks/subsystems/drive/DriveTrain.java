@@ -98,6 +98,7 @@ public class DriveTrain extends DriveTrainHardware {
     }
 
     public double getGyroAngleDegrees() {
+        // It just so happens that the gyro outputs 4x the amount that it actually turned
         return gyro.getAngleZ() / 4.0;
     }
 
@@ -106,25 +107,31 @@ public class DriveTrain extends DriveTrainHardware {
     }
 
     public double getLeftDistanceInches() {
+        //Getpos is rotations since it was last reset
         return leftMaster.getPosition() * Constants.Drive.kDriveWheelDiameterInches * Math.PI;
     }
 
     public double getRightDistanceInches() {
+        //Getpos is rotations since it was last reset
         return rightMaster.getPosition() * Constants.Drive.kDriveWheelDiameterInches * Math.PI;
     }
 
     public double getRightVelocityInchesPerSec() {
+        //getSpeed is rpm
         return rightMaster.getSpeed() / 60 * Constants.Drive.kDriveWheelDiameterInches * Math.PI;
     }
 
     public double getLeftVelocityInchesPerSec() {
+        //getSpeed is rpm
         return leftMaster.getSpeed() / 60 * Constants.Drive.kDriveWheelDiameterInches * Math.PI;
     }
 
     public void zeroEncoders() {
+        //Set the rotations to zero
         rightMaster.setPosition(0.0);
         leftMaster.setPosition(0.0);
 
+        //Set the encoder position to zero (ticks)
         rightMaster.setEncPosition(0);
         leftMaster.setEncPosition(0);
     }
