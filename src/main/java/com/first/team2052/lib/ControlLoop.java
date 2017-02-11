@@ -27,7 +27,7 @@ public class ControlLoop {
 
     public synchronized void start() {
         for (Loopable loopable : loopables) {
-            loopable.start();
+            loopable.onStart();
         }
 
         synchronized (runningThread) {
@@ -41,7 +41,7 @@ public class ControlLoop {
         }
 
         for (Loopable loopable : loopables) {
-            loopable.stop();
+            loopable.onStop();
         }
     }
 

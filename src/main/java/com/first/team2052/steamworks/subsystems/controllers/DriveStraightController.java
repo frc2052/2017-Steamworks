@@ -1,7 +1,8 @@
-package com.first.team2052.steamworks.subsystems;
+package com.first.team2052.steamworks.subsystems.controllers;
 
 import com.first.team2052.lib.TrajectoryFollower;
 import com.first.team2052.steamworks.Constants;
+import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 
 public class DriveStraightController extends DriveController {
     private TrajectoryFollower trajectoryFollower;
@@ -9,24 +10,26 @@ public class DriveStraightController extends DriveController {
 
     public DriveStraightController(DriveTrain driveTrain, double max_vel, double distance) {
         super(driveTrain);
-        startAngle = driveTrain.getGyroAngle();
+        driveTrain.setHighGear(false);
+
+        startAngle = driveTrain.getGyroAngleDegrees();
 
         TrajectoryFollower.TrajectoryConfig config = new TrajectoryFollower.TrajectoryConfig();
         config.dt = Constants.kControlLoopPeriod;
-        config.max_acc = Constants.kDriveMaxAcceleration;
-        config.max_vel = Constants.kDriveMaxVelocity;
-        trajectoryFollower = new TrajectoryFollower();
+        config.max_acc = Constants.Drive.kDriveMaxAcceleration;
+        config.max_vel = max_vel;
 
+        trajectoryFollower = new TrajectoryFollower();
         trajectoryFollower.configure(
-                Constants.kDriveStraightKp,
-                Constants.kDriveStraightKi,
-                Constants.kDriveStraightKd,
-                Constants.kDriveStraightKv,
-                Constants.kDriveStraightKa, config);
+                Constants.Drive.kDriveStraightKp,
+                Constants.Drive.kDriveStraightKi,
+                Constants.Drive.kDriveStraightKd,
+                Constants.Drive.kDriveStraightKv,
+                Constants.Drive.kDriveStraightKa, config);
 
         TrajectoryFollower.TrajectorySetpoint currentState = new TrajectoryFollower.TrajectorySetpoint();
-        currentState.pos = driveTrain.getAverageDistance();
-        currentState.vel = driveTrain.getAverageVelocity();
+        currentState.pos = (driveTrain.getLeftDistanceInches() + driveTrain.getRightDistanceInches()) / 2.0;
+        currentState.vel = (driveTrain.getLeftVelocityInchesPerSec() + driveTrain.getRightVelocityInchesPerSec()) / 2.0;
 
         trajectoryFollower.setGoal(currentState, distance);
     }
@@ -41,8 +44,8 @@ public class DriveStraightController extends DriveController {
 
     @Override
     public DriveSignal calculate() {
-        double output = trajectoryFollower.calculate(driveTrain.getAverageDistance());
-        return DriveSignal.arcadeSignal(output, (driveTrain.getGyroAngle() - startAngle) * -0.025);
+        double output = trajectoryFollower.calculate((driveTrain.getLeftDistanceInches() + driveTrain.getRightDistanceInches()) / 2.0);
+        return DriveSignal.arcadeSignal(output, (driveTrain.getGyroAngleDegrees() - startAngle) * -0.025);
     }
 
     @Override
