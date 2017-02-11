@@ -26,7 +26,7 @@ public class Robot extends IterativeRobot {
         zeroAllSensors();
 
         controlLoop.start();
-        driveTrain.setDistanceTrajectory(20 * 12);
+        driveTrain.setDistanceTrajectory(5 * 12);
     }
 
     @Override
@@ -54,6 +54,8 @@ public class Robot extends IterativeRobot {
         gearMan.setGearManState(controls.getGearManState());
 
         SmartDashboard.putNumber("gyro", driveTrain.getGyroAngleDegrees());
+        SmartDashboard.putNumber("distance", driveTrain.getLeftDistanceInches());
+        SmartDashboard.putNumber("velocity", driveTrain.getLeftVelocityInchesPerSec());
     }
 
     @Override

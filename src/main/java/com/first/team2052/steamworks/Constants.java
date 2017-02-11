@@ -11,7 +11,6 @@ public class Constants {
         public static final int kDriveRight1Id = 4;
         public static final int kDriveRight2Id = 5;
         public static final int kDriveRight3Id = 6;
-        public static int kIntakeMotorPort = 11;
     }
 
     public static class Drive {
@@ -44,10 +43,5 @@ public class Constants {
     public static class GearMan {
         public static int kGearManInSolenoidId = 2;
         public static int kGearManOutSolenoidId = 3;
-    }
-
-    public static class Intake {
-        public static final double kIntakeMotorSpeedIn = 1.0;
-        public static final double kIntakeMotorSpeedOut = -1.0;
     }
 }
