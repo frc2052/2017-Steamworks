@@ -4,11 +4,12 @@ import com.first.team2052.steamworks.Constants;
 import edu.wpi.first.wpilibj.Solenoid;
 
 public class GearMan {
-    static GearMan instance = new GearMan();
-    Solenoid inSolenoid = new Solenoid(Constants.Solenoid.kGearManInSolenoidId);
-    Solenoid outSolenoid = new Solenoid(Constants.Solenoid.kGearManOutSolenoidId);
+    private static GearMan instance = new GearMan();
+    private Solenoid inSolenoid, outSolenoid;
 
     private GearMan() {
+        inSolenoid = new Solenoid(Constants.Drive.kDriveInSolenoidId);
+        outSolenoid = new Solenoid(Constants.Drive.kDriveOutSolenoidId);
     }
 
     public void setGearManState(GearManState gearManState) {

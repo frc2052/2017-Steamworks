@@ -1,6 +1,7 @@
 package com.first.team2052.steamworks;
 
 import com.first.team2052.lib.ControlLoop;
+import com.first.team2052.steamworks.subsystems.GearMan;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -10,6 +11,7 @@ public class Robot extends IterativeRobot {
     private ControlLoop controlLoop = new ControlLoop(Constants.kControlLoopPeriod);
     private DriveTrain driveTrain = DriveTrain.getInstance();
     private Controls controls = Controls.getInstance();
+    private GearMan gearMan = GearMan.getInstance();
 
     @Override
     public void robotInit() {
@@ -19,6 +21,8 @@ public class Robot extends IterativeRobot {
     @Override
     public void autonomousInit() {
         driveTrain.setHighGear(Constants.Drive.kDriveDefaultHighGear);
+        gearMan.setGearManState(GearMan.GearManState.CLOSED);
+
         zeroAllSensors();
 
         controlLoop.start();
@@ -34,6 +38,8 @@ public class Robot extends IterativeRobot {
         driveTrain.setOpenLoop(0.0, 0.0);
         driveTrain.setHighGear(Constants.Drive.kDriveDefaultHighGear);
 
+        gearMan.setGearManState(GearMan.GearManState.CLOSED);
+
         driveTrain.zeroEncoders();
     }
 
@@ -45,6 +51,7 @@ public class Robot extends IterativeRobot {
         double tank = controls.getTank();
 
         driveTrain.setOpenLoop(tank + turn, tank - turn);
+        gearMan.setGearManState(controls.getGearManState());
 
         SmartDashboard.putNumber("gyro", driveTrain.getGyroAngleDegrees());
     }
