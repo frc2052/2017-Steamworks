@@ -9,12 +9,13 @@ public class Constants {
         public static final int kDriveLeft3Id = 3;
 
         public static final int kDriveRight1Id = 4;
-        public static final int kDriveRight2Id = 5;
-        public static final int kDriveRight3Id = 6;
+        public static final int kDriveRight2Id = 50;
+        public static final int kDriveRight3Id = 60;
 
-        public static final int kLeftAgitatorMotorPort = 7;
-        public static final int kRightAgitatorMotorPort = 8;
-        public static final int kShooterMotorPort = 9;
+        public static final int kLeftAgitatorMotorPort = 10;
+        public static final int kRightAgitatorMotorPort = 9;
+        public static final int kShooterMotorPort = 7;
+        public static final int kShooterMotorSlavePort = 8;
     }
 
     public static class Solenoid {
@@ -32,7 +33,7 @@ public class Constants {
         public static int kDriveEncoderTicksPerRot = (int) (3 * kDriveTicksPerRot * kDriveThirdStageGearRatio);
 
         // All constants are for LOW GEAR
-        public static double kDriveMaxVelocity = 75.0;
+        public static double kDriveMaxVelocity = 75.0; //inches per sec
         public static double kDriveMaxAcceleration = 107.0;
         public static double kDriveStraightKp = 0.0;
         public static double kDriveStraightKi = 0.0;
@@ -47,8 +48,15 @@ public class Constants {
     }
 
     public static class Shooter {
-        public static double kShooterMotorSpeed = 1.0;
+        public static final double kShooterVelocityKp = 0.045;
+        public static final double kShooterVelocityKi = 0.0;
+        public static final double kShooterVelocityKd = 0.5;
+        public static final double kShooterVelocityKf = 0.03568;
+        public static final int kShooterVelocityIZone = 0;
+        public static final int kShooterVelocityCloseLoopRampRate = 0;
         public static double kTatorSpeed = 0.5;
-        public static double kTatorSpeedBack = -0.5;
+
+        //RPM
+        public static final int kShooterKeyVelocity = 3000;
     }
 }

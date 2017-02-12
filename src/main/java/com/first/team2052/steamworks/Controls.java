@@ -29,4 +29,7 @@ public class Controls {
     public static Controls getInstance() {
         return instance;
     }
+    public boolean getWantShoot(){
+        return joystick0.getRawButton(3);
+    }
 }

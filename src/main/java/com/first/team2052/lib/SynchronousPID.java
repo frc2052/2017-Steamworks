@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.util.BoundaryException;
 /**
  * Class implements a PID Control Loop.
  * <p>
- * Does all computation synchronously (i.e. the calculate() function must be
+ * Does all computation synchronously (kShooterVelocityKi.e. the calculate() function must be
  * called by the user from his own thread)
  */
 public class SynchronousPID {
@@ -28,7 +28,7 @@ public class SynchronousPID {
     }
 
     /**
-     * Allocate a PID object with the given constants for P, I, D
+     * Allocate a PID object with the given constants for kShooterVelocityKp, I, D
      *
      * @param Kp the proportional coefficient
      * @param Ki the integral coefficient
