@@ -31,8 +31,8 @@ class DriveTrainHardware {
         rightMaster.configEncoderCodesPerRev(Constants.Drive.kDriveEncoderTicksPerRot);
 
         //Fix sensor polarity
-        leftMaster.reverseSensor(true);
-        rightMaster.reverseSensor(false);
+        leftMaster.reverseSensor(false);
+        rightMaster.reverseSensor(true);
 
         //Configure talons for follower mode
         rightSlave.changeControlMode(CANTalon.TalonControlMode.Follower);
@@ -45,8 +45,8 @@ class DriveTrainHardware {
         leftSlave.set(leftMaster.getDeviceID());
         leftSlave1.set(leftMaster.getDeviceID());
 
-        shifterIn = new Solenoid(Constants.Solenoid.kDriveInSolenoidId);
-        shifterOut = new Solenoid(Constants.Solenoid.kDriveOutSolenoidId);
+        shifterIn = new Solenoid(Constants.Drive.kDriveInSolenoidId);
+        shifterOut = new Solenoid(Constants.Drive.kDriveOutSolenoidId);
 
         gyro = new ADIS16448_IMU();
     }
