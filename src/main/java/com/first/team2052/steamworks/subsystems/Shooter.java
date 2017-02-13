@@ -3,7 +3,6 @@ package com.first.team2052.steamworks.subsystems;
 import com.ctre.CANTalon;
 import com.first.team2052.lib.Loopable;
 import com.first.team2052.steamworks.Constants;
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 
 public class Shooter implements Loopable {
     public static final int kVelocityProfile = 0;
@@ -19,36 +18,45 @@ public class Shooter implements Loopable {
         shootMotor = new CANTalon(Constants.CAN.kShooterMotorPort);
         shootMotorSlave = new CANTalon(Constants.CAN.kShooterMotorSlavePort);
 
+
+        //Never go backwards. No matter what
+        shootMotor.configPeakOutputVoltage(12.0f, -0.0f);
+
+        //Configure for follower mode
         shootMotorSlave.changeControlMode(CANTalon.TalonControlMode.Follower);
         shootMotorSlave.set(shootMotor.getDeviceID());
 
-        shootMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
-        shootMotor.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
-        shootMotor.configEncoderCodesPerRev(1024);
-        shootMotor.configPeakOutputVoltage(12.0f, -0.0f);
+        //Config for our encoder options
+        if (Constants.Shooter.kUseDoubleEncoderExtender) {
+            shootMotor.setFeedbackDevice(CANTalon.FeedbackDevice.QuadEncoder);
+            shootMotor.configEncoderCodesPerRev(1024);
+        } else {
+            shootMotor.setFeedbackDevice(CANTalon.FeedbackDevice.CtreMagEncoder_Relative);
+        }
+
+        shootMotor.reverseSensor(false);
+
         shootMotor.reverseOutput(false);
         shootMotorSlave.reverseOutput(false);
-        shootMotor.reverseSensor(false);
+
         shootMotor.enableBrakeMode(false);
         shootMotorSlave.enableBrakeMode(false);
-        shootMotor.setPID(Constants.Shooter.kShooterVelocityKp, Constants.Shooter.kShooterVelocityKi, Constants.Shooter.kShooterVelocityKd, Constants.Shooter.kShooterVelocityKf, Constants.Shooter.kShooterVelocityIZone, Constants.Shooter.kShooterVelocityCloseLoopRampRate, kVelocityProfile);
+
+        shootMotor.changeControlMode(CANTalon.TalonControlMode.Speed);
+
+        shootMotor.setPID(Constants.Shooter.kShooterVelocityKp,
+                Constants.Shooter.kShooterVelocityKi,
+                Constants.Shooter.kShooterVelocityKd,
+                Constants.Shooter.kShooterVelocityKf,
+                Constants.Shooter.kShooterVelocityIZone,
+                Constants.Shooter.kShooterVelocityCloseLoopRampRate,
+                kVelocityProfile);
         shootMotor.set(0.0);
     }
 
-    public void setAgitatorSpeed(double speed) {
+    private void setAgitatorSpeed(double speed) {
         leftAgitator.set(speed);
         rightAgitator.set(-speed);
-    }
-
-    public double getAgitatorAdaptiveSpeed() {
-        int maxError = 400;
-        double speed = -1.0 / maxError * (shootMotor.getError()) + 1.0;
-        return speed <= 0.0 ? 0.0 : speed;
-    }
-
-    public void setMotorSpeedOpen() {
-        //shootMotor.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-        shootMotor.set(3500);
     }
 
     @Override
@@ -84,9 +92,8 @@ public class Shooter implements Loopable {
 
         if (newState != shooterState) {
             shooterState = newState;
-            System.out.println("Shoot state changed");
+            System.out.println(String.format("Shoot state changed to %s", newState.name()));
         }
-        System.out.println("shooter rpm:" + shootMotor.getSpeed());
     }
 
     public boolean isOnTarget() {

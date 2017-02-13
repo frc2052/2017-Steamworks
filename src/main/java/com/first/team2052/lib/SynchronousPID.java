@@ -28,7 +28,7 @@ public class SynchronousPID {
     }
 
     /**
-     * Allocate a PID object with the given constants for kShooterVelocityKp, I, D
+     * Allocate a PID object with the given constants for P, I, D
      *
      * @param Kp the proportional coefficient
      * @param Ki the integral coefficient

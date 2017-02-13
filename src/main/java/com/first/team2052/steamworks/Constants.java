@@ -60,6 +60,10 @@ public class Constants {
     }
 
     public static class Shooter {
+        //Use cable to Mag encoder or use Magnetic Encoder converted to a Quad encoder
+        //Talk to Adam or Nate about this
+        public static final boolean kUseDoubleEncoderExtender = true;
+
         public static final double kShooterVelocityKp = 0.045;
         public static final double kShooterVelocityKi = 0.0;
         public static final double kShooterVelocityKd = 0.5;
