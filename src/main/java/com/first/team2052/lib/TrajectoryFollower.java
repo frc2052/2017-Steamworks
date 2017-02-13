@@ -161,6 +161,7 @@ public class TrajectoryFollower {
 
         last_error_ = error;
         System.out.println("Error: " + error);
+        System.out.println("Pos: " + position);
         return output;
     }
 

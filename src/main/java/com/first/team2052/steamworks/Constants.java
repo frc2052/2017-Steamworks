@@ -18,12 +18,11 @@ public class Constants {
         public static final int kShooterMotorSlavePort = 8;
     }
 
-    public static class Solenoid {
+    public static class Drive {
+        //Solenoid Id's for shifting
         public static int kDriveOutSolenoidId = 1;
         public static int kDriveInSolenoidId = 0;
-    }
 
-    public static class Drive {
         // Default state of the drive train transmission when in teleopInit, autoInit, and robotInit
         public static boolean kDriveDefaultHighGear = false;
 
@@ -45,6 +44,19 @@ public class Constants {
 
         public static double kDrivePathkTurn = 0.03;
 
+        public static double kDriveStraightTurnKp = -0.025;
+
+    }
+
+    public static class GearMan {
+        public static int kGearManInSolenoidId = 2;
+        public static int kGearManOutSolenoidId = 3;
+    }
+
+    public static class Pickup {
+        public static final double kIntakeMotorSpeedIn = 1.0;
+        public static final double kIntakeMotorSpeedOut = -0.5;
+        public static int kIntakeMotorPort = 11;
     }
 
     public static class Shooter {
