@@ -73,6 +73,9 @@ public class DriveTrain implements Loopable {
     public void setPathTrajectory(Path pathTrajectory){
         controller = new DrivePathController(this, pathTrajectory, false);
     }
+    public void setBackwardsPathTrajectory(Path pathTrajectory){
+        controller = new DrivePathController(this, pathTrajectory, true);
+    }
 
     public void setHighGear(boolean highGear) {
         shifterOut.set(highGear);

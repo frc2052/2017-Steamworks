@@ -56,21 +56,8 @@ public class PathGenMain {
         TrajectoryGenerator.Config config = new TrajectoryGenerator.Config();
         config.dt = 1.0 / 100.0;
         final double kWheelbaseWidth = 26.841;
-
         {
-            final String path_name = "DoNothing";
-            config.max_acc = 80.0;
-            config.max_jerk = 300.0;
-            config.max_vel = 4 * 12;
-
-            WaypointSequence p = new WaypointSequence(1);
-            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-
-            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
-            writePath(path, directory, path_name);
-        }
-        {
-            final String path_name = "Pos1&3Gear";
+            final String path_name = "PosEdgeGear";
             config.max_acc = 80.0;
             config.max_jerk = 300.0;
             config.max_vel = 4 * 12;
@@ -84,7 +71,7 @@ public class PathGenMain {
             writePath(path, directory, path_name);
         }
         {
-            final String path_name = "Pos2Gear";
+            final String path_name = "PosCenterGear";
             config.max_acc = 80.0;
             config.max_jerk = 300.0;
             config.max_vel = 4 * 12;
@@ -97,153 +84,154 @@ public class PathGenMain {
             writePath(path, directory, path_name);
         }
         {
-            final String path_name = "Pos1Gear&Hopper";
-            config.max_acc = 80.0;
-            config.max_jerk = 300.0;
-            config.max_vel = 4 * 12;
-
-            WaypointSequence p = new WaypointSequence(6);
-            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(75, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(111, 84, Math.PI/3));
-            p.addWaypoint(new WaypointSequence.Waypoint(105, 63, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(105, 44, Math.PI/2));
-
-            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
-            writePath(path, directory, path_name);
-        }
-        {
-            final String path_name = "Pos3Gear&Hopper";
-            config.max_acc = 80.0;
-            config.max_jerk = 300.0;
-            config.max_vel = 4 * 12;
-
-            WaypointSequence p = new WaypointSequence(6);
-            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(75, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(111, 84, Math.PI/3));
-            p.addWaypoint(new WaypointSequence.Waypoint(75, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(200, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(200, 55, Math.PI/2));
-
-            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
-            writePath(path, directory, path_name);
-        }
-        {
-            final String path_name = "LPos2Gear&Hopper";
-            config.max_acc = 80.0;
-            config.max_jerk = 300.0;
-            config.max_vel = 4 * 12;
-
-            WaypointSequence p = new WaypointSequence(6);
-            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(76, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(38, 0, Math.PI/2));
-            p.addWaypoint(new WaypointSequence.Waypoint(38, 130, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(200, 130, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(200, 160, Math.PI/2));
-
-            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
-            writePath(path, directory, path_name);
-        }
-        {
-            final String path_name = "RPos2Gear&Hopper";
-            config.max_acc = 80.0;
-            config.max_jerk = 300.0;
-            config.max_vel = 4 * 12;
-
-            WaypointSequence p = new WaypointSequence(6);
-            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(76, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(38, 0, Math.PI/2));
-            p.addWaypoint(new WaypointSequence.Waypoint(38, 130, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(110, 130, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(110, 160, Math.PI/2));
-
-            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
-            writePath(path, directory, path_name);
-        }
-        {
-            final String path_name = "Pos1chaos";
-            config.max_acc = 80.0;
-            config.max_jerk = 300.0;
-            config.max_vel = 4 * 12;
-
-            WaypointSequence p = new WaypointSequence(6);
-            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(105, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(105, 55, Math.PI/2));
-            p.addWaypoint(new WaypointSequence.Waypoint(105, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(315, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(315, 55, Math.PI/2));
-
-            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
-            writePath(path, directory, path_name);
-        }
-        {
-            final String path_name = "Pos3chaos";
-            config.max_acc = 80.0;
-            config.max_jerk = 300.0;
-            config.max_vel = 4 * 12;
-
-            WaypointSequence p = new WaypointSequence(6);
-            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(200, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(200, 55, Math.PI/2));
-            p.addWaypoint(new WaypointSequence.Waypoint(200, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(438, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(438, 55, Math.PI/2));
-
-            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
-            writePath(path, directory, path_name);
-        }
-        {
-            final String path_name = "Pos1Gear&Hopper&shoot";
-            config.max_acc = 80.0;
-            config.max_jerk = 300.0;
-            config.max_vel = 4 * 12;
-
-            WaypointSequence p = new WaypointSequence(8);
-            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(75, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(111, 84, Math.PI/3));
-            p.addWaypoint(new WaypointSequence.Waypoint(105, 63, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(105, 44, Math.PI/2));
-            p.addWaypoint(new WaypointSequence.Waypoint(105, 8, Math.PI));
-            p.addWaypoint(new WaypointSequence.Waypoint(53, 8, Math.PI));
-            p.addWaypoint(new WaypointSequence.Waypoint(10, 45, Math.PI/4));
-
-            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
-            writePath(path, directory, path_name);
-        }
-        {
-            final String path_name = "Pos1Shoot";
+            final String path_name = "PosEdgeShoot";
             config.max_acc = 80.0;
             config.max_jerk = 300.0;
             config.max_vel = 4 * 12;
 
             WaypointSequence p = new WaypointSequence(2);
             p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(30, 0, 0)); //move backwards
+            p.addWaypoint(new WaypointSequence.Waypoint(30, 0, 0));
 
             Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
             writePath(path, directory, path_name);
         }
-        {
-            final String path_name = "Pos1Hopper&Shoot";
-            config.max_acc = 80.0;
-            config.max_jerk = 300.0;
-            config.max_vel = 4 * 12;
-
-            WaypointSequence p = new WaypointSequence(2);
-            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(150, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(150, 30, Math.PI/2));
-            p.addWaypoint(new WaypointSequence.Waypoint(150, 22, Math.PI));
-            p.addWaypoint(new WaypointSequence.Waypoint(98, 22, Math.PI/4));
-
-            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
-            writePath(path, directory, path_name);
-        }
+//        {
+//            final String path_name = "Pos1Gear&Hopper";
+//            config.max_acc = 80.0;
+//            config.max_jerk = 300.0;
+//            config.max_vel = 4 * 12;
+//
+//            WaypointSequence p = new WaypointSequence(6);
+//            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(75, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(111, 84, Math.PI/3));
+//            p.addWaypoint(new WaypointSequence.Waypoint(105, 63, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(105, 44, Math.PI/2));
+//
+//            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
+//            writePath(path, directory, path_name);
+//        }
+//        {
+//            final String path_name = "Pos3Gear&Hopper";
+//            config.max_acc = 80.0;
+//            config.max_jerk = 300.0;
+//            config.max_vel = 4 * 12;
+//
+//            WaypointSequence p = new WaypointSequence(6);
+//            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(75, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(111, 84, Math.PI/3));
+//            p.addWaypoint(new WaypointSequence.Waypoint(75, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(200, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(200, 55, Math.PI/2));
+//
+//            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
+//            writePath(path, directory, path_name);
+//        }
+//        {
+//            final String path_name = "LPos2Gear&Hopper";
+//            config.max_acc = 80.0;
+//            config.max_jerk = 300.0;
+//            config.max_vel = 4 * 12;
+//
+//            WaypointSequence p = new WaypointSequence(6);
+//            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(76, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(38, 0, Math.PI/2));
+//            p.addWaypoint(new WaypointSequence.Waypoint(38, 130, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(200, 130, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(200, 160, Math.PI/2));
+//
+//            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
+//            writePath(path, directory, path_name);
+//        }
+//        {
+//            final String path_name = "RPos2Gear&Hopper";
+//            config.max_acc = 80.0;
+//            config.max_jerk = 300.0;
+//            config.max_vel = 4 * 12;
+//
+//            WaypointSequence p = new WaypointSequence(6);
+//            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(76, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(38, 0, Math.PI/2));
+//            p.addWaypoint(new WaypointSequence.Waypoint(38, 130, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(110, 130, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(110, 160, Math.PI/2));
+//
+//            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
+//            writePath(path, directory, path_name);
+//        }
+//        {
+//            final String path_name = "Pos1chaos";
+//            config.max_acc = 80.0;
+//            config.max_jerk = 300.0;
+//            config.max_vel = 4 * 12;
+//
+//            WaypointSequence p = new WaypointSequence(6);
+//            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(105, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(105, 55, Math.PI/2));
+//            p.addWaypoint(new WaypointSequence.Waypoint(105, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(315, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(315, 55, Math.PI/2));
+//
+//            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
+//            writePath(path, directory, path_name);
+//        }
+//        {
+//            final String path_name = "Pos3chaos";
+//            config.max_acc = 80.0;
+//            config.max_jerk = 300.0;
+//            config.max_vel = 4 * 12;
+//
+//            WaypointSequence p = new WaypointSequence(6);
+//            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(200, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(200, 55, Math.PI/2));
+//            p.addWaypoint(new WaypointSequence.Waypoint(200, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(438, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(438, 55, Math.PI/2));
+//
+//            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
+//            writePath(path, directory, path_name);
+//        }
+//        {
+//            final String path_name = "Pos1Gear&Hopper&shoot";
+//            config.max_acc = 80.0;
+//            config.max_jerk = 300.0;
+//            config.max_vel = 4 * 12;
+//
+//            WaypointSequence p = new WaypointSequence(8);
+//            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(75, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(111, 84, Math.PI/3));
+//            p.addWaypoint(new WaypointSequence.Waypoint(105, 63, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(105, 44, Math.PI/2));
+//            p.addWaypoint(new WaypointSequence.Waypoint(105, 8, Math.PI));
+//            p.addWaypoint(new WaypointSequence.Waypoint(53, 8, Math.PI));
+//            p.addWaypoint(new WaypointSequence.Waypoint(10, 45, Math.PI/4));
+//
+//            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
+//            writePath(path, directory, path_name);
+//        }
+//
+//        {
+//            final String path_name = "Pos1Hopper&Shoot";
+//            config.max_acc = 80.0;
+//            config.max_jerk = 300.0;
+//            config.max_vel = 4 * 12;
+//
+//            WaypointSequence p = new WaypointSequence(2);
+//            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(150, 0, 0));
+//            p.addWaypoint(new WaypointSequence.Waypoint(150, 30, Math.PI/2));
+//            p.addWaypoint(new WaypointSequence.Waypoint(150, 22, Math.PI));
+//            p.addWaypoint(new WaypointSequence.Waypoint(98, 22, Math.PI/4));
+//
+//            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
+//            writePath(path, directory, path_name);
+//        }
     }
 }
