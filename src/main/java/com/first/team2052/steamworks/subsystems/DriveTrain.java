@@ -71,10 +71,10 @@ public class DriveTrain implements Loopable {
     }
 
     public void setPathTrajectory(Path pathTrajectory){
-        controller = new DrivePathController(this, pathTrajectory, false);
+        setPathTrajectory(pathTrajectory, false);
     }
-    public void setBackwardsPathTrajectory(Path pathTrajectory){
-        controller = new DrivePathController(this, pathTrajectory, true);
+    public void setPathTrajectory(Path pathTrajectory, boolean backwards){
+        controller = new DrivePathController(this, pathTrajectory, backwards);
     }
 
     public void setHighGear(boolean highGear) {

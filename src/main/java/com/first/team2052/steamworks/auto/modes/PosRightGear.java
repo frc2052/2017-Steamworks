@@ -8,7 +8,9 @@ import com.first.team2052.trajectory.common.Path;
 import com.google.common.base.Optional;
 
 /**
- * Created by Kay on 2/11/2017.
+ * Starts: Boiler
+ * Desc: Places the gear on the right side of Airship
+ * Ends: Airship
  */
 public class PosRightGear extends AutoMode {
     @Override

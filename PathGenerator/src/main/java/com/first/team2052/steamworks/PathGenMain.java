@@ -84,15 +84,40 @@ public class PathGenMain {
             writePath(path, directory, path_name);
         }
         {
-            final String path_name = "PosEdgeShoot";
+            final String path_name = "PosBoilerShoot";
             config.max_acc = 80.0;
             config.max_jerk = 300.0;
             config.max_vel = 4 * 12;
 
             WaypointSequence p = new WaypointSequence(2);
             p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(30, 0, 0));
+            p.addWaypoint(new WaypointSequence.Waypoint(0, 36, (3 * Math.PI) / 4));
 
+            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
+            writePath(path, directory, path_name);
+        }
+        {
+            final String path_name = "PosBoilerHopper";
+            config.max_acc = 80.0;
+            config.max_jerk = 300.0;
+            config.max_vel = 4 * 12;
+
+            WaypointSequence p = new WaypointSequence(2);
+            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
+            p.addWaypoint(new WaypointSequence.Waypoint(90, 0, 0));
+            p.addWaypoint(new WaypointSequence.Waypoint(105, 44, Math.PI / 2));
+            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
+            writePath(path, directory, path_name);
+        }
+        {
+            final String path_name = "PosBoilerHopperToBoiler";
+            config.max_acc = 80.0;
+            config.max_jerk = 300.0;
+            config.max_vel = 4 * 12;
+
+            WaypointSequence p = new WaypointSequence(2);
+            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
+            p.addWaypoint(new WaypointSequence.Waypoint(28, 73, (2*Math.PI)-Math.PI / 4));
             Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
             writePath(path, directory, path_name);
         }

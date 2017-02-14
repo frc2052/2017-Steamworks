@@ -8,7 +8,9 @@ import com.first.team2052.trajectory.common.Path;
 import com.google.common.base.Optional;
 
 /**
- * Created by Kay on 2/11/2017.
+ * Starts: Center against alliance wall
+ * Desc: Brings a gear to the airship
+ * Ends: Airship
  */
 public class PosCenterGear extends AutoMode {
     @Override

@@ -11,16 +11,16 @@ import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * Starts: Boiler
- * Desc: Turns and shoots
- * Ends: Back at the Boiler
+ * Desc: Presses the Hopper, prepares to shoot
+ * Ends: Boiler
  */
-public class PosBoilerShoot extends AutoMode{
+public class PosBoilerHopperShoot extends AutoMode{
     @Override
     protected void init() throws AutoModeEndedException {
+        DriveTrain dt = DriveTrain.getInstance();
         AutoPaths myPathFactory = AutoPaths.getInstance();
-        Optional<Path> myPath = myPathFactory.getPath("PosBoilerShoot");
+        Optional<Path> myPath = myPathFactory.getPath("PosBoilerHopper"); //goes to hopper
         if (myPath.isPresent()) {
-            DriveTrain dt = DriveTrain.getInstance();
             if(AutoModeSelector.isOnBlue()) {
                 myPath.get().goLeft();
             }else{
@@ -28,5 +28,16 @@ public class PosBoilerShoot extends AutoMode{
             }
             dt.setPathTrajectory(myPath.get());
         }
+        dt.setDistanceTrajectory(-60); //back up
+        Optional<Path> myPath2 = myPathFactory.getPath("PosBoilerHopperToBoiler"); //go to boiler
+        if (myPath2.isPresent()) {
+            if(AutoModeSelector.isOnBlue()) {
+                myPath2.get().goLeft();
+            }else{
+                myPath2.get().goRight();
+            }
+            dt.setPathTrajectory(myPath2.get());
+        }
+        //shoot
     }
 }

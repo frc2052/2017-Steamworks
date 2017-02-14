@@ -1,8 +1,7 @@
 package com.first.team2052.steamworks.auto;
 
-import com.first.team2052.steamworks.auto.modes.DontMove;
-import com.first.team2052.steamworks.auto.modes.PosCenterGear;
-import com.first.team2052.steamworks.auto.modes.PosLeftGear;
+import com.first.team2052.steamworks.auto.modes.*;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 public class AutoModeSelector {
@@ -12,7 +11,10 @@ public class AutoModeSelector {
         DONT_MOVE("Don't Move", DontMove.class),
         POS_LEFT_GEAR("Pos Left Gear", PosLeftGear.class),
         POS_RIGHT_GEAR("Pos Right Gear", PosLeftGear.class),
-        POS_CENTER_GEAR("Pos Center Gear", PosCenterGear.class);
+        POS_CENTER_GEAR("Pos Center Gear", PosCenterGear.class),
+        POS_BOILER_SHOOT("Pos Boiler Shoot", PosBoilerShoot.class),
+        POS_BOILER_HOPPER("Pos Boiler Hopper", PosBoilerHopper.class),
+        POS_BOILER_HOPPER_SHOOT("Pos Boiler Hopper Shoot", PosBoilerHopperShoot.class);
 
         private final Class<? extends AutoMode> clazz;
         private final String name;
@@ -42,6 +44,15 @@ public class AutoModeSelector {
             } else {
                 sendableChooserAutoMode.addObject(mode.name, mode);
             }
+        }
+    }
+    public static boolean isOnBlue() {
+        DriverStation.Alliance color;
+        color = DriverStation.getInstance().getAlliance();
+        if(color == DriverStation.Alliance.Blue){
+            return true;
+        }else{
+            return false;
         }
     }
 

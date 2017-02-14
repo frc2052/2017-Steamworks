@@ -1,27 +1,37 @@
 package com.first.team2052.steamworks.auto.modes;
 
-import com.first.team2052.steamworks.Robot;
 import com.first.team2052.steamworks.auto.AutoMode;
 import com.first.team2052.steamworks.auto.AutoModeEndedException;
+import com.first.team2052.steamworks.auto.AutoModeSelector;
 import com.first.team2052.steamworks.auto.AutoPaths;
 import com.first.team2052.steamworks.subsystems.DriveTrain;
 import com.first.team2052.trajectory.common.Path;
 import com.google.common.base.Optional;
+import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * Starts: Boiler
- * Desc: Places the gear on the left side of Airship
- * Ends: Airship
+ * Desc: Presses against the hopper
+ * Ends: Hopper
  */
-public class PosLeftGear extends AutoMode {
+
+public class PosBoilerHopper extends AutoMode{
+
     @Override
     protected void init() throws AutoModeEndedException {
         AutoPaths myPathFactory = AutoPaths.getInstance();
-        Optional<Path> myPath = myPathFactory.getPath("PosEdgeGear");
+        Optional<Path> myPath = myPathFactory.getPath("PosBoilerHopper");
         if (myPath.isPresent()) {
             DriveTrain dt = DriveTrain.getInstance();
-            myPath.get().goRight();
+            if(AutoModeSelector.isOnBlue()) {
+                myPath.get().goLeft();
+            }else{
+                myPath.get().goRight();
+            }
             dt.setPathTrajectory(myPath.get());
         }
     }
+
+
+
 }
