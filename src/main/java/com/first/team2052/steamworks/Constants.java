@@ -12,7 +12,7 @@ public class Constants {
         public static final int kDriveRight2Id = 5;
         public static final int kDriveRight3Id = 6;
 
-        public static final int kClimbId = 10;
+        public static final int kClimbId = 12;
     }
 
     public static class Drive {
@@ -58,6 +58,5 @@ public class Constants {
 
     public static class Climber {
         public static final double kClimberMotorSpeedUp = 0.5;
-        public static final double kClimberMotorSpeedDown = -0.5;
     }
 }

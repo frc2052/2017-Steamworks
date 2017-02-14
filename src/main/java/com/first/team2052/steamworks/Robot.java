@@ -1,6 +1,7 @@
 package com.first.team2052.steamworks;
 
 import com.first.team2052.lib.ControlLoop;
+import com.first.team2052.steamworks.subsystems.Climber;
 import com.first.team2052.steamworks.subsystems.GearMan;
 import com.first.team2052.steamworks.subsystems.Pickup;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
@@ -14,16 +15,19 @@ public class Robot extends IterativeRobot {
     private Controls controls;
     private GearMan gearMan;
     private Pickup pickup;
+    private Climber climber;
 
     @Override
     public void robotInit() {
         controlLoop = new ControlLoop(Constants.kControlLoopPeriod);
 
-        controlLoop.addLoopable(driveTrain.getLoopable());
         driveTrain = DriveTrain.getInstance();
         controls = Controls.getInstance();
         gearMan = GearMan.getInstance();
         pickup = Pickup.getInstance();
+        climber = Climber.getInstance();
+
+        controlLoop.addLoopable(driveTrain.getLoopable());
     }
 
     @Override
@@ -64,6 +68,7 @@ public class Robot extends IterativeRobot {
 
 
         pickup.setIntakeState(controls.getIntakeState());
+        climber.setClimberState(controls.getClimberState());
         SmartDashboard.putNumber("gyro", driveTrain.getGyroAngleDegrees());
         SmartDashboard.putNumber("distance", driveTrain.getLeftDistanceInches());
         SmartDashboard.putNumber("velocity", driveTrain.getLeftVelocityInchesPerSec());

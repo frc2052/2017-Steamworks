@@ -10,6 +10,7 @@ public class Climber {
     private static Climber instance = new Climber();
 
     private Climber() {
+        grapple.configPeakOutputVoltage(+12.0f, 0.0f);
     }
 
     public void setClimberState(ClimberState state) {
@@ -18,7 +19,6 @@ public class Climber {
 
     public enum ClimberState {
         UP(Constants.Climber.kClimberMotorSpeedUp),
-        DOWN(Constants.Climber.kClimberMotorSpeedDown),
         STOP(0.0);
         double speed;
 
