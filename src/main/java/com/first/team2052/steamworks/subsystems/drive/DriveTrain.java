@@ -9,7 +9,7 @@ import com.first.team2052.steamworks.subsystems.controllers.DriveStraightControl
 import com.first.team2052.trajectory.common.Path;
 
 public class DriveTrain extends DriveTrainHardware {
-    private DriveController controller;
+    private volatile DriveController controller;
     private static DriveTrain instance = new DriveTrain();
 
     private final Loopable loopable = new Loopable() {
@@ -78,7 +78,7 @@ public class DriveTrain extends DriveTrainHardware {
     /**
      * Sets the motor speeds in percent mode and disables all controllers
      */
-    public synchronized void setOpenLoop(double left_power, double right_power) {
+    public void setOpenLoop(double left_power, double right_power) {
         controller = null;
         setLeftRightPower(left_power, right_power);
     }
@@ -87,7 +87,7 @@ public class DriveTrain extends DriveTrainHardware {
      * Set's the speeds of the motor without resetting a controller
      * This method is used by controllers directly
      */
-    protected synchronized void setLeftRightPower(double left_power, double right_power) {
+    protected void setLeftRightPower(double left_power, double right_power) {
         leftMaster.set(-left_power);
         rightMaster.set(right_power);
     }

@@ -3,9 +3,8 @@ package com.first.team2052.steamworks.auto.modes;
 import com.first.team2052.steamworks.auto.AutoMode;
 import com.first.team2052.steamworks.auto.AutoModeEndedException;
 import com.first.team2052.steamworks.auto.AutoPaths;
-import com.first.team2052.steamworks.subsystems.DriveTrain;
-import com.first.team2052.trajectory.common.Path;
-import com.google.common.base.Optional;
+import com.first.team2052.steamworks.subsystems.GearMan;
+import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 
 /**
  * Starts: Center against alliance wall
@@ -15,11 +14,10 @@ import com.google.common.base.Optional;
 public class PosCenterGear extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
-        AutoPaths myPathFactory = AutoPaths.getInstance();
-        Optional<Path> myPath = myPathFactory.getPath("PosCenterGear");
-        if (myPath.isPresent()) {
-            DriveTrain dt = DriveTrain.getInstance();
-            dt.setPathTrajectory(myPath.get());
-        }
+        drivePath(AutoPaths.getInstance().getPath("PosCenterGear"), true, true);
+        waitUntilPathFinishes();
+        GearMan.getInstance().setGearManState(GearMan.GearManState.OPEN);
+        driveStraightDistance(24, 24);
+        GearMan.getInstance().setGearManState(GearMan.GearManState.CLOSED);
     }
 }

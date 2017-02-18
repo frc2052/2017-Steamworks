@@ -21,40 +21,46 @@ public class Controls {
     }
 
     public double getTank() {
-        return Util.checkForDeadzone(-joystick0.getY(), 0.075);
+        return Util.checkForDeadzone(-joystick0.getY(), 0.10);
     }
 
     public double getTurn() {
-        return Util.checkForDeadzone(joystick1.getX(), 0.075);
+        double turn = Util.checkForDeadzone(joystick1.getX(), 0.10);
+        turn = Math.sin(Math.PI / 2.0 * Constants.kDriveSpeedCurveTurn * turn)
+                / Math.sin(Math.PI / 2.0 * Constants.kDriveSpeedCurveTurn);
+        turn = Math.sin(Math.PI / 2.0 * Constants.kDriveSpeedCurveTurn * turn)
+                / Math.sin(Math.PI / 2.0 * Constants.kDriveSpeedCurveTurn);
+        return turn;
     }
 
     public boolean getHighGear() {
         return joystick0.getRawButton(2);
     }
 
-    public GearMan.GearManState getGearManState(){
+    public GearMan.GearManState getGearManState() {
         gearManLatch.update(secondaryStick.getRawButton(4));
         return gearManLatch.get() ? GearMan.GearManState.OPEN : GearMan.GearManState.CLOSED;
     }
 
     public Pickup.IntakeState getIntakeState() {
-        if(secondaryStick.getRawButton(2)){
+        if (secondaryStick.getRawButton(2)) {
             return Pickup.IntakeState.IN;
-        } else if(secondaryStick.getRawButton(3)){
+        } else if (secondaryStick.getRawButton(3)) {
             return Pickup.IntakeState.OUT;
         } else {
             return Pickup.IntakeState.STOP;
         }
     }
 
-    public Climber.ClimberState getClimberState(){
-        return joystick0.getRawButton(4) ? Climber.ClimberState.UP : Climber.ClimberState.STOP;
+    public Climber.ClimberState getClimberState() {
+        return secondaryStick.getRawButton(5) ? Climber.ClimberState.UP : Climber.ClimberState.STOP;
     }
 
     public static Controls getInstance() {
         return instance;
     }
-    public boolean getWantShoot(){
-        return joystick0.getRawButton(3);
+
+    public boolean getWantShoot() {
+        return joystick0.getTrigger();
     }
 }

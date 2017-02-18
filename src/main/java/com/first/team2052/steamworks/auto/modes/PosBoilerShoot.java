@@ -4,7 +4,7 @@ import com.first.team2052.steamworks.auto.AutoMode;
 import com.first.team2052.steamworks.auto.AutoModeEndedException;
 import com.first.team2052.steamworks.auto.AutoModeSelector;
 import com.first.team2052.steamworks.auto.AutoPaths;
-import com.first.team2052.steamworks.subsystems.DriveTrain;
+import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 import com.first.team2052.trajectory.common.Path;
 import com.google.common.base.Optional;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -26,7 +26,7 @@ public class PosBoilerShoot extends AutoMode{
             }else{
                 myPath.get().goRight();
             }
-            dt.setPathTrajectory(myPath.get());
+            dt.drivePathTrajectory(myPath.get());
         }
     }
 }

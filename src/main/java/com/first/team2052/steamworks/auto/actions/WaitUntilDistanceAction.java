@@ -8,9 +8,9 @@ public class WaitUntilDistanceAction extends AutoModeBase.Action {
     private double curPos, goalPos;
 
     public WaitUntilDistanceAction(double distance) {
-        goalPos = distance;
         curPos =  (DriveTrain.getInstance().getLeftDistanceInches()
                 + DriveTrain.getInstance().getRightDistanceInches()) / 2;
+        goalPos = distance + curPos;
     }
 
     @Override

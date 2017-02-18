@@ -27,11 +27,12 @@ public class DriveStraightController extends DriveController {
                 Constants.Drive.kDriveStraightKv,
                 Constants.Drive.kDriveStraightKa, config);
 
+        double currentPos = (driveTrain.getLeftDistanceInches() + driveTrain.getRightDistanceInches()) / 2.0;
         TrajectoryFollower.TrajectorySetpoint currentState = new TrajectoryFollower.TrajectorySetpoint();
-        currentState.pos = (driveTrain.getLeftDistanceInches() + driveTrain.getRightDistanceInches()) / 2.0;
+        currentState.pos = currentPos;
         currentState.vel = (driveTrain.getLeftVelocityInchesPerSec() + driveTrain.getRightVelocityInchesPerSec()) / 2.0;
 
-        trajectoryFollower.setGoal(currentState, distance);
+        trajectoryFollower.setGoal(currentState, distance + currentPos);
     }
 
     public TrajectoryFollower.TrajectorySetpoint getTrajectorySetpoint() {

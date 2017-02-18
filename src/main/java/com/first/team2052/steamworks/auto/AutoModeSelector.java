@@ -3,6 +3,7 @@ package com.first.team2052.steamworks.auto;
 import com.first.team2052.steamworks.auto.modes.*;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoModeSelector {
     private static SendableChooser<AutoModeDefinition> sendableChooserAutoMode;
@@ -45,6 +46,7 @@ public class AutoModeSelector {
                 sendableChooserAutoMode.addObject(mode.name, mode);
             }
         }
+        SmartDashboard.putData("auto_modes", sendableChooserAutoMode);
     }
     public static boolean isOnBlue() {
         DriverStation.Alliance color;

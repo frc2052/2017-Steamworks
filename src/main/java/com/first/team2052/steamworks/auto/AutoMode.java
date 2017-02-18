@@ -2,6 +2,7 @@ package com.first.team2052.steamworks.auto;
 
 import com.first.team2052.steamworks.Constants;
 import com.first.team2052.steamworks.auto.actions.WaitUntilDistanceAction;
+import com.first.team2052.steamworks.auto.actions.WaitUntilPathFinished;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 import com.first.team2052.trajectory.common.Path;
 import com.google.common.base.Optional;
@@ -47,5 +48,9 @@ public abstract class AutoMode extends AutoModeBase {
 
     public void waitUntilDistance(double distance) throws AutoModeEndedException {
         runAction(new WaitUntilDistanceAction(distance));
+    }
+
+    public void waitUntilPathFinishes() throws AutoModeEndedException {
+        runAction(new WaitUntilPathFinished());
     }
 }

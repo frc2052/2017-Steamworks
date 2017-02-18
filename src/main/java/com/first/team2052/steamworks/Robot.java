@@ -2,6 +2,8 @@ package com.first.team2052.steamworks;
 
 import com.first.team2052.lib.ControlLoop;
 import com.first.team2052.lib.RevRoboticsPressureSensor;
+import com.first.team2052.steamworks.auto.AutoModeRunner;
+import com.first.team2052.steamworks.auto.AutoModeSelector;
 import com.first.team2052.steamworks.subsystems.Climber;
 import com.first.team2052.steamworks.subsystems.GearMan;
 import com.first.team2052.steamworks.subsystems.Pickup;
@@ -22,6 +24,7 @@ public class Robot extends IterativeRobot {
     private Shooter shooter;
     private Climber climber;
     private RevRoboticsPressureSensor revRoboticsPressureSensor;
+    private AutoModeRunner autoModeRunner;
 
     @Override
     public void robotInit() {
@@ -35,10 +38,11 @@ public class Robot extends IterativeRobot {
         climber = Climber.getInstance();
         revRoboticsPressureSensor = new RevRoboticsPressureSensor(0);
 
-        if(Constants.Testing.kDisableDriveCode) {
-            controlLoop.addLoopable(driveTrain.getLoopable());
-        }
+        controlLoop.addLoopable(driveTrain.getLoopable());
+
+        AutoModeSelector.putToSmartDashboard();
         controlLoop.addLoopable(shooter);
+        autoModeRunner = new AutoModeRunner();
     }
 
     @Override
@@ -51,12 +55,15 @@ public class Robot extends IterativeRobot {
         zeroAllSensors();
 
         controlLoop.start();
-        driveTrain.setDistanceTrajectory(5 * 12);
+        autoModeRunner.setAutoMode(AutoModeSelector.getAutoInstance());
+        autoModeRunner.start();
     }
 
     @Override
     public void teleopInit() {
         zeroAllSensors();
+
+        autoModeRunner.stop();
 
         shooter.setWantShoot(false);
 
@@ -78,7 +85,7 @@ public class Robot extends IterativeRobot {
         double turn = controls.getTurn();
         double tank = controls.getTank();
 
-        if(!Constants.Testing.kDisableDriveCode) {
+        if (!Constants.Testing.kDisableDriveCode) {
             driveTrain.setOpenLoop(tank + turn, tank - turn);
         } else {
             driveTrain.setOpenLoop(0.0, 0.0);
@@ -98,6 +105,7 @@ public class Robot extends IterativeRobot {
     @Override
     public void disabledInit() {
         controlLoop.stop();
+        autoModeRunner.stop();
         zeroAllSensors();
     }
 

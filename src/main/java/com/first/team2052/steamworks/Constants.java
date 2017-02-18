@@ -2,6 +2,7 @@ package com.first.team2052.steamworks;
 
 public class Constants {
     public static final double kControlLoopPeriod = 1.0 / 100.0;
+    public static double kDriveSpeedCurveTurn = 0.75;
 
     public static class CAN {
         public static final int kDriveLeft1Id = 1;
@@ -40,7 +41,7 @@ public class Constants {
         // All constants are for LOW GEAR
         public static double kDriveMaxVelocity = 75.0; //inches per sec
         public static double kDriveMaxAcceleration = 107.0;
-        public static double kDriveStraightKp = 0.0;
+        public static double kDriveStraightKp = 0.03;
         public static double kDriveStraightKi = 0.0;
         public static double kDriveStraightKd = 0.0;
         public static double kDriveStraightKv = 1.0 / kDriveMaxVelocity;
@@ -91,6 +92,6 @@ public class Constants {
     }
 
     public static class Testing {
-        public static boolean kDisableDriveCode = true;
+        public static boolean kDisableDriveCode = false;
     }
 }

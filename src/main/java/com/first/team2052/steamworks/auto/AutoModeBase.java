@@ -1,6 +1,6 @@
 package com.first.team2052.steamworks.auto;
 
-import edu.wpi.first.wpilibj.DriverStation;
+import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 import edu.wpi.first.wpilibj.Timer;
 
 public abstract class AutoModeBase {

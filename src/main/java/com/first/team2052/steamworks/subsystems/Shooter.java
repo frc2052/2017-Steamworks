@@ -94,7 +94,7 @@ public class Shooter implements Loopable {
             shooterState = newState;
             System.out.println(String.format("Shoot state changed to %s", newState.name()));
         }
-        System.out.println("rpm: " + shootMotor.getSpeed());
+        //System.out.println("rpm: " + shootMotor.getSpeed());
     }
 
     public boolean isOnTargetSpeed() {

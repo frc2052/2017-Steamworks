@@ -4,10 +4,9 @@ import com.first.team2052.steamworks.auto.AutoMode;
 import com.first.team2052.steamworks.auto.AutoModeEndedException;
 import com.first.team2052.steamworks.auto.AutoModeSelector;
 import com.first.team2052.steamworks.auto.AutoPaths;
-import com.first.team2052.steamworks.subsystems.DriveTrain;
+import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 import com.first.team2052.trajectory.common.Path;
 import com.google.common.base.Optional;
-import edu.wpi.first.wpilibj.DriverStation;
 
 /**
  * Starts: Boiler
@@ -26,7 +25,7 @@ public class PosBoilerHopperShoot extends AutoMode{
             }else{
                 myPath.get().goRight();
             }
-            dt.setPathTrajectory(myPath.get());
+            dt.drivePathTrajectory(myPath.get());
         }
         dt.setDistanceTrajectory(-60); //back up
         Optional<Path> myPath2 = myPathFactory.getPath("PosBoilerHopperToBoiler"); //go to boiler
@@ -36,7 +35,7 @@ public class PosBoilerHopperShoot extends AutoMode{
             }else{
                 myPath2.get().goRight();
             }
-            dt.setPathTrajectory(myPath2.get());
+            dt.drivePathTrajectory(myPath2.get());
         }
         //shoot
     }
