@@ -21,11 +21,11 @@ public class Controls {
     }
 
     public double getTank() {
-        return -joystick0.getY();
+        return Util.checkForDeadzone(-joystick0.getY(), 0.075);
     }
 
     public double getTurn() {
-        return joystick1.getX();
+        return Util.checkForDeadzone(joystick1.getX(), 0.075);
     }
 
     public boolean getHighGear() {

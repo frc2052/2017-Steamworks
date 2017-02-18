@@ -10,7 +10,7 @@ public class Shooter implements Loopable {
     private ShooterState shooterState = ShooterState.STOP;
     private boolean wantShoot = false;
     private static Shooter instance = new Shooter();
-    private int shooterVeloitySetpoint = Constants.Shooter.kShooterKeyVelocity;
+    private int shooterVelocitySetpoint = Constants.Shooter.kShooterKeyVelocity;
 
     private Shooter() {
         leftAgitator = new CANTalon(Constants.CAN.kLeftAgitatorMotorPort);
@@ -19,7 +19,7 @@ public class Shooter implements Loopable {
         shootMotorSlave = new CANTalon(Constants.CAN.kShooterMotorSlavePort);
 
 
-        //Never go backwards. No matter what
+        //Ensure never go backwards. No matter what. If you send a negative power/voltage it'll be 0 speed (coast)
         shootMotor.configPeakOutputVoltage(12.0f, -0.0f);
 
         //Configure for follower mode
@@ -55,8 +55,8 @@ public class Shooter implements Loopable {
     }
 
     private void setAgitatorSpeed(double speed) {
-        leftAgitator.set(speed);
-        rightAgitator.set(-speed);
+        leftAgitator.set(-speed);
+        rightAgitator.set(speed);
     }
 
     @Override
@@ -64,10 +64,10 @@ public class Shooter implements Loopable {
         ShooterState newState = shooterState;
         switch (shooterState) {
             case RAMP_UP:
-                shootMotor.set(shooterVeloitySetpoint);
+                shootMotor.set(shooterVelocitySetpoint);
                 if (!wantShoot) {
                     newState = ShooterState.STOP;
-                } else if (isOnTarget()) {
+                } else if (isOnTargetSpeed()) {
                     newState = ShooterState.SHOOTING;
                 }
                 setAgitatorSpeed(0.0);
@@ -75,11 +75,11 @@ public class Shooter implements Loopable {
             case SHOOTING:
                 if (!wantShoot) {
                     newState = ShooterState.STOP;
-                } else if (!isOnTarget()) {
+                } else if (!isOnTargetSpeed()) {
                     newState = ShooterState.RAMP_UP;
                 }
                 setAgitatorSpeed(Constants.Shooter.kTatorSpeed);
-                shootMotor.set(shooterVeloitySetpoint);
+                shootMotor.set(shooterVelocitySetpoint);
                 break;
             case STOP:
                 if (wantShoot) {
@@ -94,23 +94,30 @@ public class Shooter implements Loopable {
             shooterState = newState;
             System.out.println(String.format("Shoot state changed to %s", newState.name()));
         }
+        System.out.println("rpm: " + shootMotor.getSpeed());
     }
 
-    public boolean isOnTarget() {
-        return Math.abs(shootMotor.getSpeed() - shooterVeloitySetpoint) < 300;
+    public boolean isOnTargetSpeed() {
+        // the speed we want +- the window
+        return Math.abs(shootMotor.getSpeed() - shooterVelocitySetpoint) <= Constants.Shooter.kShooterVelocityWindow;
     }
 
     public void setShooterSpeed(int rpm) {
-        shooterVeloitySetpoint = rpm;
-        shootMotor.set(rpm);
+        shooterVelocitySetpoint = rpm;
     }
 
     @Override
     public void onStart() {
+        shootMotor.set(0);
+        setWantShoot(false);
+        shooterState = ShooterState.STOP;
     }
 
     @Override
     public void onStop() {
+        shootMotor.set(0);
+        setWantShoot(false);
+        shooterState = ShooterState.STOP;
     }
 
     public void setWantShoot(boolean wantShoot) {

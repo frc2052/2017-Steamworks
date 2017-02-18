@@ -12,10 +12,12 @@ public class Constants {
         public static final int kDriveRight2Id = 5;
         public static final int kDriveRight3Id = 6;
 
-        public static final int kShooterMotorPort = 7;
-        public static final int kShooterMotorSlavePort = 8;
-        public static final int kRightAgitatorMotorPort = 9;
-        public static final int kLeftAgitatorMotorPort = 10;
+
+        public static final int kRightAgitatorMotorPort = 7;
+        public static final int kLeftAgitatorMotorPort = 8;
+
+        public static final int kShooterMotorPort = 9;
+        public static final int kShooterMotorSlavePort = 10;
 
         public static int kIntakeMotorPort = 11;
 
@@ -60,7 +62,7 @@ public class Constants {
 
     public static class Pickup {
         //Intake speed in %
-        public static final double kIntakeMotorSpeedIn = 1.0;
+        public static final double kIntakeMotorSpeedIn = 0.8;
         public static final double kIntakeMotorSpeedOut = -0.5;
     }
 
@@ -77,13 +79,18 @@ public class Constants {
         public static final int kShooterVelocityCloseLoopRampRate = 0;
 
         //Agitator speed in %
-        public static double kTatorSpeed = 0.5;
+        public static double kTatorSpeed = 0.50;
 
-        //RPM (MAX 4200rpm)
-        public static final int kShooterKeyVelocity = 3000;
+        //RPM (MAX 4200rpm) Never set above 4200 because we might not get to that exact RPM
+        public static final int kShooterKeyVelocity = 3100;
+        public static final int kShooterVelocityWindow = 300;
     }
 
     public static class Climber {
         public static final double kClimberMotorSpeedUp = 0.5;
+    }
+
+    public static class Testing {
+        public static boolean kDisableDriveCode = true;
     }
 }

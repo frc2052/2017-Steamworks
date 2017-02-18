@@ -9,7 +9,7 @@ import com.first.team2052.steamworks.Constants;
  */
 public class Pickup {
     private static Pickup instance = new Pickup();
-    CANTalon intakeMotor = new CANTalon(Constants.Pickup.kIntakeMotorPort);
+    CANTalon intakeMotor = new CANTalon(Constants.CAN.kIntakeMotorPort);
 
     private Pickup() {
     }
