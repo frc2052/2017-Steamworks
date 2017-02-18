@@ -747,7 +747,7 @@ public class ADIS16448_IMU extends GyroBase implements Gyro, PIDSource, LiveWind
         // much of which sensor is 'trusted' to contribute to the rotation estimate.
         //
         // The Complementary Filter algorithm is applied to each X/Y/Z rotation
-        // axis to compute R/P/Y outputs, respectively.
+        // axis to compute R/kShooterVelocityKp/Y outputs, respectively.
         //
         // Magnetometer readings are tilt-compensated when Tilt-Comp-(Yaw) is
         // asserted (True), by the IMU TILT subVI.  This creates what is known as a

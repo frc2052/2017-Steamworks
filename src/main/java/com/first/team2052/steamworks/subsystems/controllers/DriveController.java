@@ -1,4 +1,6 @@
-package com.first.team2052.steamworks.subsystems;
+package com.first.team2052.steamworks.subsystems.controllers;
+
+import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 
 public abstract class DriveController {
     protected DriveTrain driveTrain;
