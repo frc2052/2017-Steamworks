@@ -80,10 +80,10 @@ public class Constants {
         public static final int kShooterVelocityCloseLoopRampRate = 0;
 
         //Agitator speed in %
-        public static double kTatorSpeed = 0.50;
+        public static double kTatorSpeed = 0.25;
 
         //RPM (MAX 4200rpm) Never set above 4200 because we might not get to that exact RPM
-        public static final int kShooterKeyVelocity = 3100;
+        public static final int kShooterKeyVelocity = 3200;
         public static final int kShooterVelocityWindow = 300;
     }
 

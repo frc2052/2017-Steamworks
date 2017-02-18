@@ -94,12 +94,14 @@ public class Robot extends IterativeRobot {
         gearMan.setGearManState(controls.getGearManState());
         pickup.setIntakeState(controls.getIntakeState());
         shooter.setWantShoot(controls.getWantShoot());
+        shooter.setWantReverseAgitator(controls.getWantReverseAgitator());
         climber.setClimberState(controls.getClimberState());
 
         SmartDashboard.putNumber("gyro", driveTrain.getGyroAngleDegrees());
         SmartDashboard.putNumber("distance", driveTrain.getLeftDistanceInches());
         SmartDashboard.putNumber("velocity", driveTrain.getLeftVelocityInchesPerSec());
         SmartDashboard.putNumber("psi", revRoboticsPressureSensor.getAirPressurePsi());
+        SmartDashboard.putBoolean("gearman", gearMan.getGearManState());
     }
 
     @Override

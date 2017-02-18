@@ -8,7 +8,7 @@ public class Shooter implements Loopable {
     public static final int kVelocityProfile = 0;
     private CANTalon leftAgitator, rightAgitator, shootMotor, shootMotorSlave;
     private ShooterState shooterState = ShooterState.STOP;
-    private boolean wantShoot = false;
+    private boolean wantShoot = false, wantReverseAgitator = false;
     private static Shooter instance = new Shooter();
     private int shooterVelocitySetpoint = Constants.Shooter.kShooterKeyVelocity;
 
@@ -59,6 +59,7 @@ public class Shooter implements Loopable {
         rightAgitator.set(speed);
     }
 
+
     @Override
     public void update() {
         ShooterState newState = shooterState;
@@ -84,9 +85,17 @@ public class Shooter implements Loopable {
             case STOP:
                 if (wantShoot) {
                     newState = ShooterState.RAMP_UP;
+                } else if (wantReverseAgitator) {
+                    newState = ShooterState.REVERSE_AGITATOR;
                 }
                 setAgitatorSpeed(0.0);
                 shootMotor.set(0.0);
+                break;
+            case REVERSE_AGITATOR:
+                setAgitatorSpeed(-Constants.Shooter.kTatorSpeed);
+                if(!wantReverseAgitator){
+                    newState = ShooterState.STOP;
+                }
                 break;
         }
 
@@ -104,6 +113,10 @@ public class Shooter implements Loopable {
 
     public void setShooterSpeed(int rpm) {
         shooterVelocitySetpoint = rpm;
+    }
+
+    public void setWantReverseAgitator(boolean wantReverseAgitator) {
+        this.wantReverseAgitator = wantReverseAgitator;
     }
 
     @Override
@@ -127,7 +140,8 @@ public class Shooter implements Loopable {
     public enum ShooterState {
         RAMP_UP,
         SHOOTING,
-        STOP
+        STOP,
+        REVERSE_AGITATOR;
     }
 
     public static Shooter getInstance() {

@@ -21,7 +21,11 @@ public class Controls {
     }
 
     public double getTank() {
-        return Util.checkForDeadzone(-joystick0.getY(), 0.10);
+        double tank = Util.checkForDeadzone(-joystick0.getY(), 0.10);
+        if (joystick1.getTrigger()) {
+            tank *= -1;
+        }
+        return tank;
     }
 
     public double getTurn() {
@@ -62,5 +66,9 @@ public class Controls {
 
     public boolean getWantShoot() {
         return joystick0.getTrigger();
+    }
+
+    public boolean getWantReverseAgitator() {
+        return joystick1.getRawButton(3);
     }
 }

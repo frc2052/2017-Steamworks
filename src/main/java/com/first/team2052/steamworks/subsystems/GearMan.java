@@ -21,6 +21,10 @@ public class GearMan {
         return instance;
     }
 
+    public boolean getGearManState() {
+        return outSolenoid.get();
+    }
+
     public enum GearManState {
         OPEN(false),
         CLOSED(true);

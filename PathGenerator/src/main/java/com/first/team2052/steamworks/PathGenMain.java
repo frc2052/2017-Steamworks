@@ -78,7 +78,7 @@ public class PathGenMain {
 
             WaypointSequence p = new WaypointSequence(2);
             p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(73, 0, 0));
+            p.addWaypoint(new WaypointSequence.Waypoint(71, 0, 0));
 
             Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
             writePath(path, directory, path_name);
