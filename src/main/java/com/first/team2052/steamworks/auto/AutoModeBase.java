@@ -2,7 +2,7 @@ package com.first.team2052.steamworks.auto;
 
 import edu.wpi.first.wpilibj.Timer;
 
-abstract class AutoModeBase {
+public abstract class AutoModeBase {
     public static abstract class Action {
         public abstract void done();
 

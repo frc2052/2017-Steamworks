@@ -71,6 +71,10 @@ public class DriveTrain extends DriveTrainHardware {
         controller = new DrivePathController(this, path);
     }
 
+    public void drivePathTrajectory(Path path, boolean backwards){
+        controller = new DrivePathController(this, path, backwards);
+    }
+
     /**
      * Sets the motor speeds in percent mode and disables all controllers
      */
@@ -142,5 +146,9 @@ public class DriveTrain extends DriveTrainHardware {
 
     public Loopable getLoopable() {
         return loopable;
+    }
+
+    public DriveController getController() {
+        return controller;
     }
 }
