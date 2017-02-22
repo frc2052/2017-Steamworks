@@ -16,6 +16,7 @@ public class Controls {
     private Joystick joystick1 = new Joystick(1);
     private Joystick secondaryStick = new Joystick(2);
     FlipFlopLatch gearManLatch = new FlipFlopLatch();
+    private boolean climberAmpLimitReached = false;
 
     private Controls() {
     }
@@ -56,13 +57,26 @@ public class Controls {
         }
     }
 
-    public Climber.ClimberState getClimberState() {
-        if(secondaryStick.getRawButton(5)){
-            return Climber.ClimberState.UP;
-        } else if(secondaryStick.getRawButton(6)) {
+    public Climber.ClimberState getClimberState(double current) {
+
+        if(!climberAmpLimitReached) { //if the voltage is ok, run normaly
+            if (current < Constants.Climber.kClimberAmpMax) {
+                if (secondaryStick.getRawButton(5)) {
+                    return Climber.ClimberState.UP;
+                } else if (secondaryStick.getRawButton(6)) {
+                    return Climber.ClimberState.SLOW_UP;
+                }
+            } else {
+                climberAmpLimitReached = true;
+            }
+        }
+
+        if(secondaryStick.getRawButton(11)) //the override works regardless if limit has been reached or not
+        {
             return Climber.ClimberState.SLOW_UP;
         }
         return Climber.ClimberState.STOP;
+
     }
 
     public static Controls getInstance() {

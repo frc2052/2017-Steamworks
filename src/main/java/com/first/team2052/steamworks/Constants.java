@@ -97,6 +97,7 @@ public class Constants {
     public static class Climber {
         public static final double kClimberMotorSpeedUp = 1.0;
         public static final double kClimberMotorSlowSpeed = 0.7;
+        public static final double kClimberAmpMax = 35;
     }
 
     public static class Testing {
