@@ -11,7 +11,7 @@ public class AutoModeSelector {
     public enum AutoModeDefinition {
         DONT_MOVE("Don't Move", DontMove.class),
         POS_LEFT_GEAR("Pos Left Gear", PosLeftGear.class),
-        POS_RIGHT_GEAR("Pos Right Gear", PosLeftGear.class),
+        POS_RIGHT_GEAR("Pos Right Gear", PosRightGear.class),
         POS_CENTER_GEAR("Pos Center Gear", PosCenterGear.class),
         POS_BOILER_SHOOT("Pos Boiler Shoot", PosBoilerShoot.class),
         POS_BOILER_HOPPER("Pos Boiler Hopper", PosBoilerHopper.class),

@@ -19,6 +19,7 @@ public class Climber {
 
     public enum ClimberState {
         UP(Constants.Climber.kClimberMotorSpeedUp),
+        SLOW_UP(Constants.Climber.kClimberMotorSlowSpeed),
         STOP(0.0);
         double speed;
 

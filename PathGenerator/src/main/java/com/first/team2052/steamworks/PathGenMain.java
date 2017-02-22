@@ -55,17 +55,31 @@ public class PathGenMain {
 
         TrajectoryGenerator.Config config = new TrajectoryGenerator.Config();
         config.dt = 1.0 / 100.0;
-        final double kWheelbaseWidth = 26.841;
+        final double kWheelbaseWidth = 27.25;
+        {
+            final String path_name = "TestPath";
+            config.max_acc = 80.0;
+            config.max_jerk = 300.0;
+            config.max_vel = 2 * 12;
+
+            WaypointSequence p = new WaypointSequence(2);
+            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
+            p.addWaypoint(new WaypointSequence.Waypoint(5 * 12, 5 * 12, 0));
+
+            Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
+            writePath(path, directory, path_name);
+        }
         {
             final String path_name = "PosEdgeGear";
             config.max_acc = 80.0;
             config.max_jerk = 300.0;
-            config.max_vel = 4 * 12;
+            config.max_vel = 2 * 12;
 
-            WaypointSequence p = new WaypointSequence(3);
+            WaypointSequence p = new WaypointSequence(4);
             p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(75, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(111, 84, Math.PI/3));
+            p.addWaypoint(new WaypointSequence.Waypoint(20, 0, 0));
+            p.addWaypoint(new WaypointSequence.Waypoint(40, 20, Math.PI / 3));
+            p.addWaypoint(new WaypointSequence.Waypoint(60, 40, Math.PI / 3));
 
             Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
             writePath(path, directory, path_name);

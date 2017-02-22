@@ -11,7 +11,7 @@ import com.google.common.io.Resources;
 import java.util.HashMap;
 
 public class AutoPaths {
-    String[] pathsNames = new String[]{"TestPath", "PosLeftGear", "PosCenterGear", "PosRightGear", "PosBoilerShoot", "PosBoilerHopper", "PosBoilerHopperToBoiler"};
+    String[] pathsNames = new String[]{"TestPath", "PosCenterGear", "PosEdgeGear"};
     HashMap<String, Path> paths = Maps.newHashMap();
     private static AutoPaths instance = new AutoPaths();
 

@@ -160,8 +160,8 @@ public class TrajectoryFollower {
         output += ki_ * error_sum_;
 
         last_error_ = error;
-        //System.out.println("Error: " + error);
-        //System.out.println("Pos: " + position);
+        System.out.println("Error: " + error);
+        System.out.println("Pos: " + position);
         return output;
     }
 

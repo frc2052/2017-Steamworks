@@ -49,10 +49,17 @@ public class Constants {
 
         public static double kDriveWheelDiameterInches = 4.0;
 
-        public static double kDrivePathkTurn = 0.03;
+        public static double kDrivePathkTurn = 0.035;
 
         public static double kDriveStraightTurnKp = -0.025;
 
+        public static double kTurnMaxAccelRadsPerSec2 = Math.PI / 6;
+
+        public static double kTurnKp = 1.2;
+        public static double kTurnKi = 0.45;
+        public static double kTurnKd = 0.35;
+        public static double kTurnKv = 1.0 / (2 * Math.PI);
+        public static double kTurnKa = 0;
     }
 
     public static class GearMan {
@@ -80,15 +87,16 @@ public class Constants {
         public static final int kShooterVelocityCloseLoopRampRate = 0;
 
         //Agitator speed in %
-        public static double kTatorSpeed = 0.25;
+        public static double kTatorSpeed = 1.00;
 
         //RPM (MAX 4200rpm) Never set above 4200 because we might not get to that exact RPM
-        public static final int kShooterKeyVelocity = 3200;
+        public static final int kShooterKeyVelocity = 3050;
         public static final int kShooterVelocityWindow = 300;
     }
 
     public static class Climber {
-        public static final double kClimberMotorSpeedUp = 0.5;
+        public static final double kClimberMotorSpeedUp = 1.0;
+        public static final double kClimberMotorSlowSpeed = 0.7;
     }
 
     public static class Testing {

@@ -10,6 +10,8 @@ import com.first.team2052.steamworks.subsystems.Pickup;
 import com.first.team2052.steamworks.subsystems.Shooter;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -25,9 +27,12 @@ public class Robot extends IterativeRobot {
     private Climber climber;
     private RevRoboticsPressureSensor revRoboticsPressureSensor;
     private AutoModeRunner autoModeRunner;
+    private PowerDistributionPanel pdp;
+
 
     @Override
     public void robotInit() {
+
         controlLoop = new ControlLoop(Constants.kControlLoopPeriod);
 
         driveTrain = DriveTrain.getInstance();
@@ -37,6 +42,7 @@ public class Robot extends IterativeRobot {
         shooter = Shooter.getInstance();
         climber = Climber.getInstance();
         revRoboticsPressureSensor = new RevRoboticsPressureSensor(0);
+        pdp = new PowerDistributionPanel();
 
         controlLoop.addLoopable(driveTrain.getLoopable());
 
@@ -98,10 +104,12 @@ public class Robot extends IterativeRobot {
         climber.setClimberState(controls.getClimberState());
 
         SmartDashboard.putNumber("gyro", driveTrain.getGyroAngleDegrees());
+        SmartDashboard.putNumber("gyroRate", driveTrain.getGyroRateDegrees());
         SmartDashboard.putNumber("distance", driveTrain.getLeftDistanceInches());
         SmartDashboard.putNumber("velocity", driveTrain.getLeftVelocityInchesPerSec());
         SmartDashboard.putNumber("psi", revRoboticsPressureSensor.getAirPressurePsi());
         SmartDashboard.putBoolean("gearman", gearMan.getGearManState());
+        SmartDashboard.putNumber("climb_amp", pdp.getCurrent(2));
     }
 
     @Override

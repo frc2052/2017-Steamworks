@@ -2,11 +2,9 @@ package com.first.team2052.steamworks.subsystems.drive;
 
 import com.first.team2052.lib.Loopable;
 import com.first.team2052.steamworks.Constants;
-import com.first.team2052.steamworks.subsystems.controllers.DriveController;
-import com.first.team2052.steamworks.subsystems.controllers.DrivePathController;
-import com.first.team2052.steamworks.subsystems.controllers.DriveSignal;
-import com.first.team2052.steamworks.subsystems.controllers.DriveStraightController;
+import com.first.team2052.steamworks.subsystems.controllers.*;
 import com.first.team2052.trajectory.common.Path;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends DriveTrainHardware {
     private volatile DriveController controller;
@@ -73,6 +71,10 @@ public class DriveTrain extends DriveTrainHardware {
 
     public void drivePathTrajectory(Path path, boolean backwards){
         controller = new DrivePathController(this, path, backwards);
+    }
+
+    public void turnInPlace(double angle){
+        controller = new DriveTurnController(this, angle, 180);
     }
 
     /**
@@ -151,4 +153,9 @@ public class DriveTrain extends DriveTrainHardware {
     public DriveController getController() {
         return controller;
     }
+
+    public double getGyroRateDegrees() {
+        return gyro.getRateZ() / 4;
+    }
+
 }

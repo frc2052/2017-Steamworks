@@ -3,6 +3,7 @@ package com.first.team2052.steamworks.auto.actions;
 import com.first.team2052.steamworks.auto.AutoModeBase;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class WaitUntilDistanceAction extends AutoModeBase.Action {
     private double curPos, goalPos;
@@ -31,5 +32,11 @@ public class WaitUntilDistanceAction extends AutoModeBase.Action {
     public void update() {
         curPos = (DriveTrain.getInstance().getLeftDistanceInches()
                 + DriveTrain.getInstance().getRightDistanceInches()) / 2;
+        double angle = DriveTrain.getInstance().getGyroAngleDegrees();
+        SmartDashboard.putNumber("autocurPos", curPos);
+        SmartDashboard.putNumber("autogoalPos", goalPos);
+        SmartDashboard.putNumber("autogyroangle", angle);
+        System.out.println(curPos + " AUTO curPos");
+        System.out.println("hello world");
     }
 }

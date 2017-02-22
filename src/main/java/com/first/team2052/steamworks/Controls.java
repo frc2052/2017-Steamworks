@@ -34,7 +34,7 @@ public class Controls {
                 / Math.sin(Math.PI / 2.0 * Constants.kDriveSpeedCurveTurn);
         turn = Math.sin(Math.PI / 2.0 * Constants.kDriveSpeedCurveTurn * turn)
                 / Math.sin(Math.PI / 2.0 * Constants.kDriveSpeedCurveTurn);
-        return turn;
+        return turn * 0.75;
     }
 
     public boolean getHighGear() {
@@ -57,7 +57,12 @@ public class Controls {
     }
 
     public Climber.ClimberState getClimberState() {
-        return secondaryStick.getRawButton(5) ? Climber.ClimberState.UP : Climber.ClimberState.STOP;
+        if(secondaryStick.getRawButton(5)){
+            return Climber.ClimberState.UP;
+        } else if(secondaryStick.getRawButton(6)) {
+            return Climber.ClimberState.SLOW_UP;
+        }
+        return Climber.ClimberState.STOP;
     }
 
     public static Controls getInstance() {

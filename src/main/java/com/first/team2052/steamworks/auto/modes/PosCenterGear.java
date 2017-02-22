@@ -14,8 +14,10 @@ import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 public class PosCenterGear extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
-        drivePath(AutoPaths.getInstance().getPath("PosCenterGear"), true, true);
-        waitUntilPathFinishes();
+        //drive backwards 71 inches at a velocity of 24 in/sec
+        //gear man is on back of robot, so robot faces backwards at start of match
+        driveStraightDistance(-71, 24);
+        //actuate gearman
         GearMan.getInstance().setGearManState(GearMan.GearManState.OPEN);
         driveStraightDistance(24, 24);
         GearMan.getInstance().setGearManState(GearMan.GearManState.CLOSED);
