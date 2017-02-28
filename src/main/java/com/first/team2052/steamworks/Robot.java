@@ -96,7 +96,7 @@ public class Robot extends IterativeRobot {
         pickup.setIntakeState(controls.getIntakeState());
         shooter.setWantShoot(controls.getWantShoot());
         shooter.setWantReverseAgitator(controls.getWantReverseAgitator());
-        climber.setClimberState(controls.getClimberState());
+        climber.setClimberState(controls.getClimberState(pdp.getCurrent(2)));
 
         SmartDashboard.putNumber("gyro", driveTrain.getGyroAngleDegrees());
         SmartDashboard.putNumber("gyroRate", driveTrain.getGyroRateDegrees());
