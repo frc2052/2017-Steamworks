@@ -9,9 +9,10 @@ import com.first.team2052.steamworks.Constants;
  */
 public class Pickup {
     private static Pickup instance = new Pickup();
-    CANTalon intakeMotor = new CANTalon(Constants.CAN.kIntakeMotorPort);
+    CANTalon intakeMotor;
 
     private Pickup() {
+        intakeMotor = new CANTalon(Constants.CAN.kIntakeMotorPort);
     }
 
     public static Pickup getInstance() {
@@ -21,17 +22,17 @@ public class Pickup {
     /**
      * This function takes in a value from the joystick and if the appropriate button (for enabling the intake) is pressed,
      */
-    public void setIntakeState(IntakeState state) {
+    public void setIntakeState(PickupState state) {
         intakeMotor.set(state.getSpeed());
     }
 
-    public enum IntakeState {
+    public enum PickupState {
         IN(Constants.Pickup.kIntakeMotorSpeedIn),
         OUT(Constants.Pickup.kIntakeMotorSpeedOut),
         STOP(0.0);
         double speed;
 
-        IntakeState(double speed) {
+        PickupState(double speed) {
             this.speed = speed;
         }
 

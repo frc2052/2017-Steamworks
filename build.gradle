@@ -24,11 +24,12 @@ frc {
     //rioIP = "10.20.52.2"
 }
 
-compileJava.dependsOn tasks.getByPath(":PathGenerator:run")
+//compileJava.dependsOn tasks.getByPath(":PathGenerator:run")
 
 dependencies {
     compile wpilib()
     compile talonSrx()
+
     compile project(":TrajectoryLib")
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }

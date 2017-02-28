@@ -23,7 +23,7 @@ public class Controls {
 
     public double getTank() {
         double tank = Util.checkForDeadzone(-joystick0.getY(), 0.10);
-        if (joystick1.getTrigger()) {
+        if (!joystick1.getTrigger()) {
             tank *= -1;
         }
         return tank;
@@ -47,19 +47,19 @@ public class Controls {
         return gearManLatch.get() ? GearMan.GearManState.OPEN : GearMan.GearManState.CLOSED;
     }
 
-    public Pickup.IntakeState getIntakeState() {
+    public Pickup.PickupState getIntakeState() {
         if (secondaryStick.getRawButton(2)) {
-            return Pickup.IntakeState.IN;
+            return Pickup.PickupState.IN;
         } else if (secondaryStick.getRawButton(3)) {
-            return Pickup.IntakeState.OUT;
+            return Pickup.PickupState.OUT;
         } else {
-            return Pickup.IntakeState.STOP;
+            return Pickup.PickupState.STOP;
         }
     }
 
     public Climber.ClimberState getClimberState(double current) {
 
-        if(!climberAmpLimitReached) { //if the voltage is ok, run normaly
+        if (!climberAmpLimitReached) { //if the voltage is ok, run normally
             if (current < Constants.Climber.kClimberAmpMax) {
                 if (secondaryStick.getRawButton(5)) {
                     return Climber.ClimberState.UP;
@@ -71,7 +71,7 @@ public class Controls {
             }
         }
 
-        if(secondaryStick.getRawButton(11)) //the override works regardless if limit has been reached or not
+        if (secondaryStick.getRawButton(11)) //the override works regardless if limit has been reached or not
         {
             return Climber.ClimberState.SLOW_UP;
         }
