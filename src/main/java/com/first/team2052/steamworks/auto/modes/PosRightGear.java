@@ -21,21 +21,9 @@ public class PosRightGear extends AutoMode {
 //        Timer.delay(10);
 //        driveStraightDistance(-80, 24);
         //drivePath(AutoPaths.getInstance().getPath("TestPath"), false, true);
-
-
-        driveStraightDistance(-72, 25);
+        driveStraightDistance(72, 25);
         DriveTrain.getInstance().turnInPlace(-60);
         Timer.delay(5);
-        driveStraightDistance(-50, 25);
-        double angle = VisionProcessor.getInstance().getXAngleFromCenter();
-        int attempts = 0;
-        while (attempts < 10 && (angle > 1 || angle < -1))
-        {
-            attempts++;
-            DriveTrain.getInstance().turnInPlace(angle);
-            Timer.delay(1);
-            angle = VisionProcessor.getInstance().getXAngleFromCenter();
-        }
-        driveStraightDistance(-15, 25);
+        driveStraightDistance(50, 25);
     }
 }

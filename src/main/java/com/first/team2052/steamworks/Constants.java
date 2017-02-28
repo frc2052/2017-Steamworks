@@ -5,13 +5,13 @@ public class Constants {
     public static double kDriveSpeedCurveTurn = 0.75;
 
     public static class CAN {
-        public static final int kDriveLeft1Id = 1;
-        public static final int kDriveLeft2Id = 2;
-        public static final int kDriveLeft3Id = 3;
+        public static final int kDriveLeft1Id = 4;
+        public static final int kDriveLeft2Id = 5;
+        public static final int kDriveLeft3Id = 6;
 
-        public static final int kDriveRight1Id = 4;
-        public static final int kDriveRight2Id = 5;
-        public static final int kDriveRight3Id = 6;
+        public static final int kDriveRight1Id = 1;
+        public static final int kDriveRight2Id = 2;
+        public static final int kDriveRight3Id = 3;
 
 
         public static final int kRightAgitatorMotorPort = 7;
@@ -41,8 +41,8 @@ public class Constants {
         // All constants are for LOW GEAR
         public static double kDriveMaxVelocity = 75.0; //inches per sec
         public static double kDriveMaxAcceleration = 107.0;
-        public static double kDriveStraightKp = 0.03;
-        public static double kDriveStraightKi = 0.0;
+        public static double kDriveStraightKp = 0.085;
+        public static double kDriveStraightKi = 0.025;
         public static double kDriveStraightKd = 0.0;
         public static double kDriveStraightKv = 1.0 / kDriveMaxVelocity;
         public static double kDriveStraightKa = 0.0;
@@ -55,7 +55,7 @@ public class Constants {
 
         public static double kTurnMaxAccelRadsPerSec2 = Math.PI / 6;
 
-        public static double kTurnKp = 1.2;
+        public static double kTurnKp = 0.8;
         public static double kTurnKi = 0.45;
         public static double kTurnKd = 0.35;
         public static double kTurnKv = 1.0 / (2 * Math.PI);
@@ -87,7 +87,7 @@ public class Constants {
         public static final int kShooterVelocityCloseLoopRampRate = 0;
 
         //Agitator speed in %
-        public static double kTatorSpeed = 1.00;
+        public static double kTatorSpeed = 0.70;
 
         //RPM (MAX 4200rpm) Never set above 4200 because we might not get to that exact RPM
         public static final int kShooterKeyVelocity = 3050;

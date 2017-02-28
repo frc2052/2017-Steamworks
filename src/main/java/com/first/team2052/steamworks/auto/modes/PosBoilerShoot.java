@@ -14,19 +14,9 @@ import edu.wpi.first.wpilibj.DriverStation;
  * Desc: Turns and shoots
  * Ends: Back at the Boiler
  */
-public class PosBoilerShoot extends AutoMode{
+public class PosBoilerShoot extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
-        AutoPaths myPathFactory = AutoPaths.getInstance();
-        Optional<Path> myPath = myPathFactory.getPath("PosBoilerShoot");
-        if (myPath.isPresent()) {
-            DriveTrain dt = DriveTrain.getInstance();
-            if(AutoModeSelector.isOnBlue()) {
-                myPath.get().goLeft();
-            }else{
-                myPath.get().goRight();
-            }
-            dt.drivePathTrajectory(myPath.get());
-        }
+        drivePath(AutoPaths.getInstance().getPath("PosBoilerShoot"), true, false);
     }
 }

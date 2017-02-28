@@ -32,7 +32,6 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void robotInit() {
-
         controlLoop = new ControlLoop(Constants.kControlLoopPeriod);
 
         driveTrain = DriveTrain.getInstance();
@@ -91,11 +90,7 @@ public class Robot extends IterativeRobot {
         double turn = controls.getTurn();
         double tank = controls.getTank();
 
-        if (!Constants.Testing.kDisableDriveCode) {
-            driveTrain.setOpenLoop(tank + turn, tank - turn);
-        } else {
-            driveTrain.setOpenLoop(0.0, 0.0);
-        }
+        driveTrain.setOpenLoop(tank + turn, tank - turn);
 
         gearMan.setGearManState(controls.getGearManState());
         pickup.setIntakeState(controls.getIntakeState());
@@ -117,6 +112,8 @@ public class Robot extends IterativeRobot {
         controlLoop.stop();
         autoModeRunner.stop();
         zeroAllSensors();
+
+        System.gc();
     }
 
     public void zeroAllSensors() {

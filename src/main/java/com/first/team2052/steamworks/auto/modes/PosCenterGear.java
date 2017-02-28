@@ -16,10 +16,10 @@ public class PosCenterGear extends AutoMode {
     protected void init() throws AutoModeEndedException {
         //drive backwards 71 inches at a velocity of 24 in/sec
         //gear man is on back of robot, so robot faces backwards at start of match
-        driveStraightDistance(-71, 24);
+        driveStraightDistance(71, 24);
         //actuate gearman
         GearMan.getInstance().setGearManState(GearMan.GearManState.OPEN);
-        driveStraightDistance(24, 24);
+        driveStraightDistance(-24, 24);
         GearMan.getInstance().setGearManState(GearMan.GearManState.CLOSED);
     }
 }

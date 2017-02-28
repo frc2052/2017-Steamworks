@@ -4,7 +4,6 @@ import com.first.team2052.lib.Loopable;
 import com.first.team2052.steamworks.Constants;
 import com.first.team2052.steamworks.subsystems.controllers.*;
 import com.first.team2052.trajectory.common.Path;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveTrain extends DriveTrainHardware {
     private volatile DriveController controller;
@@ -23,15 +22,13 @@ public class DriveTrain extends DriveTrainHardware {
         }
 
         @Override
-        public void onStart() {
-            controller = null;
-            setOpenLoop(0.0, 0.0);
+        public synchronized void onStart() {
+            //setOpenLoop(0.0, 0.0);
         }
 
         @Override
-        public void onStop() {
-            controller = null;
-            setOpenLoop(0.0, 0.0);
+        public synchronized void onStop() {
+            //setOpenLoop(0.0, 0.0);
         }
     };
 
@@ -80,7 +77,7 @@ public class DriveTrain extends DriveTrainHardware {
     /**
      * Sets the motor speeds in percent mode and disables all controllers
      */
-    public void setOpenLoop(double left_power, double right_power) {
+    public synchronized void setOpenLoop(double left_power, double right_power) {
         controller = null;
         setLeftRightPower(left_power, right_power);
     }
@@ -89,7 +86,7 @@ public class DriveTrain extends DriveTrainHardware {
      * Set's the speeds of the motor without resetting a controller
      * This method is used by controllers directly
      */
-    protected void setLeftRightPower(double left_power, double right_power) {
+    protected synchronized void setLeftRightPower(double left_power, double right_power) {
         leftMaster.set(-left_power);
         rightMaster.set(right_power);
     }

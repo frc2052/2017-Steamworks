@@ -9,9 +9,12 @@ public class ControlLoop {
     private final Object runningThread = new Object();
     private double period = 1.0 / 100.0;
     private List<Loopable> loopables = Lists.newArrayList();
+    boolean running = false;
 
     private Runnable runnable = () -> {
         synchronized (runningThread) {
+            if(!running)
+                return;
             for (Loopable loopable : loopables) {
                 loopable.update();
             }
@@ -26,6 +29,7 @@ public class ControlLoop {
     }
 
     public synchronized void start() {
+        running = true;
         for (Loopable loopable : loopables) {
             loopable.onStart();
         }
@@ -36,6 +40,7 @@ public class ControlLoop {
     }
 
     public synchronized void stop() {
+        running = false;
         synchronized (runningThread) {
             notifier.stop();
         }
