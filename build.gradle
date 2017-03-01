@@ -24,7 +24,7 @@ frc {
     //rioIP = "10.20.52.2"
 }
 
-//compileJava.dependsOn tasks.getByPath(":PathGenerator:run")
+compileJava.dependsOn tasks.getByPath(":PathGenerator:run")
 
 dependencies {
     compile wpilib()

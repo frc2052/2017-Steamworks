@@ -97,20 +97,21 @@ public class PathGenMain {
             Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
             writePath(path, directory, path_name);
         }
-        /*{
+        {
             final String path_name = "PosBoilerShoot";
             config.max_acc = 80.0;
             config.max_jerk = 600.0;
             config.max_vel = 2 * 12;
 
             WaypointSequence p = new WaypointSequence(4);
-            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, 0));
-            p.addWaypoint(new WaypointSequence.Waypoint(30, 12, Math.PI / 3));
-            p.addWaypoint(new WaypointSequence.Waypoint(12, 36, 5 *));
+            p.addWaypoint(new WaypointSequence.Waypoint(0, 0, Math.PI / 6));
+            p.addWaypoint(new WaypointSequence.Waypoint(40, -12, 0));
+            p.addWaypoint(new WaypointSequence.Waypoint(80, 0, Math.PI / 3));
+            p.addWaypoint(new WaypointSequence.Waypoint(12, 36, 3 * Math.PI / 4));
 
             Path path = PathGenerator.makePath(p, config, kWheelbaseWidth, path_name);
             writePath(path, directory, path_name);
-        }*/
+        }
         /*
         {
             final String path_name = "PosBoilerHopper";

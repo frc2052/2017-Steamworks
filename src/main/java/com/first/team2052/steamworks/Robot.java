@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
     private ControlLoop controlLoop;
-    private DriveTrain driveTrain;
+    private static DriveTrain driveTrain;
     private Controls controls;
     private GearMan gearMan;
     private Pickup pickup;
@@ -61,10 +61,12 @@ public class Robot extends IterativeRobot {
         controlLoop.start();
         autoModeRunner.setAutoMode(AutoModeSelector.getAutoInstance());
         autoModeRunner.start();
+        System.out.println("Auto End");
     }
 
     @Override
     public void teleopInit() {
+        System.out.println("Teleop Begin");
         zeroAllSensors();
 
         autoModeRunner.stop();
@@ -108,6 +110,7 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void disabledInit() {
+        System.out.println("Disable");
         controlLoop.stop();
         autoModeRunner.stop();
         zeroAllSensors();

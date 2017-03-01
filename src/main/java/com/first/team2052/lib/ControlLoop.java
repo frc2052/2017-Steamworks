@@ -12,12 +12,10 @@ public class ControlLoop {
     boolean running = false;
 
     private Runnable runnable = () -> {
-        synchronized (runningThread) {
-            if(!running)
-                return;
-            for (Loopable loopable : loopables) {
-                loopable.update();
-            }
+        if (!running)
+            return;
+        for (Loopable loopable : loopables) {
+            loopable.update();
         }
     };
 
@@ -28,31 +26,25 @@ public class ControlLoop {
         notifier = new Notifier(runnable);
     }
 
-    public synchronized void start() {
+    public void start() {
         running = true;
+
         for (Loopable loopable : loopables) {
             loopable.onStart();
         }
 
-        synchronized (runningThread) {
-            notifier.startPeriodic(period);
-        }
+        notifier.startPeriodic(period);
     }
 
-    public synchronized void stop() {
+    public void stop() {
         running = false;
-        synchronized (runningThread) {
-            notifier.stop();
-        }
-
         for (Loopable loopable : loopables) {
             loopable.onStop();
         }
+        System.out.println("Stopped Control Loop");
     }
 
-    public synchronized void addLoopable(Loopable loopable) {
-        synchronized (runningThread) {
-            loopables.add(loopable);
-        }
+    public void addLoopable(Loopable loopable) {
+        loopables.add(loopable);
     }
 }

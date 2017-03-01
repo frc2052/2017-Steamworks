@@ -7,15 +7,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoModeSelector {
     private static SendableChooser<AutoModeDefinition> sendableChooserAutoMode;
+    private static SendableChooser<Side> sendableChooserSide;
 
     public enum AutoModeDefinition {
         DONT_MOVE("Don't Move", DontMove.class),
-        POS_LEFT_GEAR("Pos Left Gear", PosLeftGear.class),
-        POS_RIGHT_GEAR("Pos Right Gear", PosRightGear.class),
-        POS_CENTER_GEAR("Pos Center Gear", PosCenterGear.class),
-        POS_BOILER_SHOOT("Pos Boiler Shoot", PosBoilerShoot.class),
-        POS_BOILER_HOPPER("Pos Boiler Hopper", PosBoilerHopper.class),
-        POS_BOILER_HOPPER_SHOOT("Pos Boiler Hopper Shoot", PosBoilerHopperShoot.class);
+        POS_LEFT_GEAR("Left Gear", PosLeftGear.class),
+        POS_RIGHT_GEAR("Right Gear", PosRightGear.class),
+        POS_CENTER_GEAR("Center Gear", PosCenterGear.class),
+        POS_BOILER_SHOOT("Boiler Shoot Baseline", PosBoilerShoot.class);
 
         private final Class<? extends AutoMode> clazz;
         private final String name;
@@ -36,6 +35,10 @@ public class AutoModeSelector {
         }
     }
 
+    public enum Side {
+        RED, BLUE
+    }
+
     public static void putToSmartDashboard() {
         sendableChooserAutoMode = new SendableChooser<AutoModeDefinition>();
         for (int i = 0; i < AutoModeDefinition.values().length; i++) {
@@ -46,19 +49,29 @@ public class AutoModeSelector {
                 sendableChooserAutoMode.addObject(mode.name, mode);
             }
         }
+        sendableChooserSide = new SendableChooser<Side>();
+        sendableChooserSide.addDefault("Red", Side.RED);
+        sendableChooserSide.addObject("Blue", Side.BLUE);
+
+        SmartDashboard.putData("alliance", sendableChooserSide);
         SmartDashboard.putData("auto_modes", sendableChooserAutoMode);
     }
+
     public static boolean isOnBlue() {
         DriverStation.Alliance color;
         color = DriverStation.getInstance().getAlliance();
-        if(color == DriverStation.Alliance.Blue){
+        if (color == DriverStation.Alliance.Blue) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
     public static AutoModeBase getAutoInstance() {
         return sendableChooserAutoMode.getSelected().getInstance();
+    }
+
+    public static Side getSide() {
+        return sendableChooserSide.getSelected();
     }
 }

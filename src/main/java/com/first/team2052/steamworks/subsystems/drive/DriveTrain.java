@@ -2,6 +2,7 @@ package com.first.team2052.steamworks.subsystems.drive;
 
 import com.first.team2052.lib.Loopable;
 import com.first.team2052.steamworks.Constants;
+import com.first.team2052.steamworks.Robot;
 import com.first.team2052.steamworks.subsystems.controllers.*;
 import com.first.team2052.trajectory.common.Path;
 
@@ -22,13 +23,13 @@ public class DriveTrain extends DriveTrainHardware {
         }
 
         @Override
-        public synchronized void onStart() {
-            //setOpenLoop(0.0, 0.0);
+        public void onStart() {
+            setOpenLoop(0.0, 0.0);
         }
 
         @Override
-        public synchronized void onStop() {
-            //setOpenLoop(0.0, 0.0);
+        public void onStop() {
+            setOpenLoop(0.0, 0.0);
         }
     };
 
@@ -66,18 +67,18 @@ public class DriveTrain extends DriveTrainHardware {
         controller = new DrivePathController(this, path);
     }
 
-    public void drivePathTrajectory(Path path, boolean backwards){
+    public void drivePathTrajectory(Path path, boolean backwards) {
         controller = new DrivePathController(this, path, backwards);
     }
 
-    public void turnInPlace(double angle){
-        controller = new DriveTurnController(this, angle, 180);
+    public void turnInPlace(double angle) {
+        controller = new DriveTurnController(this, angle, 720);
     }
 
     /**
      * Sets the motor speeds in percent mode and disables all controllers
      */
-    public synchronized void setOpenLoop(double left_power, double right_power) {
+    public void setOpenLoop(double left_power, double right_power) {
         controller = null;
         setLeftRightPower(left_power, right_power);
     }
@@ -86,7 +87,7 @@ public class DriveTrain extends DriveTrainHardware {
      * Set's the speeds of the motor without resetting a controller
      * This method is used by controllers directly
      */
-    protected synchronized void setLeftRightPower(double left_power, double right_power) {
+    protected void setLeftRightPower(double left_power, double right_power) {
         leftMaster.set(-left_power);
         rightMaster.set(right_power);
     }
@@ -139,7 +140,7 @@ public class DriveTrain extends DriveTrainHardware {
         leftMaster.setEncPosition(0);
     }
 
-    public static DriveTrain getInstance() {
+    public synchronized static DriveTrain getInstance() {
         return instance;
     }
 

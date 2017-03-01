@@ -41,7 +41,7 @@ public class Constants {
         // All constants are for LOW GEAR
         public static double kDriveMaxVelocity = 75.0; //inches per sec
         public static double kDriveMaxAcceleration = 107.0;
-        public static double kDriveStraightKp = 0.085;
+        public static double kDriveStraightKp = 0.12;
         public static double kDriveStraightKi = 0.025;
         public static double kDriveStraightKd = 0.0;
         public static double kDriveStraightKv = 1.0 / kDriveMaxVelocity;
@@ -49,17 +49,17 @@ public class Constants {
 
         public static double kDriveWheelDiameterInches = 4.0;
 
-        public static double kDrivePathkTurn = 0.035;
+        public static double kDrivePathkTurn = 0.015;
 
         public static double kDriveStraightTurnKp = -0.025;
 
         public static double kTurnMaxAccelRadsPerSec2 = Math.PI / 6;
 
-        public static double kTurnKp = 0.8;
-        public static double kTurnKi = 0.45;
-        public static double kTurnKd = 0.35;
+        public static double kTurnKp = 2.3;
+        public static double kTurnKi = 1.0;
+        public static double kTurnKd = 0.25;
         public static double kTurnKv = 1.0 / (2 * Math.PI);
-        public static double kTurnKa = 0;
+        public static double kTurnKa = 0.0015;
     }
 
     public static class GearMan {
