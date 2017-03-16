@@ -23,7 +23,7 @@ public class Controls {
 
     public double getTank() {
         double tank = Util.checkForDeadzone(-joystick0.getY(), 0.10);
-        if (joystick1.getTrigger()) {
+        if (!joystick1.getTrigger()) {
             tank *= -1;
         }
         return tank;
