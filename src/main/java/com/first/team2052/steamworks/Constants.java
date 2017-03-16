@@ -40,7 +40,7 @@ public class Constants {
 
         // All constants are for LOW GEAR
         public static double kDriveMaxVelocity = 75.0; //inches per sec
-        public static double kDriveMaxAcceleration = 107.0;
+        public static double kDriveMaxAcceleration = 107.0; //inches per second per second
         public static double kDriveStraightKp = 0.12;
         public static double kDriveStraightKi = 0.025;
         public static double kDriveStraightKd = 0.0;
@@ -66,6 +66,8 @@ public class Constants {
         //Solenoid Id's
         public static int kGearManInSolenoidId = 2;
         public static int kGearManOutSolenoidId = 3;
+        public static int kGearManPunchInSolenoidId = 4;
+        public static int kGearManPunchOutSolenoidId = 5;
     }
 
     public static class Pickup {
@@ -90,14 +92,16 @@ public class Constants {
         public static double kTatorSpeed = 0.70;
 
         //RPM (MAX 4200rpm) Never set above 4200 because we might not get to that exact RPM
-        public static final int kShooterKeyVelocity = 3050;
+        public static final int kShooterKeyVelocity = 3250;
+
+        //RPM amount away from the target that the agitators will begin spinning at
         public static final int kShooterVelocityWindow = 300;
     }
 
     public static class Climber {
         public static final double kClimberMotorSpeedUp = 1.0;
         public static final double kClimberMotorSlowSpeed = 0.7;
-        public static final double kClimberAmpMax = 35;
+        public static final double kClimberAmpMax = 40;
     }
 
     public static class Testing {

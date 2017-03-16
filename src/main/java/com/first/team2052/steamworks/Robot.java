@@ -46,6 +46,7 @@ public class Robot extends IterativeRobot {
 
         AutoModeSelector.putToSmartDashboard();
         controlLoop.addLoopable(shooter);
+        controlLoop.addLoopable(gearMan);
         autoModeRunner = new AutoModeRunner();
     }
 

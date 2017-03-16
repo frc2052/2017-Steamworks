@@ -5,12 +5,12 @@ import com.first.team2052.steamworks.Constants;
 
 public class Climber {
     CANTalon grapple = new CANTalon(Constants.CAN.kClimbId);
-    //DigitalInput digit = new DigitalInput(627);//these are random numbers that need a rightful port number
 
     private static Climber instance = new Climber();
 
     private Climber() {
         grapple.configPeakOutputVoltage(+12.0f, 0.0f);
+        grapple.setVoltageRampRate(15.0);
     }
 
     public void setClimberState(ClimberState state) {

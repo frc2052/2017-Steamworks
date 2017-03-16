@@ -34,7 +34,8 @@ public class PosBoilerShoot extends AutoMode {
         Timer.delay(0.5);
         DriveTrain.getInstance().setOpenLoop(0, 0);
         Shooter.getInstance().setWantShoot(true);
-        Timer.delay(3.0);
+        Timer.delay(4.5);
+        Shooter.getInstance().setWantShoot(false);
         driveStraightDistance(100, 36);
     }
 }
