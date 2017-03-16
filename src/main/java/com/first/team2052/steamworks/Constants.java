@@ -1,5 +1,7 @@
 package com.first.team2052.steamworks;
 
+import com.ctre.CANTalon;
+
 public class Constants {
     public static final double kControlLoopPeriod = 1.0 / 100.0;
     public static double kDriveSpeedCurveTurn = 0.75;
@@ -102,5 +104,23 @@ public class Constants {
 
     public static class Testing {
         public static boolean kDisableDriveCode = false;
+    }
+
+
+    public static class DriveControllers {
+        public static double kDriveVelocityKp = 0.0;
+        public static double kDriveVelocityKi = 0.0;
+        public static double kDriveVelocityKd = 0.0;
+        public static double kDriveVelocityKf = 0.0;
+        public static int kDriveVelocityIZone = 0;
+        public static double kDriveVelocityRampRate = 0.0;
+        public static int kDriveVelocityAllowableError = 0;
+
+        public final static double kTrackScrubFactor = 0.5;
+        public final static double kTrackEffectiveDiameter = 27.25;
+
+        public static double kPathFollowingLookahead = 24;
+        public static double kPathFollowingMaxAccel = 75;
+        public static double kPathFollowingMaxVel = 75;
     }
 }

@@ -10,6 +10,8 @@ import edu.wpi.first.wpilibj.Solenoid;
  * Purely for organization
  */
 class DriveTrainHardware {
+    protected static final int kVelocityControlSlot = 0;
+
     final CANTalon rightMaster;
     private final CANTalon rightSlave, rightSlave1;
     final CANTalon leftMaster;
@@ -44,6 +46,14 @@ class DriveTrainHardware {
         leftSlave1.changeControlMode(CANTalon.TalonControlMode.Follower);
         leftSlave.set(leftMaster.getDeviceID());
         leftSlave1.set(leftMaster.getDeviceID());
+
+        // Load velocity control gains
+        leftMaster.setPID(Constants.DriveControllers.kDriveVelocityKp, Constants.DriveControllers.kDriveVelocityKi, Constants.DriveControllers.kDriveVelocityKd,
+                Constants.DriveControllers.kDriveVelocityKf, Constants.DriveControllers.kDriveVelocityIZone, Constants.DriveControllers.kDriveVelocityRampRate,
+                kVelocityControlSlot);
+        rightMaster.setPID(Constants.DriveControllers.kDriveVelocityKp, Constants.DriveControllers.kDriveVelocityKi, Constants.DriveControllers.kDriveVelocityKd,
+                Constants.DriveControllers.kDriveVelocityKf, Constants.DriveControllers.kDriveVelocityIZone, Constants.DriveControllers.kDriveVelocityRampRate,
+                kVelocityControlSlot);
 
         shifterIn = new Solenoid(Constants.Drive.kDriveInSolenoidId);
         shifterOut = new Solenoid(Constants.Drive.kDriveOutSolenoidId);

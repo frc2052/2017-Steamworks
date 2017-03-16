@@ -2,6 +2,7 @@ package com.first.team2052.steamworks;
 
 import com.first.team2052.lib.ControlLoop;
 import com.first.team2052.lib.RevRoboticsPressureSensor;
+import com.first.team2052.lib.vec.RigidTransform2d;
 import com.first.team2052.steamworks.auto.AutoModeRunner;
 import com.first.team2052.steamworks.auto.AutoModeSelector;
 import com.first.team2052.steamworks.subsystems.Climber;
@@ -11,6 +12,7 @@ import com.first.team2052.steamworks.subsystems.Shooter;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -26,6 +28,8 @@ public class Robot extends IterativeRobot {
     private Climber climber;
     private RevRoboticsPressureSensor revRoboticsPressureSensor;
     private AutoModeRunner autoModeRunner;
+    private RobotState robotState;
+    private RobotStateEstimator stateEstimator;
     private PowerDistributionPanel pdp;
 
 
@@ -42,7 +46,11 @@ public class Robot extends IterativeRobot {
         revRoboticsPressureSensor = new RevRoboticsPressureSensor(0);
         pdp = new PowerDistributionPanel();
 
+        robotState = RobotState.getInstance();
+        stateEstimator = RobotStateEstimator.getInstance();
+
         controlLoop.addLoopable(driveTrain.getLoopable());
+        controlLoop.addLoopable(stateEstimator);
 
         AutoModeSelector.putToSmartDashboard();
         controlLoop.addLoopable(shooter);
@@ -51,6 +59,8 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void autonomousInit() {
+        robotState.reset(Timer.getFPGATimestamp(), new RigidTransform2d());
+
         driveTrain.setHighGear(Constants.Drive.kDriveDefaultHighGear);
         gearMan.setGearManState(GearMan.GearManState.CLOSED);
 
@@ -61,12 +71,12 @@ public class Robot extends IterativeRobot {
         controlLoop.start();
         autoModeRunner.setAutoMode(AutoModeSelector.getAutoInstance());
         autoModeRunner.start();
-        System.out.println("Auto End");
     }
 
     @Override
     public void teleopInit() {
-        System.out.println("Teleop Begin");
+        robotState.reset(Timer.getFPGATimestamp(), new RigidTransform2d());
+
         zeroAllSensors();
 
         autoModeRunner.stop();
@@ -110,11 +120,15 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void disabledInit() {
-        System.out.println("Disable");
         controlLoop.stop();
         autoModeRunner.stop();
         zeroAllSensors();
+    }
 
+    @Override
+    public void disabledPeriodic() {
+        driveTrain.zeroEncoders();
+        robotState.reset(Timer.getFPGATimestamp(), new RigidTransform2d());
         System.gc();
     }
 
