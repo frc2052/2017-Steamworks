@@ -41,9 +41,9 @@ public class Constants {
 
         public static double kDriveWheelDiameterInches = 4.0;
 
-        public static double kDriveVelocityKp = 0.0;
+        public static double kDriveVelocityKp = 0.075;
         public static double kDriveVelocityKi = 0.0;
-        public static double kDriveVelocityKd = 0.0;
+        public static double kDriveVelocityKd = 1.5;
         public static double kDriveVelocityKf = 0.258;
         public static int kDriveVelocityIZone = 0;
         public static double kDriveVelocityRampRate = 0.0;
@@ -53,11 +53,11 @@ public class Constants {
         public static double kPathFollowingMaxAccel = 75;
         public static double kPathFollowingMaxVel = 90;
 
-        public static double kDriveHeadingVelocityKp = 4.0;
-        public static double kDriveHeadingVelocityKi = 0.0;
-        public static double kDriveHeadingVelocityKd = 50.0;
+        public static double kDriveHeadingVelocityKp = 5.0;
+        public static double kDriveHeadingVelocityKi = 0.1;
+        public static double kDriveHeadingVelocityKd = 60.0;
 
-        public final static double kTrackScrubFactor = 0.5;
+        public final static double kTrackScrubFactor = 1.2;
         public final static double kTrackEffectiveDiameter = 27.25;
     }
 

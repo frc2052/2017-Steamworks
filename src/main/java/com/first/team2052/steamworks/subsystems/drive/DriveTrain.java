@@ -224,7 +224,7 @@ public class DriveTrain extends DriveTrainHardware {
 
     public double getGyroAngleDegrees() {
         // It just so happens that the gyro outputs 4x the amount that it actually turned
-        return gyro.getAngleZ() / 4.0;
+        return -gyro.getAngleZ() / 4.0;
     }
 
     public synchronized Rotation2d getGyroAngle() {

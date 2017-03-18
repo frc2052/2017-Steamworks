@@ -45,6 +45,7 @@ public class ControlLoop {
     }
 
     public void addLoopable(Loopable loopable) {
+        System.out.println(loopable);
         loopables.add(loopable);
     }
 }

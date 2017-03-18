@@ -3,6 +3,7 @@ package com.first.team2052.steamworks;
 import com.first.team2052.lib.ControlLoop;
 import com.first.team2052.lib.RevRoboticsPressureSensor;
 import com.first.team2052.lib.vec.RigidTransform2d;
+import com.first.team2052.lib.vec.Rotation2d;
 import com.first.team2052.steamworks.auto.AutoModeRunner;
 import com.first.team2052.steamworks.auto.AutoModeSelector;
 import com.first.team2052.steamworks.subsystems.Climber;
@@ -48,10 +49,10 @@ public class Robot extends IterativeRobot {
 
         controlLoop.addLoopable(driveTrain.getLoopable());
         controlLoop.addLoopable(stateEstimator);
-
-        AutoModeSelector.putToSmartDashboard();
         controlLoop.addLoopable(shooter);
         controlLoop.addLoopable(gearMan);
+
+        AutoModeSelector.putToSmartDashboard();
         autoModeRunner = new AutoModeRunner();
     }
 

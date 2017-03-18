@@ -10,7 +10,7 @@ public class RobotStateEstimator implements Loopable{
     private double left_encoder_prev_distance = 0;
     private double right_encoder_prev_distance = 0;
 
-    private static RobotStateEstimator instance;
+    private static RobotStateEstimator instance = new RobotStateEstimator();
 
     DriveTrain driveTrain = DriveTrain.getInstance();
     RobotState robotState = RobotState.getInstance();
