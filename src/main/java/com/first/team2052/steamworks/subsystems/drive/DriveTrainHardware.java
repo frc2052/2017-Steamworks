@@ -19,6 +19,7 @@ class DriveTrainHardware {
     ADIS16448_IMU gyro;
     Solenoid shifterIn, shifterOut;
 
+
     DriveTrainHardware() {
         rightMaster = new CANTalon(Constants.CAN.kDriveRight1Id);
         rightSlave = new CANTalon(Constants.CAN.kDriveRight2Id);
@@ -48,12 +49,15 @@ class DriveTrainHardware {
         leftSlave1.set(leftMaster.getDeviceID());
 
         // Load velocity control gains
-        leftMaster.setPID(Constants.DriveControllers.kDriveVelocityKp, Constants.DriveControllers.kDriveVelocityKi, Constants.DriveControllers.kDriveVelocityKd,
-                Constants.DriveControllers.kDriveVelocityKf, Constants.DriveControllers.kDriveVelocityIZone, Constants.DriveControllers.kDriveVelocityRampRate,
+        leftMaster.setPID(Constants.Drive.kDriveVelocityKp, Constants.Drive.kDriveVelocityKi, Constants.Drive.kDriveVelocityKd,
+                Constants.Drive.kDriveVelocityKf, Constants.Drive.kDriveVelocityIZone, Constants.Drive.kDriveVelocityRampRate,
                 kVelocityControlSlot);
-        rightMaster.setPID(Constants.DriveControllers.kDriveVelocityKp, Constants.DriveControllers.kDriveVelocityKi, Constants.DriveControllers.kDriveVelocityKd,
-                Constants.DriveControllers.kDriveVelocityKf, Constants.DriveControllers.kDriveVelocityIZone, Constants.DriveControllers.kDriveVelocityRampRate,
+        rightMaster.setPID(Constants.Drive.kDriveVelocityKp, Constants.Drive.kDriveVelocityKi, Constants.Drive.kDriveVelocityKd,
+                Constants.Drive.kDriveVelocityKf, Constants.Drive.kDriveVelocityIZone, Constants.Drive.kDriveVelocityRampRate,
                 kVelocityControlSlot);
+
+        leftMaster.setMotionMagicCruiseVelocity(430);
+        rightMaster.setMotionMagicCruiseVelocity(300);
 
         shifterIn = new Solenoid(Constants.Drive.kDriveInSolenoidId);
         shifterOut = new Solenoid(Constants.Drive.kDriveOutSolenoidId);

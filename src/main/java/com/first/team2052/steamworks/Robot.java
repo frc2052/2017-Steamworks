@@ -15,9 +15,6 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-/**
- * Front of robot is the side with the fuel intake
- */
 public class Robot extends IterativeRobot {
     private ControlLoop controlLoop;
     private static DriveTrain driveTrain;
@@ -63,7 +60,7 @@ public class Robot extends IterativeRobot {
         robotState.reset(Timer.getFPGATimestamp(), new RigidTransform2d());
 
         driveTrain.setHighGear(Constants.Drive.kDriveDefaultHighGear);
-        gearMan.setGearManState(GearMan.GearManState.CLOSED);
+        gearMan.setWantOpen(false);
 
         shooter.setWantShoot(false);
 
@@ -89,10 +86,10 @@ public class Robot extends IterativeRobot {
         driveTrain.setOpenLoop(0.0, 0.0);
         driveTrain.setHighGear(Constants.Drive.kDriveDefaultHighGear);
 
-        gearMan.setGearManState(GearMan.GearManState.CLOSED);
+        gearMan.setWantOpen(false);
         pickup.setIntakeState(Pickup.PickupState.STOP);
 
-        driveTrain.zeroEncoders();
+        driveTrain.resetEncoders();
     }
 
     @Override
@@ -104,7 +101,7 @@ public class Robot extends IterativeRobot {
 
         driveTrain.setOpenLoop(tank + turn, tank - turn);
 
-        gearMan.setGearManState(controls.getGearManState());
+        gearMan.setWantOpen(controls.getGearManState());
         pickup.setIntakeState(controls.getIntakeState());
         shooter.setWantShoot(controls.getWantShoot());
         shooter.setWantReverseAgitator(controls.getWantReverseAgitator());
@@ -112,10 +109,8 @@ public class Robot extends IterativeRobot {
 
         SmartDashboard.putNumber("gyro", driveTrain.getGyroAngleDegrees());
         SmartDashboard.putNumber("gyroRate", driveTrain.getGyroRateDegrees());
-        SmartDashboard.putNumber("distance", driveTrain.getLeftDistanceInches());
-        SmartDashboard.putNumber("velocity", driveTrain.getLeftVelocityInchesPerSec());
         SmartDashboard.putNumber("psi", revRoboticsPressureSensor.getAirPressurePsi());
-        SmartDashboard.putBoolean("gearman", gearMan.getGearManState());
+        SmartDashboard.putBoolean("gearman", gearMan.getSolenoidState());
         SmartDashboard.putNumber("climb_amp", pdp.getCurrent(2));
     }
 
@@ -128,13 +123,13 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void disabledPeriodic() {
-        driveTrain.zeroEncoders();
+        driveTrain.resetEncoders();
         robotState.reset(Timer.getFPGATimestamp(), new RigidTransform2d());
         System.gc();
     }
 
     public void zeroAllSensors() {
-        driveTrain.zeroEncoders();
+        driveTrain.resetEncoders();
         driveTrain.zeroGyro();
     }
 }

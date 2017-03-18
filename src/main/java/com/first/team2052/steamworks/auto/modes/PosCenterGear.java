@@ -1,11 +1,16 @@
 package com.first.team2052.steamworks.auto.modes;
 
+import com.first.team2052.lib.path.Path;
+import com.first.team2052.lib.vec.Translation2d;
 import com.first.team2052.steamworks.auto.AutoMode;
 import com.first.team2052.steamworks.auto.AutoModeEndedException;
-import com.first.team2052.steamworks.auto.AutoPaths;
+import com.first.team2052.steamworks.auto.actions.*;
 import com.first.team2052.steamworks.subsystems.GearMan;
-import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
-import edu.wpi.first.wpilibj.Timer;
+import com.google.common.collect.Lists;
+
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Starts: Center against alliance wall
@@ -15,13 +20,23 @@ import edu.wpi.first.wpilibj.Timer;
 public class PosCenterGear extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
-        //drive backwards 71 inches at a velocity of 24 in/sec
-        //gear man is on back of robot, so robot faces backwards at start of match
-        driveStraightDistance(71, 30);
-        //actuate gearman
-        GearMan.getInstance().setGearManState(GearMan.GearManState.OPEN);
-        Timer.delay(2.0);
-        driveStraightDistance(-36, 12);
-        GearMan.getInstance().setGearManState(GearMan.GearManState.CLOSED);
+        //Generate path waypoints
+        List<Path.Waypoint> forwardPath = Lists.newArrayList();
+        forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 60));
+        forwardPath.add(new Path.Waypoint(new Translation2d(60, 0), 30));
+        forwardPath.add(new Path.Waypoint(new Translation2d(72, 0), 12));
+
+        List<Path.Waypoint> backwardPath = Lists.newArrayList();
+        backwardPath.add(new Path.Waypoint(new Translation2d(72, 0), 12));
+        backwardPath.add(new Path.Waypoint(new Translation2d(55, 0), 60, "CloseGearMan"));
+        backwardPath.add(new Path.Waypoint(new Translation2d(35, 0), 60));
+
+        //Drive up to the peg and drop gear
+        runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(forwardPath), false), new DropGearAction())));
+
+        //Drive back, when we pass a waypoint close the gear manipulator
+        runAction(new ParallelAction(Arrays.asList(
+                new FollowPathAction(new Path(backwardPath), true),
+                new SeriesAction(Arrays.asList(new WaitForPathMarkerAction("CloseGearMan"), new CloseGearAction())))));
     }
 }

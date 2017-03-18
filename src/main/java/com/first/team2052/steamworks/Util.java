@@ -1,8 +1,5 @@
 package com.first.team2052.steamworks;
 
-/**
- * Created by KnightKrawler on 1/21/2017.
- */
 public class Util {
     public static double checkForDeadzone(double value, double deadZone) {
         if (Math.abs(value) < deadZone)

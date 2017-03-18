@@ -1,7 +1,5 @@
 package com.first.team2052.steamworks;
 
-import com.ctre.CANTalon;
-
 public class Constants {
     public static final double kControlLoopPeriod = 1.0 / 100.0;
     public static double kDriveSpeedCurveTurn = 0.75;
@@ -38,30 +36,29 @@ public class Constants {
         private static final int kDriveTicksPerRot = 256;
         private static final double kDriveThirdStageGearRatio = 54.0 / 30.0;
         // VEX 3 CIM ball shift with 3rd stage 3 rotations per gearbox output shaft rotation * ratio for gearbox
+        // 5529.6 native units per rot
         public static int kDriveEncoderTicksPerRot = (int) (3 * kDriveTicksPerRot * kDriveThirdStageGearRatio);
-
-        // All constants are for LOW GEAR
-        public static double kDriveMaxVelocity = 75.0; //inches per sec
-        public static double kDriveMaxAcceleration = 107.0; //inches per second per second
-        public static double kDriveStraightKp = 0.12;
-        public static double kDriveStraightKi = 0.025;
-        public static double kDriveStraightKd = 0.0;
-        public static double kDriveStraightKv = 1.0 / kDriveMaxVelocity;
-        public static double kDriveStraightKa = 0.0;
 
         public static double kDriveWheelDiameterInches = 4.0;
 
-        public static double kDrivePathkTurn = 0.015;
+        public static double kDriveVelocityKp = 0.0;
+        public static double kDriveVelocityKi = 0.0;
+        public static double kDriveVelocityKd = 0.0;
+        public static double kDriveVelocityKf = 0.258;
+        public static int kDriveVelocityIZone = 0;
+        public static double kDriveVelocityRampRate = 0.0;
+        public static int kDriveVelocityAllowableError = 0;
 
-        public static double kDriveStraightTurnKp = -0.025;
+        public static double kPathFollowingLookahead = 24;
+        public static double kPathFollowingMaxAccel = 75;
+        public static double kPathFollowingMaxVel = 90;
 
-        public static double kTurnMaxAccelRadsPerSec2 = Math.PI / 6;
+        public static double kDriveHeadingVelocityKp = 4.0;
+        public static double kDriveHeadingVelocityKi = 0.0;
+        public static double kDriveHeadingVelocityKd = 50.0;
 
-        public static double kTurnKp = 2.3;
-        public static double kTurnKi = 1.0;
-        public static double kTurnKd = 0.25;
-        public static double kTurnKv = 1.0 / (2 * Math.PI);
-        public static double kTurnKa = 0.0015;
+        public final static double kTrackScrubFactor = 0.5;
+        public final static double kTrackEffectiveDiameter = 27.25;
     }
 
     public static class GearMan {
@@ -70,6 +67,8 @@ public class Constants {
         public static int kGearManOutSolenoidId = 3;
         public static int kGearManPunchInSolenoidId = 4;
         public static int kGearManPunchOutSolenoidId = 5;
+
+        public static double kGearManPunchWaitSeconds = 0.75;
     }
 
     public static class Pickup {
@@ -104,27 +103,5 @@ public class Constants {
         public static final double kClimberMotorSpeedUp = 1.0;
         public static final double kClimberMotorSlowSpeed = 0.7;
         public static final double kClimberAmpMax = 40;
-    }
-
-    public static class Testing {
-        public static boolean kDisableDriveCode = false;
-    }
-
-
-    public static class DriveControllers {
-        public static double kDriveVelocityKp = 0.0;
-        public static double kDriveVelocityKi = 0.0;
-        public static double kDriveVelocityKd = 0.0;
-        public static double kDriveVelocityKf = 0.0;
-        public static int kDriveVelocityIZone = 0;
-        public static double kDriveVelocityRampRate = 0.0;
-        public static int kDriveVelocityAllowableError = 0;
-
-        public final static double kTrackScrubFactor = 0.5;
-        public final static double kTrackEffectiveDiameter = 27.25;
-
-        public static double kPathFollowingLookahead = 24;
-        public static double kPathFollowingMaxAccel = 75;
-        public static double kPathFollowingMaxVel = 75;
     }
 }

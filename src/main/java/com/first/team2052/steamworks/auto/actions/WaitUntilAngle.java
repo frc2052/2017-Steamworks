@@ -1,20 +1,16 @@
 package com.first.team2052.steamworks.auto.actions;
 
-import com.first.team2052.steamworks.auto.AutoModeBase;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 
-/**
- * Created by KnightKrawler on 2/28/2017.
- */
-public class WaitUntilAngle extends AutoModeBase.Action {
+public class WaitUntilAngle implements Action {
     private final double angle;
 
     public WaitUntilAngle(double angle){
         this.angle = angle;
     }
+
     @Override
     public void done() {
-
     }
 
     @Override

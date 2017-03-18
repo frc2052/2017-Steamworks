@@ -42,9 +42,9 @@ public class Controls {
         return joystick0.getRawButton(2);
     }
 
-    public GearMan.GearManState getGearManState() {
+    public boolean getGearManState() {
         gearManLatch.update(secondaryStick.getRawButton(4));
-        return gearManLatch.get() ? GearMan.GearManState.OPEN : GearMan.GearManState.CLOSED;
+        return gearManLatch.get();
     }
 
     public Pickup.PickupState getIntakeState() {

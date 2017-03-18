@@ -1,18 +1,9 @@
 package com.first.team2052.steamworks.auto;
 
-import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
+import com.first.team2052.steamworks.auto.actions.Action;
 import edu.wpi.first.wpilibj.Timer;
 
 public abstract class AutoModeBase {
-    public static abstract class Action {
-        public abstract void done();
-
-        public abstract boolean isFinished();
-
-        public abstract void start();
-
-        public abstract void update();
-    }
 
     private boolean running = false;
     private Timer timer = new Timer();

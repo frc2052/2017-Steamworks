@@ -7,49 +7,70 @@ import edu.wpi.first.wpilibj.Timer;
 
 public class GearMan implements Loopable {
     private static GearMan instance = new GearMan();
-    private Solenoid inSolenoid, outSolenoid;
-    private Solenoid punchInSolenoid, punchOutSolenoid;
+    private Solenoid inSolenoid, outSolenoid,
+            punchInSolenoid, punchOutSolenoid;
+
     private GearManState currentState = GearManState.CLOSED;
-    private GearManState wantedState = GearManState.CLOSED;
-    private Timer stateTimer = new Timer();
+    private boolean wantOpen = false;
+    private Timer stateTimer;
 
     private GearMan() {
         inSolenoid = new Solenoid(Constants.GearMan.kGearManInSolenoidId);
         outSolenoid = new Solenoid(Constants.GearMan.kGearManOutSolenoidId);
         punchInSolenoid = new Solenoid(Constants.GearMan.kGearManPunchInSolenoidId);
         punchOutSolenoid = new Solenoid(Constants.GearMan.kGearManPunchOutSolenoidId);
+
+        stateTimer = new Timer();
     }
 
-    public void setGearManState(GearManState gearManState) {
-        wantedState = gearManState;
+    public void setWantOpen(boolean wantOpen) {
+        this.wantOpen = wantOpen;
     }
 
     public static GearMan getInstance() {
         return instance;
     }
 
-    public boolean getGearManState() {
+    public boolean getSolenoidState() {
         return outSolenoid.get();
+    }
+
+    public GearManState getCurrentState() {
+        return currentState;
     }
 
     @Override
     public void update() {
-        GearManState newState;
+        GearManState newState = currentState;
         switch (currentState) {
             case CLOSED:
+                if (wantOpen) {
+                    newState = GearManState.OPEN;
+                }
+
                 setOpenPincers(false);
                 setPushGear(false);
                 break;
             case OPEN:
+                if (!wantOpen) {
+                    newState = GearManState.CLOSED;
+                }
+
                 setOpenPincers(true);
                 //This waits a set amount of time to push the gear on to the peg further
-                if (stateTimer.get() > .75) {
-                    setPushGear(true);
+                if (stateTimer.get() > Constants.GearMan.kGearManPunchWaitSeconds) {
+                    newState = GearManState.OPEN_PUNCHED;
                 }
                 break;
-        }
+            case OPEN_PUNCHED:
+                if (!wantOpen) {
+                    newState = GearManState.CLOSED;
+                }
 
-        newState = wantedState;
+                setOpenPincers(true);
+                setPushGear(true);
+                break;
+        }
 
         if (newState != currentState) {
             System.out.println("Gearman State Changed");
@@ -61,12 +82,11 @@ public class GearMan implements Loopable {
 
     @Override
     public void onStart() {
-
+        setWantOpen(false);
     }
 
     @Override
     public void onStop() {
-
     }
 
     private void setOpenPincers(boolean open) {
@@ -80,13 +100,8 @@ public class GearMan implements Loopable {
     }
 
     public enum GearManState {
-        OPEN(false),
-        CLOSED(true);
-
-        public final boolean out;
-
-        GearManState(boolean out) {
-            this.out = out;
-        }
+        OPEN,
+        OPEN_PUNCHED,
+        CLOSED
     }
 }

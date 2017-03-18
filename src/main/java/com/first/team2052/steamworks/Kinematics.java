@@ -3,9 +3,6 @@ package com.first.team2052.steamworks;
 import com.first.team2052.lib.vec.RigidTransform2d;
 import com.first.team2052.lib.vec.Rotation2d;
 
-/**
- * Created by Adam on 3/13/2017.
- */
 public class Kinematics {
     private static final double kEpsilon = 1E-9;
 
@@ -16,7 +13,7 @@ public class Kinematics {
     public static RigidTransform2d.Delta forwardKinematics(double left_wheel_delta, double right_wheel_delta) {
         double linear_velocity = (left_wheel_delta + right_wheel_delta) / 2;
         double delta_v = (right_wheel_delta - left_wheel_delta) / 2;
-        double delta_rotation = delta_v * 2 * Constants.DriveControllers.kTrackScrubFactor / Constants.DriveControllers.kTrackEffectiveDiameter;
+        double delta_rotation = delta_v * 2 * Constants.Drive.kTrackScrubFactor / Constants.Drive.kTrackEffectiveDiameter;
         return new RigidTransform2d.Delta(linear_velocity, 0, delta_rotation);
     }
 
@@ -51,7 +48,7 @@ public class Kinematics {
         if (Math.abs(velocity.dtheta) < kEpsilon) {
             return new DriveVelocity(velocity.dx, velocity.dx);
         }
-        double delta_v = Constants.DriveControllers.kTrackEffectiveDiameter * velocity.dtheta / (2 * Constants.DriveControllers.kTrackScrubFactor);
+        double delta_v = Constants.Drive.kTrackEffectiveDiameter * velocity.dtheta / (2 * Constants.Drive.kTrackScrubFactor);
         return new DriveVelocity(velocity.dx - delta_v, velocity.dx + delta_v);
     }
 }

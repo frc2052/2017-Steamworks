@@ -21,6 +21,7 @@ public class Climber {
         UP(Constants.Climber.kClimberMotorSpeedUp),
         SLOW_UP(Constants.Climber.kClimberMotorSlowSpeed),
         STOP(0.0);
+
         double speed;
 
         ClimberState(double speed) {
