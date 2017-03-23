@@ -49,22 +49,13 @@ public class AutoModeSelector {
                 sendableChooserAutoMode.addObject(mode.name, mode);
             }
         }
-        sendableChooserSide = new SendableChooser<Side>();
+
+        sendableChooserSide = new SendableChooser<>();
         sendableChooserSide.addDefault("Red", Side.RED);
         sendableChooserSide.addObject("Blue", Side.BLUE);
 
         SmartDashboard.putData("alliance", sendableChooserSide);
         SmartDashboard.putData("auto_modes", sendableChooserAutoMode);
-    }
-
-    public static boolean isOnBlue() {
-        DriverStation.Alliance color;
-        color = DriverStation.getInstance().getAlliance();
-        if (color == DriverStation.Alliance.Blue) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     public static AutoModeBase getAutoInstance() {

@@ -23,6 +23,8 @@ public class Constants {
         public static int kIntakeMotorPort = 11;
 
         public static final int kClimbId = 12;
+
+        public static final int kIndexerId = 13;
     }
 
     public static class Drive {
@@ -96,7 +98,7 @@ public class Constants {
         public static final int kShooterKeyVelocity = 3250;
 
         //RPM amount away from the target that the agitators will begin spinning at
-        public static final int kShooterVelocityWindow = 300;
+        public static final int kShooterVelocityWindow = 100;
     }
 
     public static class Climber {

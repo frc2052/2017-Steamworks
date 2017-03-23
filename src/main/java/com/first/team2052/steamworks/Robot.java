@@ -3,13 +3,12 @@ package com.first.team2052.steamworks;
 import com.first.team2052.lib.ControlLoop;
 import com.first.team2052.lib.RevRoboticsPressureSensor;
 import com.first.team2052.lib.vec.RigidTransform2d;
-import com.first.team2052.lib.vec.Rotation2d;
 import com.first.team2052.steamworks.auto.AutoModeRunner;
 import com.first.team2052.steamworks.auto.AutoModeSelector;
 import com.first.team2052.steamworks.subsystems.Climber;
 import com.first.team2052.steamworks.subsystems.GearMan;
 import com.first.team2052.steamworks.subsystems.Pickup;
-import com.first.team2052.steamworks.subsystems.Shooter;
+import com.first.team2052.steamworks.subsystems.shooter.Shooter;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -104,8 +103,11 @@ public class Robot extends IterativeRobot {
 
         gearMan.setWantOpen(controls.getGearManState());
         pickup.setIntakeState(controls.getIntakeState());
+
         shooter.setWantShoot(controls.getWantShoot());
+        shooter.setWantIdleRampUp(controls.getWantShooterIdle());
         shooter.setWantReverseAgitator(controls.getWantReverseAgitator());
+
         climber.setClimberState(controls.getClimberState(pdp.getCurrent(2)));
 
         SmartDashboard.putNumber("gyro", driveTrain.getGyroAngleDegrees());

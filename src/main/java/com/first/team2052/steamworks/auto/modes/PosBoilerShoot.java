@@ -5,10 +5,16 @@ import com.first.team2052.lib.vec.Rotation2d;
 import com.first.team2052.lib.vec.Translation2d;
 import com.first.team2052.steamworks.auto.AutoMode;
 import com.first.team2052.steamworks.auto.AutoModeEndedException;
+import com.first.team2052.steamworks.auto.AutoModeSelector;
 import com.first.team2052.steamworks.auto.actions.FollowPathAction;
+import com.first.team2052.steamworks.auto.actions.SeriesAction;
+import com.first.team2052.steamworks.auto.actions.StartShootingAction;
+import com.first.team2052.steamworks.auto.actions.WaitAction;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
+import com.first.team2052.steamworks.subsystems.shooter.Shooter;
 import com.google.common.collect.Lists;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,33 +25,23 @@ import java.util.List;
 public class PosBoilerShoot extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
-//        driveStraightDistance(46, 36);
-//        if (AutoModeSelector.getSide() == AutoModeSelector.Side.RED) {
-//            DriveTrain.getInstance().turnInPlace(-44.25);
-//            runAction(new WaitUntilAngle(-44.25));
-//        } else {
-//            DriveTrain.getInstance().turnInPlace(44.25);
-//            runAction(new WaitUntilAngle(44.25));
-//        }
-//        driveStraightDistance(-39, 24);
-//        Timer.delay(0.5);
-//        DriveTrain.getInstance().setOpenLoop(-.25, -.25);
-//        Timer.delay(0.5);
-//        DriveTrain.getInstance().setOpenLoop(0, 0);
-//        Shooter.getInstance().setWantShoot(true);
-//        Timer.delay(4.5);
-//        Shooter.getInstance().setWantShoot(false);
-//        driveStraightDistance(100, 36);
+        double distance_forward = 46;
+        double turn = Math.toRadians(42.25);
 
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
-        forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 20));
-        forwardPath.add(new Path.Waypoint(new Translation2d(-30, -30), 20));
-        forwardPath.add(new Path.Waypoint(new Translation2d(-55, -10), 20));
-        forwardPath.add(new Path.Waypoint(new Translation2d(-48, -5), 20));
-        forwardPath.add(new Path.Waypoint(new Translation2d(-12, 30), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 50));
+        forwardPath.add(new Path.Waypoint(new Translation2d(-distance_forward + (15 * Math.cos(turn)), 0), 30));
+        forwardPath.add(new Path.Waypoint(new Translation2d(-distance_forward + (15 * Math.cos(turn)), isBlue() ? -1 : 1 * 15 * Math.sin(turn)), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(-distance_forward + (39 * Math.cos(turn)), isBlue() ? -1 : 1 * 39 * Math.sin(turn)), 20));
 
-        runAction(new FollowPathAction(new Path(forwardPath), true));
+        //Start running the shooter, but don't shoot
+        Shooter.getInstance().setWantIdleRampUp(true);
 
-        DriveTrain.getInstance().setVelocityHeadingSetpoint(20, Rotation2d.fromDegrees(-180));
+        runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(forwardPath), true)/*, new StartShootingAction()*/, new WaitAction(4.0))));
+
+        Shooter.getInstance().setWantIdleRampUp(false);
+        Shooter.getInstance().setWantShoot(false);
+
+        DriveTrain.getInstance().setVelocityHeadingSetpoint(60, Rotation2d.fromDegrees(-180));
     }
 }

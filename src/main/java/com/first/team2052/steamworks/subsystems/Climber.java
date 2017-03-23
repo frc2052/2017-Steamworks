@@ -4,17 +4,17 @@ import com.ctre.CANTalon;
 import com.first.team2052.steamworks.Constants;
 
 public class Climber {
-    CANTalon grapple = new CANTalon(Constants.CAN.kClimbId);
+    private CANTalon climbing_motor = new CANTalon(Constants.CAN.kClimbId);
 
     private static Climber instance = new Climber();
 
     private Climber() {
-        grapple.configPeakOutputVoltage(+12.0f, 0.0f);
-        grapple.setVoltageRampRate(15.0);
+        climbing_motor.configPeakOutputVoltage(+12.0f, 0.0f);
+        climbing_motor.setVoltageRampRate(15.0);
     }
 
     public void setClimberState(ClimberState state) {
-        grapple.set(state.getSpeed());
+        climbing_motor.set(state.getSpeed());
     }
 
     public enum ClimberState {

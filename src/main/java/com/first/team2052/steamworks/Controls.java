@@ -16,6 +16,7 @@ public class Controls {
     private Joystick joystick1 = new Joystick(1);
     private Joystick secondaryStick = new Joystick(2);
     FlipFlopLatch gearManLatch = new FlipFlopLatch();
+    FlipFlopLatch wantIdleLatch = new FlipFlopLatch();
     private boolean climberAmpLimitReached = false;
 
     private Controls() {
@@ -45,6 +46,11 @@ public class Controls {
     public boolean getGearManState() {
         gearManLatch.update(secondaryStick.getRawButton(4));
         return gearManLatch.get();
+    }
+
+    public boolean getWantShooterIdle(){
+        wantIdleLatch.update(secondaryStick.getRawButton(8));
+        return wantIdleLatch.get();
     }
 
     public Pickup.PickupState getIntakeState() {

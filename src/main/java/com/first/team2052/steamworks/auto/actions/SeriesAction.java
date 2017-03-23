@@ -9,6 +9,8 @@ public class SeriesAction implements Action {
     private final ArrayList<Action> mRemainingActions;
 
     public SeriesAction(List<Action> actions) {
+        //We don't want a reference of the list, we a copy
+        //Just in case we have to use the list elsewhere in auto
         mRemainingActions = new ArrayList<>(actions.size());
         for (Action action : actions) {
             mRemainingActions.add(action);
