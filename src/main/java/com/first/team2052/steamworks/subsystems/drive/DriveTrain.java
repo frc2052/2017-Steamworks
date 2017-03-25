@@ -24,7 +24,8 @@ public class DriveTrain extends DriveTrainHardware {
     private final Loopable loopable = new Loopable() {
         @Override
         public void onStart() {
-            setOpenLoop(0.0, 0.0);
+            setOpenLoop(DriveSignal.NEUTRAL);
+            setBrakeMode(false);
         }
 
         @Override
@@ -34,12 +35,13 @@ public class DriveTrain extends DriveTrainHardware {
             }
             //Always be in low gear for controllers
             setHighGear(false);
+            setBrakeMode(true);
 
             switch (getDriveControlState()) {
                 case PATH_FOLLOWING_CONTROL:
                     updatePathFollower();
                     if (isFinishedPath()) {
-                        setOpenLoop(0.0, 0.0);
+                        setOpenLoop(DriveSignal.NEUTRAL);
                     }
                     return;
                 case VELOCITY_HEADING_CONTROL:
@@ -50,13 +52,13 @@ public class DriveTrain extends DriveTrainHardware {
 
         @Override
         public void onStop() {
-            setOpenLoop(0.0, 0.0);
+            setOpenLoop(DriveSignal.NEUTRAL);
         }
     };
 
     private DriveTrain() {
         setHighGear(Constants.Drive.kDriveDefaultHighGear);
-        setOpenLoop(0.0, 0.0);
+        setOpenLoop(DriveSignal.NEUTRAL);
 
         velocityHeadingPid = new SynchronousPID(Constants.Drive.kDriveHeadingVelocityKp, Constants.Drive.kDriveHeadingVelocityKi,
                 Constants.Drive.kDriveHeadingVelocityKd);
@@ -86,13 +88,13 @@ public class DriveTrain extends DriveTrainHardware {
     /**
      * Sets the motor speeds in percent mode and disables all controllers
      */
-    public void setOpenLoop(double left_power, double right_power) {
+    public void setOpenLoop(DriveSignal signal) {
         if (getDriveControlState() != DriveControlState.OPEN_LOOP) {
             leftMaster.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
             rightMaster.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
             driveControlState = DriveControlState.OPEN_LOOP;
         }
-        setLeftRightPower(left_power, right_power);
+        setLeftRightPower(signal.leftMotor, signal.rightMotor);
     }
 
     /**
@@ -196,6 +198,7 @@ public class DriveTrain extends DriveTrainHardware {
             rightMaster.changeControlMode(CANTalon.TalonControlMode.Speed);
             rightMaster.setProfile(kVelocityControlSlot);
             rightMaster.setAllowableClosedLoopErr(Constants.Drive.kDriveVelocityAllowableError);
+            setBrakeMode(true);
         }
     }
 

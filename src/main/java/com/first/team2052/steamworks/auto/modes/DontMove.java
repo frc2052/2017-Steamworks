@@ -2,6 +2,7 @@ package com.first.team2052.steamworks.auto.modes;
 
 import com.first.team2052.steamworks.auto.AutoMode;
 import com.first.team2052.steamworks.auto.AutoModeEndedException;
+import com.first.team2052.steamworks.subsystems.drive.DriveSignal;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 
 /**
@@ -12,6 +13,6 @@ import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 public class DontMove extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
-        DriveTrain.getInstance().setOpenLoop(0.0, 0.0);
+        DriveTrain.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
     }
 }

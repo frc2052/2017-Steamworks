@@ -23,7 +23,7 @@ public class Controls {
     }
 
     public double getTank() {
-        double tank = Util.checkForDeadzone(-joystick0.getY(), 0.10);
+        double tank = -joystick0.getY();
         if (!joystick1.getTrigger()) {
             tank *= -1;
         }
@@ -31,12 +31,11 @@ public class Controls {
     }
 
     public double getTurn() {
-        double turn = Util.checkForDeadzone(joystick1.getX(), 0.10);
-        turn = Math.sin(Math.PI / 2.0 * Constants.kDriveSpeedCurveTurn * turn)
-                / Math.sin(Math.PI / 2.0 * Constants.kDriveSpeedCurveTurn);
-        turn = Math.sin(Math.PI / 2.0 * Constants.kDriveSpeedCurveTurn * turn)
-                / Math.sin(Math.PI / 2.0 * Constants.kDriveSpeedCurveTurn);
-        return turn * 0.75;
+        return joystick1.getX();
+    }
+
+    public boolean getQuickTurn(){
+        return joystick1.getRawButton(3);
     }
 
     public boolean getHighGear() {
@@ -94,6 +93,6 @@ public class Controls {
     }
 
     public boolean getWantReverseAgitator() {
-        return joystick1.getRawButton(3);
+        return secondaryStick.getRawButton(10);
     }
 }

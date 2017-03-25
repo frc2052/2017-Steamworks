@@ -8,6 +8,7 @@ import com.first.team2052.steamworks.auto.AutoModeSelector;
 import com.first.team2052.steamworks.subsystems.Climber;
 import com.first.team2052.steamworks.subsystems.GearMan;
 import com.first.team2052.steamworks.subsystems.Pickup;
+import com.first.team2052.steamworks.subsystems.drive.DriveSignal;
 import com.first.team2052.steamworks.subsystems.shooter.Shooter;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -28,10 +29,12 @@ public class Robot extends IterativeRobot {
     private RobotState robotState;
     private RobotStateEstimator stateEstimator;
     private PowerDistributionPanel pdp;
+    private DriveHelper driveHelper;
 
 
     @Override
     public void robotInit() {
+        driveHelper = new DriveHelper();
         controlLoop = new ControlLoop(Constants.kControlLoopPeriod);
 
         driveTrain = DriveTrain.getInstance();
@@ -60,6 +63,9 @@ public class Robot extends IterativeRobot {
         robotState.reset(Timer.getFPGATimestamp(), new RigidTransform2d());
 
         driveTrain.setHighGear(Constants.Drive.kDriveDefaultHighGear);
+        driveTrain.setOpenLoop(DriveSignal.NEUTRAL);
+        driveTrain.setBrakeMode(false);
+
         gearMan.setWantOpen(false);
 
         shooter.setWantShoot(false);
@@ -83,8 +89,9 @@ public class Robot extends IterativeRobot {
 
         controlLoop.start();
 
-        driveTrain.setOpenLoop(0.0, 0.0);
+        driveTrain.setOpenLoop(DriveSignal.NEUTRAL);
         driveTrain.setHighGear(Constants.Drive.kDriveDefaultHighGear);
+        driveTrain.setBrakeMode(false);
 
         gearMan.setWantOpen(false);
         pickup.setIntakeState(Pickup.PickupState.STOP);
@@ -96,10 +103,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         driveTrain.setHighGear(controls.getHighGear());
 
-        double turn = controls.getTurn();
-        double tank = controls.getTank();
-
-        driveTrain.setOpenLoop(tank + turn, tank - turn);
+        driveTrain.setOpenLoop(driveHelper.drive(controls.getTank(), controls.getTurn(), controls.getQuickTurn()));
 
         gearMan.setWantOpen(controls.getGearManState());
         pickup.setIntakeState(controls.getIntakeState());

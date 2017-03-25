@@ -18,6 +18,7 @@ class DriveTrainHardware {
     private final CANTalon leftSlave, leftSlave1;
     ADIS16448_IMU gyro;
     Solenoid shifterIn, shifterOut;
+    private boolean isBrakeMode = true;
 
 
     DriveTrainHardware() {
@@ -66,5 +67,19 @@ class DriveTrainHardware {
         shifterOut = new Solenoid(Constants.Drive.kDriveOutSolenoidId);
 
         gyro = new ADIS16448_IMU();
+
+        setBrakeMode(false);
+    }
+
+    public void setBrakeMode(boolean on) {
+        if (isBrakeMode != on) {
+            leftMaster.enableBrakeMode(on);
+            leftSlave.enableBrakeMode(on);
+            leftSlave1.enableBrakeMode(on);
+            rightMaster.enableBrakeMode(on);
+            rightSlave.enableBrakeMode(on);
+            rightSlave1.enableBrakeMode(on);
+            isBrakeMode = on;
+        }
     }
 }

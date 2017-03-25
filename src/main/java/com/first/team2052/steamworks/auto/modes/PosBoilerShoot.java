@@ -42,6 +42,6 @@ public class PosBoilerShoot extends AutoMode {
         Shooter.getInstance().setWantIdleRampUp(false);
         Shooter.getInstance().setWantShoot(false);
 
-        DriveTrain.getInstance().setVelocityHeadingSetpoint(60, Rotation2d.fromDegrees(-180));
+        DriveTrain.getInstance().setVelocityHeadingSetpoint(20, Rotation2d.fromDegrees(-180));
     }
 }

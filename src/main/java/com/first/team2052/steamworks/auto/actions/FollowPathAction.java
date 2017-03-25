@@ -1,6 +1,7 @@
 package com.first.team2052.steamworks.auto.actions;
 
 import com.first.team2052.lib.path.Path;
+import com.first.team2052.steamworks.subsystems.drive.DriveSignal;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 
 /**
@@ -35,7 +36,7 @@ public class FollowPathAction implements Action {
 
     @Override
     public void done() {
-        mDrive.setOpenLoop(0.0, 0.0);
+        mDrive.setOpenLoop(DriveSignal.NEUTRAL);
     }
 
     @Override

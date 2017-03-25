@@ -22,9 +22,11 @@ public class PosLeftGear extends AutoMode {
         double distance_to_peg_polar = 40.0;
 
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
-        forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 50));
-        forwardPath.add(new Path.Waypoint(new Translation2d(distance, 0), 40));
-        forwardPath.add(new Path.Waypoint(new Translation2d(distance + (20 * Math.cos(Math.PI / 3)), -(20 * Math.sin(Math.PI / 3))), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 80));
+        forwardPath.add(new Path.Waypoint(new Translation2d(distance - 20, 0), 30));
+        forwardPath.add(new Path.Waypoint(new Translation2d(distance, 0), 30));
+        forwardPath.add(new Path.Waypoint(new Translation2d(distance + (10 * Math.cos(Math.PI / 3)), -(10 * Math.sin(Math.PI / 3))), 30));
+        forwardPath.add(new Path.Waypoint(new Translation2d(distance + ((distance_to_peg_polar - 20) * Math.cos(Math.PI / 3)), -((distance_to_peg_polar - 20) * Math.sin(Math.PI / 3))), 20));
         forwardPath.add(new Path.Waypoint(new Translation2d(distance + (distance_to_peg_polar * Math.cos(Math.PI / 3)), -(distance_to_peg_polar * Math.sin(Math.PI / 3))), 20));
 
         List<Path.Waypoint> backwardPath = Lists.newArrayList();
@@ -35,7 +37,7 @@ public class PosLeftGear extends AutoMode {
 
         List<Path.Waypoint> middleFieldPath = Lists.newArrayList();
         middleFieldPath.add(new Path.Waypoint(new Translation2d(distance - 20, 0), 60));
-        middleFieldPath.add(new Path.Waypoint(new Translation2d(distance + 50, 0), 20));
+        middleFieldPath.add(new Path.Waypoint(new Translation2d(distance + 50, 0), 60));
 
         //Drive up to the peg and drop gear
         runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(forwardPath), false), new DropGearAction())));
