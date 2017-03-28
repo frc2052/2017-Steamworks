@@ -20,7 +20,7 @@ public class GearMan implements Loopable {
         punchInSolenoid = new Solenoid(Constants.GearMan.kGearManPunchInSolenoidId);
         punchOutSolenoid = new Solenoid(Constants.GearMan.kGearManPunchOutSolenoidId);
 
-        stateTimer = new Timer();
+        stateTimer = new Timer();//This timer is for the puncher
     }
 
     public void setWantOpen(boolean wantOpen) {
@@ -39,11 +39,13 @@ public class GearMan implements Loopable {
         return currentState;
     }
 
+    //We need a robot to test this
     @Override
     public void update() {
         GearManState newState = currentState;
         switch (currentState) {
             case CLOSED:
+                //the piston closes
                 if (wantOpen) {
                     newState = GearManState.OPEN;
                 }
@@ -52,6 +54,7 @@ public class GearMan implements Loopable {
                 setPushGear(false);
                 break;
             case OPEN:
+                //the piston opens
                 if (!wantOpen) {
                     newState = GearManState.CLOSED;
                 }
@@ -63,15 +66,16 @@ public class GearMan implements Loopable {
                 }
                 break;
             case OPEN_PUNCHED:
+                //combination of the piston opening, and the puncher extending
                 if (!wantOpen) {
                     newState = GearManState.CLOSED;
                 }
 
                 setOpenPincers(true);
                 setPushGear(true);
-                break;
+            break;
         }
-
+        //this code resets the timer and assigns a new state
         if (newState != currentState) {
             System.out.println("Gearman State Changed");
             stateTimer.reset();
