@@ -57,6 +57,7 @@ public class GearMan implements Loopable {
                     newState = GearManState.CLOSED;
                 }
 
+                setPushGear(false);
                 setOpenPincers(true);
                 //This waits a set amount of time to push the gear on to the peg further
                 if (stateTimer.get() > Constants.GearMan.kGearManPunchWaitSeconds) {
@@ -69,7 +70,7 @@ public class GearMan implements Loopable {
                     newState = GearManState.CLOSING;
                 }
 
-                if(stateTimer.get() > 0.5){
+                if (stateTimer.get() > 0.5) {
                     newState = GearManState.OPEN_MANUAL;
                 }
 
@@ -80,9 +81,11 @@ public class GearMan implements Loopable {
                 setOpenPincers(true);
                 setPushGear(false);
 
-                if(!wantOpen){
+                if (!wantOpen && stateTimer.get() > 0.5) {
+                    newState = GearManState.CLOSED;
+                } else if (!wantOpen) {
                     newState = GearManState.CLOSING;
-                } else if(wantPunch && stateTimer.get() > 0.5){
+                } else if (wantPunch && stateTimer.get() > 0.5) {
                     newState = GearManState.OPEN_PUNCHED;
                 }
                 break;
@@ -96,7 +99,9 @@ public class GearMan implements Loopable {
                 break;
         }
         //this code resets the timer and assigns a new state
-        if (newState != currentState) {
+        if (newState != currentState)
+
+        {
             System.out.println("Gearman State Changed " + currentState);
             stateTimer.reset();
             stateTimer.start();
