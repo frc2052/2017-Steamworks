@@ -25,7 +25,7 @@ import java.util.List;
 public class PosBoilerShoot extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
-        double distance_forward = 46;
+        double distance_forward = 42;
         double turn = Math.toRadians(42.25);
 
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
