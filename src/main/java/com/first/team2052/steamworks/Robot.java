@@ -120,6 +120,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("psi", revRoboticsPressureSensor.getAirPressurePsi());
         SmartDashboard.putBoolean("gearman", gearMan.getSolenoidState());
         SmartDashboard.putNumber("climb_amp", pdp.getCurrent(2));
+        robotState.outputToSmartDashboard();
     }
 
     @Override
