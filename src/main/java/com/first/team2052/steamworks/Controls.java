@@ -92,6 +92,10 @@ public class Controls {
         return joystick0.getTrigger();
     }
 
+    public boolean getWantPunch() {
+        return secondaryStick.getRawButton(7);
+    }
+
     public boolean getWantReverseAgitator() {
         return secondaryStick.getRawButton(10);
     }

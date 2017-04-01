@@ -11,7 +11,7 @@ public class GearMan implements Loopable {
             punchInSolenoid, punchOutSolenoid;
 
     private GearManState currentState = GearManState.CLOSED;
-    private boolean wantOpen = false, wantPunch = true;
+    private boolean wantOpen = false, wantPunch = false;
     private Timer stateTimer;
 
     private GearMan() {
@@ -57,6 +57,7 @@ public class GearMan implements Loopable {
                     newState = GearManState.CLOSED;
                 }
 
+                setPushGear(false);
                 setOpenPincers(true);
                 //This waits a set amount of time to push the gear on to the peg further
                 if (stateTimer.get() > Constants.GearMan.kGearManPunchWaitSeconds) {
@@ -66,10 +67,10 @@ public class GearMan implements Loopable {
             case OPEN_PUNCHED:
                 //combination of the piston opening, and the puncher extending
                 if (!wantOpen) {
-                    newState = GearManState.CLOSED;
+                    newState = GearManState.CLOSING;
                 }
 
-                if(stateTimer.get() > 0.5){
+                if (stateTimer.get() > 0.5) {
                     newState = GearManState.OPEN_MANUAL;
                 }
 
@@ -80,23 +81,28 @@ public class GearMan implements Loopable {
                 setOpenPincers(true);
                 setPushGear(false);
 
-                if(!wantOpen){
+                if (!wantOpen && stateTimer.get() > 0.5) {
+                    newState = GearManState.CLOSED;
+                } else if (!wantOpen) {
                     newState = GearManState.CLOSING;
-                } else if(wantPunch && stateTimer.get() > 0.5){
+                } else if (wantPunch && stateTimer.get() > 0.5) {
                     newState = GearManState.OPEN_PUNCHED;
                 }
                 break;
             case CLOSING:
                 setOpenPincers(true);
+                setPushGear(false);
 
-                if (stateTimer.get() > 1.0) {
+                if (stateTimer.get() > 0.5) {
                     newState = GearManState.CLOSED;
                 }
                 break;
         }
         //this code resets the timer and assigns a new state
-        if (newState != currentState) {
-            System.out.println("Gearman State Changed");
+        if (newState != currentState)
+
+        {
+            System.out.println("Gearman State Changed " + currentState);
             stateTimer.reset();
             stateTimer.start();
             currentState = newState;
@@ -120,6 +126,10 @@ public class GearMan implements Loopable {
     private void setPushGear(boolean push) {
         punchInSolenoid.set(!push);
         punchOutSolenoid.set(push);
+    }
+
+    public void setWantPunch(boolean wantPunch) {
+        this.wantPunch = wantPunch;
     }
 
     public enum GearManState {

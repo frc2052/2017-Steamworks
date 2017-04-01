@@ -24,11 +24,10 @@ public class PosCenterGear extends AutoMode {
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
         forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 50));
         forwardPath.add(new Path.Waypoint(new Translation2d(60, 0), 20));
-        forwardPath.add(new Path.Waypoint(new Translation2d(72, 0), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(70, 0), 20));
 
         List<Path.Waypoint> backwardPath = Lists.newArrayList();
-        backwardPath.add(new Path.Waypoint(new Translation2d(72, 0), 12));
-        backwardPath.add(new Path.Waypoint(new Translation2d(50, 0), 12));
+        backwardPath.add(new Path.Waypoint(new Translation2d(70, 0), 50));
         backwardPath.add(new Path.Waypoint(new Translation2d(40, 0), 60,  "CloseGearMan"));
         backwardPath.add(new Path.Waypoint(new Translation2d(35, 0), 60));
 

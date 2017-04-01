@@ -106,6 +106,7 @@ public class Robot extends IterativeRobot {
         driveTrain.setOpenLoop(driveHelper.drive(controls.getTank(), controls.getTurn(), controls.getQuickTurn()));
 
         gearMan.setWantOpen(controls.getGearManState());
+        gearMan.setWantPunch(controls.getWantPunch());
         pickup.setIntakeState(controls.getIntakeState());
 
         shooter.setWantShoot(controls.getWantShoot());
@@ -119,6 +120,7 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("psi", revRoboticsPressureSensor.getAirPressurePsi());
         SmartDashboard.putBoolean("gearman", gearMan.getSolenoidState());
         SmartDashboard.putNumber("climb_amp", pdp.getCurrent(2));
+        robotState.outputToSmartDashboard();
     }
 
     @Override

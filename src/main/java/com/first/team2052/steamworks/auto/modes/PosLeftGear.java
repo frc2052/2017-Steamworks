@@ -19,7 +19,7 @@ public class PosLeftGear extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
         double distance = 74.0;
-        double distance_to_peg_polar = 59.0;
+        double distance_to_peg_polar = 57.0;
 
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
         forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 80));
@@ -31,9 +31,9 @@ public class PosLeftGear extends AutoMode {
 
         List<Path.Waypoint> backwardPath = Lists.newArrayList();
         backwardPath.add(new Path.Waypoint(new Translation2d(distance + (distance_to_peg_polar * Math.cos(Math.PI / 3)), -(distance_to_peg_polar * Math.sin(Math.PI / 3))), 12));
-        backwardPath.add(new Path.Waypoint(new Translation2d(distance + (45 * Math.cos(Math.PI / 3)), -(45 * Math.sin(Math.PI / 3))), 12));
-        backwardPath.add(new Path.Waypoint(new Translation2d(distance, 0), 60));
-        backwardPath.add(new Path.Waypoint(new Translation2d(distance - 20, 0), 60, "CloseGearMan"));
+        backwardPath.add(new Path.Waypoint(new Translation2d(distance + (45 * Math.cos(Math.PI / 3)), -(45 * Math.sin(Math.PI / 3))), 60));
+        backwardPath.add(new Path.Waypoint(new Translation2d(distance, 0), 60, "CloseGearMan"));
+        backwardPath.add(new Path.Waypoint(new Translation2d(distance - 20, 0), 60));
 
         List<Path.Waypoint> middleFieldPath = Lists.newArrayList();
         middleFieldPath.add(new Path.Waypoint(new Translation2d(distance - 20, 0), 60));
