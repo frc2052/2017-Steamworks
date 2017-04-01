@@ -65,10 +65,10 @@ public class Constants {
 
     public static class GearMan {
         //Solenoid Id's
-        public static int kGearManInSolenoidId = 2;
-        public static int kGearManOutSolenoidId = 3;
-        public static int kGearManPunchInSolenoidId = 4;
-        public static int kGearManPunchOutSolenoidId = 5;
+        public static int kGearManInSolenoidId = 2;//5 on phil
+        public static int kGearManOutSolenoidId = 3;//4 on phil
+        public static int kGearManPunchInSolenoidId = 4;//7 on phil
+        public static int kGearManPunchOutSolenoidId = 5;//6 on phil
 
         public static double kGearManPunchWaitSeconds = 0.75;
     }

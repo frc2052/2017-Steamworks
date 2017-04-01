@@ -106,6 +106,7 @@ public class Robot extends IterativeRobot {
         driveTrain.setOpenLoop(driveHelper.drive(controls.getTank(), controls.getTurn(), controls.getQuickTurn()));
 
         gearMan.setWantOpen(controls.getGearManState());
+        gearMan.setWantPunch(controls.getWantPunch());
         pickup.setIntakeState(controls.getIntakeState());
 
         shooter.setWantShoot(controls.getWantShoot());

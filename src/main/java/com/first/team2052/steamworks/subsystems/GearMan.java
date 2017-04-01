@@ -11,7 +11,7 @@ public class GearMan implements Loopable {
             punchInSolenoid, punchOutSolenoid;
 
     private GearManState currentState = GearManState.CLOSED;
-    private boolean wantOpen = false, wantPunch = true;
+    private boolean wantOpen = false, wantPunch = false;
     private Timer stateTimer;
 
     private GearMan() {
@@ -66,7 +66,7 @@ public class GearMan implements Loopable {
             case OPEN_PUNCHED:
                 //combination of the piston opening, and the puncher extending
                 if (!wantOpen) {
-                    newState = GearManState.CLOSED;
+                    newState = GearManState.CLOSING;
                 }
 
                 if(stateTimer.get() > 0.5){
@@ -88,15 +88,16 @@ public class GearMan implements Loopable {
                 break;
             case CLOSING:
                 setOpenPincers(true);
+                setPushGear(false);
 
-                if (stateTimer.get() > 1.0) {
+                if (stateTimer.get() > 0.5) {
                     newState = GearManState.CLOSED;
                 }
                 break;
         }
         //this code resets the timer and assigns a new state
         if (newState != currentState) {
-            System.out.println("Gearman State Changed");
+            System.out.println("Gearman State Changed " + currentState);
             stateTimer.reset();
             stateTimer.start();
             currentState = newState;
@@ -120,6 +121,10 @@ public class GearMan implements Loopable {
     private void setPushGear(boolean push) {
         punchInSolenoid.set(!push);
         punchOutSolenoid.set(push);
+    }
+
+    public void setWantPunch(boolean wantPunch) {
+        this.wantPunch = wantPunch;
     }
 
     public enum GearManState {
