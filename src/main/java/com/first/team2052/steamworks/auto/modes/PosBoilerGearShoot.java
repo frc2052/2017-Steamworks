@@ -21,21 +21,23 @@ public class PosBoilerGearShoot extends AutoMode {
     protected void init() throws AutoModeEndedException {
         double distance = 79.0;
         double distance_to_peg_polar = 59.0;
-        double turn = 42.25;
+        double turn = Math.toRadians(42.25);
         double distance_backward = 42;
 
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
-        forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 50));
-        forwardPath.add(new Path.Waypoint(new Translation2d(distance, 0), 40));
-        forwardPath.add(new Path.Waypoint(new Translation2d(distance + (20 * Math.cos(Math.PI / 3)), isBlue() ? -1 : 1 * (20 * Math.sin(Math.PI / 3))), 20));
-        forwardPath.add(new Path.Waypoint(new Translation2d(distance + (distance_to_peg_polar * Math.cos(Math.PI / 3)), isBlue() ? -1 : 1 * (distance_to_peg_polar * Math.sin(Math.PI / 3))), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 80));
+        forwardPath.add(new Path.Waypoint(new Translation2d(distance - 20, 0), 30));
+        forwardPath.add(new Path.Waypoint(new Translation2d(distance, 0), 30));
+        forwardPath.add(new Path.Waypoint(new Translation2d(distance + (10 * Math.cos(Math.PI / 3)), (10 * Math.sin(Math.PI / 3))), 30));
+        forwardPath.add(new Path.Waypoint(new Translation2d(distance + ((distance_to_peg_polar - 20) * Math.cos(Math.PI / 3)), ((distance_to_peg_polar - 20) * Math.sin(Math.PI / 3))), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(distance + (distance_to_peg_polar * Math.cos(Math.PI / 3)), (distance_to_peg_polar * Math.sin(Math.PI / 3))), 20));
 
         List<Path.Waypoint> backwardPath = Lists.newArrayList();
-        backwardPath.add(new Path.Waypoint(new Translation2d(distance + (distance_to_peg_polar * Math.cos(Math.PI / 3)), isBlue() ? -1 : 1 * (distance_to_peg_polar * Math.sin(Math.PI / 3))), 12));
-        backwardPath.add(new Path.Waypoint(new Translation2d(distance + (20 * Math.cos(Math.PI / 3)), isBlue() ? -1 : 1 * (20 * Math.sin(Math.PI / 3))), 12));
+        backwardPath.add(new Path.Waypoint(new Translation2d(distance + (distance_to_peg_polar * Math.cos(Math.PI / 3)), (distance_to_peg_polar * Math.sin(Math.PI / 3))), 12));
+        backwardPath.add(new Path.Waypoint(new Translation2d(distance + (20 * Math.cos(Math.PI / 3)), (20 * Math.sin(Math.PI / 3))), 12));
         backwardPath.add(new Path.Waypoint(new Translation2d(distance, 0), 40, "CloseGearMan"));
-        backwardPath.add(new Path.Waypoint(new Translation2d(distance_backward - (15 * Math.cos(turn)), isBlue() ? -1 : 1 * 15 * Math.sin(turn)), 20));
-        backwardPath.add(new Path.Waypoint(new Translation2d(distance_backward - (39 * Math.cos(turn)), isBlue() ? -1 : 1 * 39 * Math.sin(turn)), 15));
+        backwardPath.add(new Path.Waypoint(new Translation2d(distance_backward - (15 * Math.cos(turn)), -15 * Math.sin(turn)), 20));
+        backwardPath.add(new Path.Waypoint(new Translation2d(distance_backward - (39 * Math.cos(turn)), -39 * Math.sin(turn)), 15));
 
         //Drive up to the peg and drop gear
         runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(forwardPath), false), new DropGearAction())));

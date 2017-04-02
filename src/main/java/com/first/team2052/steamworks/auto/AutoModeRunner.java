@@ -12,6 +12,7 @@ public class AutoModeRunner {
     }
 
     public void setAutoMode(AutoModeBase autoMode) {
+        System.out.println(autoMode);
         this.autoMode = autoMode;
     }
 

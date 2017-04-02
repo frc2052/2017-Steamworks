@@ -14,7 +14,8 @@ public class AutoModeSelector {
         POS_LEFT_GEAR("Left Gear", PosLeftGear.class),
         POS_RIGHT_GEAR("Right Gear", PosRightGear.class),
         POS_CENTER_GEAR("Center Gear", PosCenterGear.class),
-        POS_BOILER_SHOOT("Boiler Shoot Baseline", PosBoilerShoot.class);
+        POS_BOILER_SHOOT("Boiler Shoot Baseline", PosBoilerShoot.class),
+        POS_GEAR_BOILER("Gear Boiler", PosBoilerGearShoot.class),;
 
         private final Class<? extends AutoMode> clazz;
         private final String name;
