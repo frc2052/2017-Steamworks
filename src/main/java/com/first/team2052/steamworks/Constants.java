@@ -43,7 +43,7 @@ public class Constants {
 
         public static double kDriveWheelDiameterInches = 4.0;
 
-        public static double kDriveVelocityKp = 0.075;
+        public static double kDriveVelocityKp = 0.085;
         public static double kDriveVelocityKi = 0.0;
         public static double kDriveVelocityKd = 1.5;
         public static double kDriveVelocityKf = 0.258;
@@ -59,8 +59,8 @@ public class Constants {
         public static double kDriveHeadingVelocityKi = 0.1;
         public static double kDriveHeadingVelocityKd = 60.0;
 
-        public final static double kTrackScrubFactor = 1.2;
-        public final static double kTrackEffectiveDiameter = 27.25;
+        public final static double kTrackScrubFactor = 1.5;
+        public final static double kTrackEffectiveDiameter = (27.25 * 27.25 + 13 * 13) / 27.25;
     }
 
     public static class GearMan {
