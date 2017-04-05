@@ -59,7 +59,7 @@ public class Constants {
         public static double kDriveHeadingVelocityKi = 0.1;
         public static double kDriveHeadingVelocityKd = 60.0;
 
-        public final static double kTrackScrubFactor = 1.5;
+        public final static double kTrackScrubFactor = 1.75;
         public final static double kTrackEffectiveDiameter = (27.25 * 27.25 + 13 * 13) / 27.25;
     }
 

@@ -18,25 +18,25 @@ import java.util.List;
 public class PosLeftGear extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
-        double distance = 75.0;
-        double distance_to_peg_polar = 57.0;
+        double fwd = 75.0;
+        double peg = 57.0;
 
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
         forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 80));
-        forwardPath.add(new Path.Waypoint(new Translation2d(distance - 30, 0), 40));
-        forwardPath.add(new Path.Waypoint(new Translation2d(distance, 0), 30));
-        forwardPath.add(new Path.Waypoint(new Translation2d(distance + ((distance_to_peg_polar - 20) * Math.cos(Math.PI / 3)), -((distance_to_peg_polar - 20) * Math.sin(Math.PI / 3))), 40));
-        forwardPath.add(new Path.Waypoint(new Translation2d(distance + (distance_to_peg_polar * Math.cos(Math.PI / 3)), -(distance_to_peg_polar * Math.sin(Math.PI / 3))), 40));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd - 30, 0), 50));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd, 0), 30));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + (peg / 2) * Math.cos(Math.PI / 3), -((peg / 2) * Math.sin(Math.PI / 3))), 40));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + (peg * Math.cos(Math.PI / 3)), -(peg * Math.sin(Math.PI / 3))), 40));
 
         List<Path.Waypoint> backwardPath = Lists.newArrayList();
-        backwardPath.add(new Path.Waypoint(new Translation2d(distance + (distance_to_peg_polar * Math.cos(Math.PI / 3)), -(distance_to_peg_polar * Math.sin(Math.PI / 3))), 12));
-        backwardPath.add(new Path.Waypoint(new Translation2d(distance + (45 * Math.cos(Math.PI / 3)), -(45 * Math.sin(Math.PI / 3))), 60));
-        backwardPath.add(new Path.Waypoint(new Translation2d(distance, 0), 10, "CloseGearMan"));
-        backwardPath.add(new Path.Waypoint(new Translation2d(distance - 20, 0), 30));
+        backwardPath.add(new Path.Waypoint(new Translation2d(fwd + peg * Math.cos(Math.PI / 3), -(peg * Math.sin(Math.PI / 3))), 60));
+        backwardPath.add(new Path.Waypoint(new Translation2d(fwd + (peg / 2) * Math.cos(Math.PI / 3), -((peg / 2) * Math.sin(Math.PI / 3))), 40));
+        backwardPath.add(new Path.Waypoint(new Translation2d(fwd, 0), 30, "CloseGearMan"));
+        backwardPath.add(new Path.Waypoint(new Translation2d(fwd - 20, 0), 30));
 
         List<Path.Waypoint> middleFieldPath = Lists.newArrayList();
-        middleFieldPath.add(new Path.Waypoint(new Translation2d(distance - 20, 0), 60));
-        middleFieldPath.add(new Path.Waypoint(new Translation2d(distance + 50, 0), 60));
+        middleFieldPath.add(new Path.Waypoint(new Translation2d(fwd - 20, 0), 60));
+        middleFieldPath.add(new Path.Waypoint(new Translation2d(fwd + 50, 0), 60));
 
         //Drive up to the peg and drop gear
         runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(forwardPath), false), new DropGearAction())));
