@@ -119,11 +119,17 @@ public class GearMan implements Loopable {
     }
 
     private void setOpenPincers(boolean open) {
+        if(inSolenoid.get() != open){
+            System.out.println("Pincers are going to " + (open ? "open" : "closed"));
+        }
         inSolenoid.set(open);
         outSolenoid.set(!open);
     }
 
     private void setPushGear(boolean push) {
+        if(punchOutSolenoid.get() != push){
+            System.out.println("Pusher is going to " + (push ? "push" : "not push"));
+        }
         punchInSolenoid.set(!push);
         punchOutSolenoid.set(push);
     }

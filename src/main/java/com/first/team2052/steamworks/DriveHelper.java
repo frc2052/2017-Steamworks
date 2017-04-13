@@ -6,7 +6,7 @@ public class DriveHelper {
     double mQuickStopAccumulator;
     public static final double kThrottleDeadband = 0.1;
     private static final double kWheelDeadband = 0.1;
-    private static final double kTurnSensitivity = 1.0;
+    private static final double kTurnSensitivity = 1.25;
     private DriveSignal mSignal = new DriveSignal(0, 0);
 
     /**

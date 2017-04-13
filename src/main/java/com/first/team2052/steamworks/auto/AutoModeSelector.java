@@ -37,6 +37,7 @@ public class AutoModeSelector {
         }
     }
 
+
     public enum Side {
         RED, BLUE
     }
@@ -62,7 +63,7 @@ public class AutoModeSelector {
 
     public static AutoModeBase getAutoInstance() {
         return sendableChooserAutoMode.getSelected().getInstance();
-    }
+    } //returns selected enum method
 
     public static Side getSide() {
         return sendableChooserSide.getSelected();

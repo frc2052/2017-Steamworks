@@ -1,5 +1,11 @@
 package com.first.team2052.steamworks;
 
+import com.first.team2052.lib.path.Path;
+import com.first.team2052.lib.vec.Translation2d;
+import com.google.common.collect.Lists;
+
+import java.util.List;
+
 public class Util {
     public static double checkForDeadzone(double value, double deadZone) {
         if (Math.abs(value) < deadZone)
@@ -31,6 +37,20 @@ public class Util {
         if (base < 0.0)
             return -(power * (Math.pow(base, 2)));
         return 0.0;
+    }
+
+    public static List<Path.Waypoint> inverseY(List<Path.Waypoint> waypoints) {
+        List<Path.Waypoint> inversedWaypoints = Lists.newArrayList();
+
+        for (Path.Waypoint waypoint : waypoints) {
+            if(waypoint.marker.isPresent()) {
+                inversedWaypoints.add(new Path.Waypoint(new Translation2d(waypoint.position.getX(), -waypoint.position.getY()), waypoint.speed, waypoint.marker.get()));
+            } else {
+                inversedWaypoints.add(new Path.Waypoint(new Translation2d(waypoint.position.getX(), -waypoint.position.getY()), waypoint.speed));
+            }
+        }
+
+        return inversedWaypoints;
     }
 
     public static double toRadians(double angle) {

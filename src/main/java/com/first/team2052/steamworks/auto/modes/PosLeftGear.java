@@ -18,8 +18,8 @@ import java.util.List;
 public class PosLeftGear extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
-        double fwd = 75.0;
-        double peg = 57.0;
+        double fwd = 67.0;
+        double peg = 65.0;
 
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
         forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 80));

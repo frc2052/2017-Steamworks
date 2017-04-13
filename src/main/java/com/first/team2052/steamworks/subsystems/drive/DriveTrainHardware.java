@@ -35,8 +35,8 @@ class DriveTrainHardware {
         rightMaster.configEncoderCodesPerRev(Constants.Drive.kDriveEncoderTicksPerRot);
 
         //Fix sensor polarity
-        leftMaster.reverseSensor(true);
-        rightMaster.reverseSensor(false);
+        leftMaster.reverseSensor(false);
+        rightMaster.reverseSensor(true);
 
         leftMaster.reverseOutput(true);
         rightMaster.reverseOutput(false);

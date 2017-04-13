@@ -44,6 +44,7 @@ public class Shooter implements Loopable {
                 } else if (!wantIdleRampUp) {
                     newState = ShooterState.STOP;
                 }
+                break;
             case RAMP_UP:
                 indexer.setAgitatorSpeed(0.0);
                 indexer.setIndexerSpeed(0.0);
@@ -51,13 +52,13 @@ public class Shooter implements Loopable {
 
                 if (!wantShoot) {
                     newState = ShooterState.STOP;
-                } else if (flywheel.isOnTarget()) {
+                } else if(flywheel.isOnTarget()){
                     newState = ShooterState.SHOOTING;
                 }
                 break;
             case SHOOTING:
                 indexer.setAgitatorSpeed(Constants.Shooter.kTatorSpeed);
-                indexer.setIndexerSpeed(0.5);
+                indexer.setIndexerSpeed(1.0);
                 flywheel.setRpm(Constants.Shooter.kShooterKeyVelocity);
 
                 if (!wantShoot) {
@@ -66,13 +67,11 @@ public class Shooter implements Loopable {
                     } else {
                         newState = ShooterState.STOP;
                     }
-                } else if (!flywheel.isOnTarget()) {
-                    newState = ShooterState.RAMP_UP;
                 }
                 break;
             case REVERSE_AGITATOR:
                 indexer.setAgitatorSpeed(-Constants.Shooter.kTatorSpeed);
-                indexer.setIndexerSpeed(-0.5);
+                indexer.setIndexerSpeed(-1.0);
                 flywheel.setRpm(0.0);
                 if (!wantReverseAgitator) {
                     newState = ShooterState.STOP;

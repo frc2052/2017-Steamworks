@@ -113,7 +113,7 @@ public class DriveTrain extends DriveTrainHardware {
             velocityHeadingPid.reset();
         }
         pathFollowingController = new AdaptivePurePursuitController(Constants.Drive.kPathFollowingLookahead,
-                Constants.Drive.kPathFollowingMaxAccel, Constants.kControlLoopPeriod, path, reversed, 0.25);
+                Constants.Drive.kPathFollowingMaxAccel, Constants.kControlLoopPeriod, path, reversed, 0.5);
         updatePathFollower();
     }
 

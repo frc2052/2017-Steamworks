@@ -1,7 +1,9 @@
 package com.first.team2052.steamworks;
 
 import com.first.team2052.lib.ControlLoop;
+import com.first.team2052.lib.Loopable;
 import com.first.team2052.lib.RevRoboticsPressureSensor;
+import com.first.team2052.lib.interpolables.InterpolatingDouble;
 import com.first.team2052.lib.vec.RigidTransform2d;
 import com.first.team2052.steamworks.auto.AutoModeRunner;
 import com.first.team2052.steamworks.auto.AutoModeSelector;
@@ -16,8 +18,13 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.util.Map;
+
 public class Robot extends IterativeRobot {
     private ControlLoop controlLoop;
+    private ControlLoop logLooper;
+    private ControlLoop slowerLooper;
+
     private static DriveTrain driveTrain;
     private Controls controls;
     private GearMan gearMan;
@@ -36,6 +43,25 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
         driveHelper = new DriveHelper();
         controlLoop = new ControlLoop(Constants.kControlLoopPeriod);
+        slowerLooper = new ControlLoop(0.1);
+        logLooper = new ControlLoop(1.0);
+        logLooper.addLoopable(new Loopable() {
+            @Override
+            public void update() {
+                Map.Entry<InterpolatingDouble, RigidTransform2d> latestFieldToVehicle = robotState.getLatestFieldToVehicle();
+                System.out.printf("%s %s%n", latestFieldToVehicle.getKey().value, latestFieldToVehicle.getValue());
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onStop() {
+
+            }
+        });
 
         driveTrain = DriveTrain.getInstance();
         controls = Controls.getInstance();
@@ -52,7 +78,7 @@ public class Robot extends IterativeRobot {
         controlLoop.addLoopable(driveTrain.getLoopable());
         controlLoop.addLoopable(stateEstimator);
         controlLoop.addLoopable(shooter);
-        controlLoop.addLoopable(gearMan);
+        slowerLooper.addLoopable(gearMan);
 
         AutoModeSelector.putToSmartDashboard();
         autoModeRunner = new AutoModeRunner();
@@ -72,7 +98,9 @@ public class Robot extends IterativeRobot {
 
         zeroAllSensors();
 
+        logLooper.start();
         controlLoop.start();
+        slowerLooper.start();
         autoModeRunner.setAutoMode(AutoModeSelector.getAutoInstance());
         autoModeRunner.start();
     }
@@ -88,6 +116,7 @@ public class Robot extends IterativeRobot {
         shooter.setWantShoot(false);
 
         controlLoop.start();
+        slowerLooper.start();
 
         driveTrain.setOpenLoop(DriveSignal.NEUTRAL);
         driveTrain.setHighGear(Constants.Drive.kDriveDefaultHighGear);
@@ -120,12 +149,15 @@ public class Robot extends IterativeRobot {
         SmartDashboard.putNumber("psi", revRoboticsPressureSensor.getAirPressurePsi());
         SmartDashboard.putBoolean("gearman", gearMan.getSolenoidState());
         SmartDashboard.putNumber("climb_amp", pdp.getCurrent(2));
+        SmartDashboard.putNumber("vel", driveTrain.getLeftVelocityInchesPerSec());
         robotState.outputToSmartDashboard();
     }
 
     @Override
     public void disabledInit() {
         controlLoop.stop();
+        logLooper.stop();
+        slowerLooper.stop();
         autoModeRunner.stop();
         zeroAllSensors();
     }

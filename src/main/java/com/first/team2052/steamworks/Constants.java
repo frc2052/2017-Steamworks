@@ -59,16 +59,16 @@ public class Constants {
         public static double kDriveHeadingVelocityKi = 0.1;
         public static double kDriveHeadingVelocityKd = 60.0;
 
-        public final static double kTrackScrubFactor = 1.75;
+        public final static double kTrackScrubFactor = 0.65;
         public final static double kTrackEffectiveDiameter = (27.25 * 27.25 + 13 * 13) / 27.25;
     }
 
     public static class GearMan {
         //Solenoid Id's
-        public static int kGearManInSolenoidId = 5;//5 on phil 2 on hornet
-        public static int kGearManOutSolenoidId = 4;//4 on phil 3 on hornet
-        public static int kGearManPunchInSolenoidId = 7;//7 on phil 4 on hornet
-        public static int kGearManPunchOutSolenoidId = 6;//6 on phil 5 on hornet
+        public static int kGearManInSolenoidId = 2;//5 on phil 2 on hornet
+        public static int kGearManOutSolenoidId = 3;//4 on phil 3 on hornet
+        public static int kGearManPunchInSolenoidId = 4;//7 on phil 4 on hornet
+        public static int kGearManPunchOutSolenoidId = 5;//6 on phil 5 on hornet
 
         public static double kGearManPunchWaitSeconds = 0.35;
     }
@@ -84,7 +84,7 @@ public class Constants {
         //Talk to Adam or Nate about this
         public static final boolean kUseDoubleEncoderExtender = true;
 
-        public static final double kShooterVelocityKp = 0.045;
+        public static final double kShooterVelocityKp = 0.15;
         public static final double kShooterVelocityKi = 0.0;
         public static final double kShooterVelocityKd = 0.5;
         public static final double kShooterVelocityKf = 0.03568;
@@ -95,10 +95,10 @@ public class Constants {
         public static double kTatorSpeed = 0.70;
 
         //RPM (MAX 4200rpm) Never set above 4200 because we might not get to that exact RPM
-        public static final int kShooterKeyVelocity = 3250;
+        public static final int kShooterKeyVelocity = 3100;
 
         //RPM amount away from the target that the agitators will begin spinning at
-        public static final int kShooterVelocityWindow = 100;
+        public static final int kShooterVelocityWindow = 300;
     }
 
     public static class Climber {

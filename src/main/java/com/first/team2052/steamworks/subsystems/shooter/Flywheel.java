@@ -15,6 +15,8 @@ class Flywheel {
         slave_motor.changeControlMode(CANTalon.TalonControlMode.Follower);
         slave_motor.set(master_motor.getDeviceID());
 
+        master_motor.configPeakOutputVoltage(12.0f, 0f);
+
         master_motor.enableBrakeMode(false);
         slave_motor.enableBrakeMode(false);
 
