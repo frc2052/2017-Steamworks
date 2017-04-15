@@ -2,7 +2,7 @@ package com.first.team2052.steamworks;
 
 public class Constants {
     public static final double kControlLoopPeriod = 1.0 / 100.0;
-    public static double kDriveSpeedCurveTurn = 0.75;
+    public static final double kSlowControlLoopPeriod = 1.0 / 10.0;
 
     public static class CAN {
         public static final int kDriveLeft1Id = 4;

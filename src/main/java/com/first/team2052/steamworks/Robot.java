@@ -11,8 +11,10 @@ import com.first.team2052.steamworks.subsystems.Climber;
 import com.first.team2052.steamworks.subsystems.GearMan;
 import com.first.team2052.steamworks.subsystems.Pickup;
 import com.first.team2052.steamworks.subsystems.drive.DriveSignal;
-import com.first.team2052.steamworks.subsystems.shooter.Shooter;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
+import com.first.team2052.steamworks.subsystems.light.LightFlasher;
+import com.first.team2052.steamworks.subsystems.light.LightFlasherLoopable;
+import com.first.team2052.steamworks.subsystems.shooter.Shooter;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
@@ -37,40 +39,28 @@ public class Robot extends IterativeRobot {
     private RobotStateEstimator stateEstimator;
     private PowerDistributionPanel pdp;
     private DriveHelper driveHelper;
+    private LightFlasher lightFlasher;
 
 
     @Override
     public void robotInit() {
+        System.out.println("Starting Robot Code - Hornet");
         driveHelper = new DriveHelper();
-        controlLoop = new ControlLoop(Constants.kControlLoopPeriod);
-        slowerLooper = new ControlLoop(0.1);
-        logLooper = new ControlLoop(1.0);
-        logLooper.addLoopable(new Loopable() {
-            @Override
-            public void update() {
-                Map.Entry<InterpolatingDouble, RigidTransform2d> latestFieldToVehicle = robotState.getLatestFieldToVehicle();
-                System.out.printf("%s %s%n", latestFieldToVehicle.getKey().value, latestFieldToVehicle.getValue());
-            }
 
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onStop() {
-
-            }
-        });
-
+        //Subsystems
         driveTrain = DriveTrain.getInstance();
         controls = Controls.getInstance();
         gearMan = GearMan.getInstance();
         pickup = Pickup.getInstance();
         shooter = Shooter.getInstance();
         climber = Climber.getInstance();
-        revRoboticsPressureSensor = new RevRoboticsPressureSensor(0);
+        lightFlasher = LightFlasher.getInstance();
+
         pdp = new PowerDistributionPanel();
+
+        //Control loops for auto and teleop
+        controlLoop = new ControlLoop(Constants.kControlLoopPeriod);
+        slowerLooper = new ControlLoop(Constants.kSlowControlLoopPeriod);
 
         robotState = RobotState.getInstance();
         stateEstimator = RobotStateEstimator.getInstance();
@@ -78,7 +68,16 @@ public class Robot extends IterativeRobot {
         controlLoop.addLoopable(driveTrain.getLoopable());
         controlLoop.addLoopable(stateEstimator);
         controlLoop.addLoopable(shooter);
+
+        //Slower loops because why update them 100 times a second
         slowerLooper.addLoopable(gearMan);
+        slowerLooper.addLoopable(LightFlasherLoopable.getInstance());
+
+        //Logging for auto
+        logLooper = new ControlLoop(1.0);
+        logLooper.addLoopable(PositionLoggerLoopable.getInstance());
+
+        revRoboticsPressureSensor = new RevRoboticsPressureSensor(0);
 
         AutoModeSelector.putToSmartDashboard();
         autoModeRunner = new AutoModeRunner();

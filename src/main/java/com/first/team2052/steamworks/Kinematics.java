@@ -45,9 +45,11 @@ public class Kinematics {
     }
 
     public static DriveVelocity inverseKinematics(RigidTransform2d.Delta velocity) {
+        //If the change in angle is really small ignore it
         if (Math.abs(velocity.dtheta) < kEpsilon) {
             return new DriveVelocity(velocity.dx, velocity.dx);
         }
+        //Calculate the turning speed based off the change in angle and the scrub factor
         double delta_v = Constants.Drive.kTrackEffectiveDiameter * velocity.dtheta / (2 * Constants.Drive.kTrackScrubFactor);
         return new DriveVelocity(velocity.dx - delta_v, velocity.dx + delta_v);
     }

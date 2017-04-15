@@ -11,7 +11,7 @@ public class CloseGearAction implements Action {
 
     @Override
     public boolean isFinished() {
-        return GearMan.getInstance().getCurrentState() == GearMan.GearManState.CLOSED;
+        return GearMan.getInstance().getCurrentState() == GearMan.GearManState.CLOSED && GearMan.getInstance().getSolenoidState();
     }
 
     @Override
