@@ -10,6 +10,7 @@ import com.first.team2052.steamworks.auto.AutoModeSelector;
 import com.first.team2052.steamworks.subsystems.Climber;
 import com.first.team2052.steamworks.subsystems.GearMan;
 import com.first.team2052.steamworks.subsystems.Pickup;
+import com.first.team2052.steamworks.subsystems.VisionProcessor;
 import com.first.team2052.steamworks.subsystems.drive.DriveSignal;
 import com.first.team2052.steamworks.subsystems.shooter.Shooter;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
@@ -79,6 +80,23 @@ public class Robot extends IterativeRobot {
         controlLoop.addLoopable(stateEstimator);
         controlLoop.addLoopable(shooter);
         slowerLooper.addLoopable(gearMan);
+        slowerLooper.addLoopable(new Loopable() {
+            @Override
+
+            public void update() {
+                VisionProcessor.getInstance().getXAngleFromCenter();
+            }
+
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onStop() {
+
+            }
+        });
 
         AutoModeSelector.putToSmartDashboard();
         autoModeRunner = new AutoModeRunner();
