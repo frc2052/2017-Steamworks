@@ -65,22 +65,6 @@ public class DriveTrain extends DriveTrainHardware {
         velocityHeadingPid.setOutputRange(-30, 30);
     }
 
-    private static double rotationsToInches(double rotations) {
-        return rotations * (Constants.Drive.kDriveWheelDiameterInches * Math.PI);
-    }
-
-    private static double rpmToInchesPerSecond(double rpm) {
-        return rotationsToInches(rpm) / 60.0;
-    }
-
-    private static double inchesToRotations(double inches) {
-        return inches / (Constants.Drive.kDriveWheelDiameterInches * Math.PI);
-    }
-
-    private static double inchesPerSecondToRpm(double inches_per_second) {
-        return inchesToRotations(inches_per_second) * 60;
-    }
-
     public synchronized static DriveTrain getInstance() {
         return instance;
     }
@@ -106,18 +90,30 @@ public class DriveTrain extends DriveTrainHardware {
         rightMaster.set(right_power);
     }
 
+    /**
+     * Drives a desired path
+     * @param path the path you want to follow
+     * @param reversed weather it is reversed or not (the robot would run backwards)
+     */
     public synchronized void followPath(Path path, boolean reversed) {
+        //If not already in the path following control state, then configure the talons and reset the PID loop for turning to get rid of any Integral error that may have accumulated
         if (getDriveControlState() != DriveControlState.PATH_FOLLOWING_CONTROL) {
             configureTalonsForSpeedControl();
             driveControlState = DriveControlState.PATH_FOLLOWING_CONTROL;
             velocityHeadingPid.reset();
         }
+        //Make a new path following controller under the constraints of the drive train.
         pathFollowingController = new AdaptivePurePursuitController(Constants.Drive.kPathFollowingLookahead,
                 Constants.Drive.kPathFollowingMaxAccel, Constants.kControlLoopPeriod, path, reversed, 0.5);
+        //Update the path follower right away
         updatePathFollower();
     }
 
+    /**
+     * Set's te velocity heading a certain direction. This is useful for driving in straight lines at certain speeds. You have no control over position though just angular velocity.
+     */
     public synchronized void setVelocityHeadingSetpoint(double forward_inches_per_sec, Rotation2d headingSetpoint) {
+        //If not already in the velocity heading control state, then configure the talons and reset the PID loop for turning to get rid of any Integral error that may have accumulated
         if (getDriveControlState() != DriveControlState.VELOCITY_HEADING_CONTROL) {
             configureTalonsForSpeedControl();
             driveControlState = DriveControlState.VELOCITY_HEADING_CONTROL;
@@ -128,7 +124,11 @@ public class DriveTrain extends DriveTrainHardware {
         updateVelocityHeadingSetpoint();
     }
 
+    /**
+     * Updates the left and right wheel velocity based off the params
+     */
     private synchronized void updateVelocitySetpoint(double left_inches_per_sec, double right_inches_per_sec) {
+        //Check to see if it in the valid states for speed control and it it isn't set the speed to 0
         if (getDriveControlState() == DriveControlState.PATH_FOLLOWING_CONTROL
                 || getDriveControlState() == DriveControlState.VELOCITY_HEADING_CONTROL) {
             leftMaster.set(inchesPerSecondToRpm(left_inches_per_sec));
@@ -140,6 +140,9 @@ public class DriveTrain extends DriveTrainHardware {
         }
     }
 
+    /**
+     * Updates the velocity heading value for turning, this is used to drive a set angle at a desired speed. We use a PID loop to do the turning
+     */
     private void updateVelocityHeadingSetpoint() {
         Rotation2d actualGyroAngle = getGyroAngle();
 
@@ -151,6 +154,10 @@ public class DriveTrain extends DriveTrainHardware {
                 velocityHeadingSetpoint.getRightSpeed() - deltaSpeed / 2);
     }
 
+    /**
+     * Update method from the drive train looper to change the drive train's left and right wheel velocity
+     * based off the Adaptive Pure Pursuit Controller which calculates motor speeds based off a lookahead point and calculates the speeds necessary to get to that point
+     */
     private void updatePathFollower() {
         RigidTransform2d robot_pose = RobotState.getInstance().getLatestFieldToVehicle().getValue();
         RigidTransform2d.Delta command = pathFollowingController.update(robot_pose, Timer.getFPGATimestamp());
@@ -169,6 +176,9 @@ public class DriveTrain extends DriveTrainHardware {
         updateVelocitySetpoint(setpoint.left, setpoint.right);
     }
 
+    /**
+     * @return if the path is finished and within it's tolerance
+     */
     public boolean isFinishedPath() {
         return (getDriveControlState() == DriveControlState.PATH_FOLLOWING_CONTROL && pathFollowingController.isDone())
                 || getDriveControlState() != DriveControlState.PATH_FOLLOWING_CONTROL;
@@ -189,6 +199,10 @@ public class DriveTrain extends DriveTrainHardware {
         }
     }
 
+    /**
+     * Configures talons for velocity speed control via closed loop control on the Talon SRX
+     * This is used in auto and for other various control states that require velocity control
+     */
     protected void configureTalonsForSpeedControl() {
         if (driveControlState != DriveControlState.PATH_FOLLOWING_CONTROL
                 && driveControlState != DriveControlState.VELOCITY_HEADING_CONTROL) {
@@ -211,6 +225,9 @@ public class DriveTrain extends DriveTrainHardware {
         shifterIn.set(!highGear);
     }
 
+    /**
+     * Zero's encoders
+     */
     public void resetEncoders() {
         //Set the rotations to zero
         rightMaster.setPosition(0.0);
@@ -221,19 +238,31 @@ public class DriveTrain extends DriveTrainHardware {
         leftMaster.setEncPosition(0);
     }
 
+    /**
+     * Reset's the gyro home point
+     */
     public void zeroGyro() {
         gyro.reset();
     }
 
+    /**
+     * @return gyro angle in degrees
+     */
     public double getGyroAngleDegrees() {
         // It just so happens that the gyro outputs 4x the amount that it actually turned
         return -gyro.getAngleZ() / 4.0;
     }
 
+    /**
+     * @return gyro angle for multiple uses cartesian, radians, degrees, translation, rotation, interpolation, etc
+     */
     public synchronized Rotation2d getGyroAngle() {
         return Rotation2d.fromDegrees(getGyroAngleDegrees());
     }
 
+    /**
+     * @return The gyro rate in degrees per second or angular velocity
+     */
     public double getGyroRateDegrees() {
         return gyro.getRateZ() / 4.0;
     }
@@ -264,5 +293,21 @@ public class DriveTrain extends DriveTrainHardware {
 
     public enum DriveControlState {
         OPEN_LOOP, VELOCITY_HEADING_CONTROL, PATH_FOLLOWING_CONTROL
+    }
+
+    private static double rotationsToInches(double rotations) {
+        return rotations * (Constants.Drive.kDriveWheelDiameterInches * Math.PI);
+    }
+
+    private static double rpmToInchesPerSecond(double rpm) {
+        return rotationsToInches(rpm) / 60.0;
+    }
+
+    private static double inchesToRotations(double inches) {
+        return inches / (Constants.Drive.kDriveWheelDiameterInches * Math.PI);
+    }
+
+    private static double inchesPerSecondToRpm(double inches_per_second) {
+        return inchesToRotations(inches_per_second) * 60;
     }
 }

@@ -84,6 +84,10 @@ public class Controls {
 
     }
 
+    public boolean isClimberAmpLimitReached() {
+        return climberAmpLimitReached;
+    }
+
     public static Controls getInstance() {
         return instance;
     }

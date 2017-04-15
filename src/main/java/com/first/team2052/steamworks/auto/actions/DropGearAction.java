@@ -18,7 +18,7 @@ public class DropGearAction implements Action {
 
     @Override
     public boolean isFinished() {
-        return gearMan.getCurrentState() == GearMan.GearManState.OPEN_MANUAL;
+        return gearMan.getCurrentState() == GearMan.GearManState.OPEN_MANUAL && !gearMan.getSolenoidState();
     }
 
     @Override

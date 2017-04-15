@@ -27,6 +27,7 @@ public class Shooter implements Loopable {
                 indexer.setIndexerSpeed(0.0);
                 flywheel.setRpm(0.0);
 
+                //This is where the wanted states fork off from. The stop state is the default state and if any of these flags are set, the new state is what comes next
                 if (wantShoot) {
                     newState = ShooterState.RAMP_UP;
                 } else if (wantIdleRampUp) {
@@ -40,8 +41,10 @@ public class Shooter implements Loopable {
                 indexer.setIndexerSpeed(0.0);
                 flywheel.setRpm(Constants.Shooter.kShooterKeyVelocity);
                 if (wantShoot) {
+                    //If it wants to shoot, then go to the ramp-up state so that it can check that it is up to speed
                     newState = ShooterState.RAMP_UP;
                 } else if (!wantIdleRampUp) {
+                    //If it doesn't want to idle ramp-up anymore, just stop the shooter.
                     newState = ShooterState.STOP;
                 }
                 break;
@@ -52,7 +55,8 @@ public class Shooter implements Loopable {
 
                 if (!wantShoot) {
                     newState = ShooterState.STOP;
-                } else if(flywheel.isOnTarget()){
+                } else if (flywheel.isOnTarget()) {
+                    //Once the flywheel is up to target speed, switch the state to shooting so it runs the agitators
                     newState = ShooterState.SHOOTING;
                 }
                 break;
@@ -62,6 +66,7 @@ public class Shooter implements Loopable {
                 flywheel.setRpm(Constants.Shooter.kShooterKeyVelocity);
 
                 if (!wantShoot) {
+                    //If it doesn't want to shoot then see if it wants to keep the flywheel up to speed if not just stop the entire shooter
                     if (wantIdleRampUp) {
                         newState = ShooterState.IDLE_RAMP_UP;
                     } else {
@@ -101,22 +106,39 @@ public class Shooter implements Loopable {
         shooterState = ShooterState.STOP;
     }
 
+    /**
+     * @return The current state of the shooter
+     */
     public ShooterState getShooterState() {
         return shooterState;
     }
 
+    /**
+     * Sets the wanted state to reverse the agitator. This state is used to unjam the balls if they do get stuck
+     */
     public void setWantReverseAgitator(boolean wantReverseAgitator) {
         this.wantReverseAgitator = wantReverseAgitator;
     }
 
+    /**
+     * Sets the wanted state to shoot. If the shooter isn't already spun up to it's target speed
+     * - It can be already sped up under the idle ramp-up state -
+     * after the flywheel is spun up, the agitator's will engage and the shooter will start firing balls
+     */
     public void setWantShoot(boolean wantShoot) {
         this.wantShoot = wantShoot;
     }
 
+    /**
+     * Sets the wanted state to be idle ramp-up. This state spins up the flywheel to the target speed, but doesn't actually start shooting
+     */
     public void setWantIdleRampUp(boolean wantIdleRampUp) {
         this.wantIdleRampUp = wantIdleRampUp;
     }
 
+    /**
+     * Enumerated shooter states for the shooter
+     */
     public enum ShooterState {
         IDLE_RAMP_UP,
         RAMP_UP,
