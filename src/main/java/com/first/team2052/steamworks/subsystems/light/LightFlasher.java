@@ -30,7 +30,9 @@ public class LightFlasher {
         if(runner instanceof FlashNumberRunner && ((FlashNumberRunner) runner).getNumber() == number && runner.isRunning){
             return;
         }
-
+        if(runner != null && runner.isRunning){
+            runner.stopFlashSequence();
+        }
         runner = new FlashNumberRunner(number);
     }
 
@@ -40,6 +42,10 @@ public class LightFlasher {
             return;
         }
 
+        if(runner != null && runner.isRunning){
+            runner.stopFlashSequence();
+        }
+
         runner = new FlashSpeedRunner(delay_between_flash);
     }
 
@@ -47,7 +53,9 @@ public class LightFlasher {
         if(runner instanceof FlashBurstRunner && ((FlashBurstRunner) runner).compare(number_burst, number_per_burst, delay_between_burst) && runner.isRunning){
             return;
         }
-
+        if(runner != null && runner.isRunning){
+            runner.stopFlashSequence();
+        }
         runner = new FlashBurstRunner(number_burst, number_per_burst, delay_between_burst);
     }
 
