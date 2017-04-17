@@ -1,8 +1,5 @@
 package com.first.team2052.steamworks.subsystems;
 
-/**
- * Created by KnightKrawler on 4/15/2017.
- */
 public class VisionTrackingTurnAngleResult {
     public boolean isValid;
     public double turnAngle;

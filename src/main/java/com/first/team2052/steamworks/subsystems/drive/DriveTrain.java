@@ -10,6 +10,8 @@ import com.first.team2052.lib.vec.Rotation2d;
 import com.first.team2052.steamworks.Constants;
 import com.first.team2052.steamworks.Kinematics;
 import com.first.team2052.steamworks.RobotState;
+import com.first.team2052.steamworks.subsystems.VisionProcessor;
+import com.first.team2052.steamworks.subsystems.VisionTrackingTurnAngleResult;
 import edu.wpi.first.wpilibj.Timer;
 
 import java.util.Set;
@@ -92,7 +94,8 @@ public class DriveTrain extends DriveTrainHardware {
 
     /**
      * Drives a desired path
-     * @param path the path you want to follow
+     *
+     * @param path     the path you want to follow
      * @param reversed weather it is reversed or not (the robot would run backwards)
      */
     public synchronized void followPath(Path path, boolean reversed) {
@@ -107,6 +110,32 @@ public class DriveTrain extends DriveTrainHardware {
                 Constants.Drive.kPathFollowingMaxAccel, Constants.kControlLoopPeriod, path, reversed, 0.5);
         //Update the path follower right away
         updatePathFollower();
+    }
+
+    public void updateVisionFollow() {
+        VisionTrackingTurnAngleResult latestTargetResult = VisionProcessor.getInstance().getLatestTargetResult();
+        if (!latestTargetResult.isValid) {
+            updateVelocitySetpoint(0, 0);
+        }
+        //Error
+        mLastHeadingErrorDegrees = RobotState.getInstance().getLatestFieldToVehicle()
+                .getValue()
+                .getRotation()
+                .rotateBy(Rotation2d.fromDegrees(latestTargetResult.turnAngle).inverse())
+                .getDegrees();
+
+        double deltaSpeed = velocityHeadingPid.calculate(mLastHeadingErrorDegrees);
+
+        updateVelocitySetpoint(deltaSpeed, -deltaSpeed);
+    }
+
+    private synchronized void startVisionFollow() {
+        if (getDriveControlState() != DriveControlState.VISION_FOLLOW) {
+            configureTalonsForSpeedControl();
+            driveControlState = DriveControlState.VISION_FOLLOW;
+            velocityHeadingPid.reset();
+        }
+        updateVisionFollow();
     }
 
     /**
@@ -130,7 +159,8 @@ public class DriveTrain extends DriveTrainHardware {
     private synchronized void updateVelocitySetpoint(double left_inches_per_sec, double right_inches_per_sec) {
         //Check to see if it in the valid states for speed control and it it isn't set the speed to 0
         if (getDriveControlState() == DriveControlState.PATH_FOLLOWING_CONTROL
-                || getDriveControlState() == DriveControlState.VELOCITY_HEADING_CONTROL) {
+                || getDriveControlState() == DriveControlState.VELOCITY_HEADING_CONTROL
+                || getDriveControlState() == DriveControlState.VISION_FOLLOW) {
             leftMaster.set(inchesPerSecondToRpm(left_inches_per_sec));
             rightMaster.set(inchesPerSecondToRpm(right_inches_per_sec));
         } else {
@@ -139,6 +169,7 @@ public class DriveTrain extends DriveTrainHardware {
             rightMaster.set(0);
         }
     }
+
 
     /**
      * Updates the velocity heading value for turning, this is used to drive a set angle at a desired speed. We use a PID loop to do the turning
@@ -205,7 +236,8 @@ public class DriveTrain extends DriveTrainHardware {
      */
     protected void configureTalonsForSpeedControl() {
         if (driveControlState != DriveControlState.PATH_FOLLOWING_CONTROL
-                && driveControlState != DriveControlState.VELOCITY_HEADING_CONTROL) {
+                && driveControlState != DriveControlState.VELOCITY_HEADING_CONTROL
+                && driveControlState != DriveControlState.VISION_FOLLOW) {
             leftMaster.changeControlMode(CANTalon.TalonControlMode.Speed);
             leftMaster.setAllowableClosedLoopErr(Constants.Drive.kDriveVelocityAllowableError);
             leftMaster.setProfile(kVelocityControlSlot);
@@ -292,7 +324,7 @@ public class DriveTrain extends DriveTrainHardware {
     }
 
     public enum DriveControlState {
-        OPEN_LOOP, VELOCITY_HEADING_CONTROL, PATH_FOLLOWING_CONTROL
+        OPEN_LOOP, VELOCITY_HEADING_CONTROL, PATH_FOLLOWING_CONTROL, VISION_FOLLOW;
     }
 
     private static double rotationsToInches(double rotations) {

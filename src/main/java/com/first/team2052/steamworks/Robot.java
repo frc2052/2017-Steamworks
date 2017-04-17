@@ -74,23 +74,7 @@ public class Robot extends IterativeRobot {
         slowerLooper.addLoopable(gearMan);
         slowerLooper.addLoopable(LightFlasherLoopable.getInstance());
 
-        slowerLooper.addLoopable(new Loopable() {
-            @Override
-
-            public void update() {
-                VisionProcessor.getInstance().getXAngleFromCenter();
-            }
-
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onStop() {
-
-            }
-        });
+        slowerLooper.addLoopable(VisionProcessor.getInstance());
 
         //Logging for auto
         logLooper = new ControlLoop(1.0);
