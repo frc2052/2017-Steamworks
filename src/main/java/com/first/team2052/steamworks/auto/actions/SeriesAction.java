@@ -3,6 +3,9 @@ package com.first.team2052.steamworks.auto.actions;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Executes one action at a time. Useful as a member of {@link ParallelAction}
+ */
 public class SeriesAction implements Action {
 
     private Action mCurAction;

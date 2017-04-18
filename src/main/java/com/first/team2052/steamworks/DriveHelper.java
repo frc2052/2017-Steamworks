@@ -58,6 +58,7 @@ public class DriveHelper {
             leftPwm += overPower * (-1.0 - rightPwm);
             rightPwm = -1.0;
         }
+
         mSignal.rightMotor = rightPwm;
         mSignal.leftMotor = leftPwm;
         return mSignal;
