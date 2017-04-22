@@ -49,6 +49,9 @@ public class DriveTrain extends DriveTrainHardware {
                 case VELOCITY_HEADING_CONTROL:
                     updateVelocityHeadingSetpoint();
                     return;
+                case VISION_FOLLOW:
+                    updateVisionFollow();
+                    break;
             }
         }
 
@@ -57,6 +60,7 @@ public class DriveTrain extends DriveTrainHardware {
             setOpenLoop(DriveSignal.NEUTRAL);
         }
     };
+    private double visionForward;
 
     private DriveTrain() {
         setHighGear(Constants.Drive.kDriveDefaultHighGear);
@@ -107,29 +111,29 @@ public class DriveTrain extends DriveTrainHardware {
         }
         //Make a new path following controller under the constraints of the drive train.
         pathFollowingController = new AdaptivePurePursuitController(Constants.Drive.kPathFollowingLookahead,
-                Constants.Drive.kPathFollowingMaxAccel, Constants.kControlLoopPeriod, path, reversed, 0.5);
+                Constants.Drive.kPathFollowingMaxAccel, Constants.kControlLoopPeriod, path, reversed, 0.25);
         //Update the path follower right away
         updatePathFollower();
     }
 
-    public void updateVisionFollow() {
+    private void updateVisionFollow() {
         VisionTrackingTurnAngleResult latestTargetResult = VisionProcessor.getInstance().getLatestTargetResult();
         if (!latestTargetResult.isValid) {
-            updateVelocitySetpoint(0, 0);
+            updateVelocitySetpoint(visionForward, visionForward);
+            return;
         }
-        //Error
-        mLastHeadingErrorDegrees = RobotState.getInstance().getLatestFieldToVehicle()
-                .getValue()
-                .getRotation()
-                .rotateBy(Rotation2d.fromDegrees(latestTargetResult.turnAngle).inverse())
-                .getDegrees();
+        double dTheta = getGyroAngleDegrees() - latestTargetResult.turnAngle;
+        dTheta *= 4;
+        double power = Math.min(dTheta, 12);
 
-        double deltaSpeed = velocityHeadingPid.calculate(mLastHeadingErrorDegrees);
-
-        updateVelocitySetpoint(deltaSpeed, -deltaSpeed);
+        updateVelocitySetpoint(visionForward + power, visionForward - power);
     }
 
-    private synchronized void startVisionFollow() {
+    public synchronized void startVisionFollow(double forward) {
+        visionForward = forward;
+        if (getDriveControlState() == DriveControlState.VISION_FOLLOW) {
+            return;
+        }
         if (getDriveControlState() != DriveControlState.VISION_FOLLOW) {
             configureTalonsForSpeedControl();
             driveControlState = DriveControlState.VISION_FOLLOW;

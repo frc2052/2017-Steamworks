@@ -84,6 +84,10 @@ public class Controls {
 
     }
 
+    public boolean wantVisionAlign(){
+        return joystick1.getRawButton(5);
+    }
+
     public boolean isClimberAmpLimitReached() {
         return climberAmpLimitReached;
     }

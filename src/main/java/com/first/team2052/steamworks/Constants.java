@@ -41,7 +41,7 @@ public class Constants {
         // 5529.6 native units per rot
         public static int kDriveEncoderTicksPerRot = (int) (3 * kDriveTicksPerRot * kDriveThirdStageGearRatio);
 
-        public static double kDriveWheelDiameterInches = 4.0;
+        public static double kDriveWheelDiameterInches = 3.764;
 
         public static double kDriveVelocityKp = 0.085;
         public static double kDriveVelocityKi = 0.0;
@@ -59,7 +59,7 @@ public class Constants {
         public static double kDriveHeadingVelocityKi = 0.1;
         public static double kDriveHeadingVelocityKd = 60.0;
 
-        public final static double kTrackScrubFactor = 0.65;
+        public final static double kTrackScrubFactor = 0.6;
         public final static double kTrackEffectiveDiameter = (27.25 * 27.25 + 13 * 13) / 27.25;
     }
 

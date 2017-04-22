@@ -33,8 +33,6 @@ public class LightFlasherLoopable implements Loopable {
             lightFlasher.flashSpeed(0.125);
         } else if (gearMan.getCurrentState() == GearMan.GearManState.OPEN_PUNCHED) {
             lightFlasher.flashSpeed(0.25);
-        } else if (gearMan.getCurrentState() == GearMan.GearManState.OPEN_MANUAL) {
-            lightFlasher.flashNumTimesByBurst(2, 1, 1.0);
         } else if (gearMan.getCurrentState() == GearMan.GearManState.CLOSING) {
             lightFlasher.flashSpeed(0.25);
         } else if (climber.getCurrentState() == Climber.ClimberState.UP) {
@@ -44,7 +42,7 @@ public class LightFlasherLoopable implements Loopable {
         } else if (controls.isClimberAmpLimitReached()) {
             lightFlasher.flashSpeed(0.125);
         } else {
-            lightFlasher.setLightOnOpen(GearMan.getInstance().getSolenoidState());
+            lightFlasher.setLightOnOpen(!GearMan.getInstance().getSolenoidState());
         }
     }
 

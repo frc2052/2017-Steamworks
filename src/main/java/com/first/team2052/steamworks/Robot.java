@@ -5,12 +5,10 @@ import com.first.team2052.lib.Loopable;
 import com.first.team2052.lib.RevRoboticsPressureSensor;
 import com.first.team2052.lib.interpolables.InterpolatingDouble;
 import com.first.team2052.lib.vec.RigidTransform2d;
+import com.first.team2052.lib.vec.Rotation2d;
 import com.first.team2052.steamworks.auto.AutoModeRunner;
 import com.first.team2052.steamworks.auto.AutoModeSelector;
-import com.first.team2052.steamworks.subsystems.Climber;
-import com.first.team2052.steamworks.subsystems.GearMan;
-import com.first.team2052.steamworks.subsystems.Pickup;
-import com.first.team2052.steamworks.subsystems.VisionProcessor;
+import com.first.team2052.steamworks.subsystems.*;
 import com.first.team2052.steamworks.subsystems.drive.DriveSignal;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 import com.first.team2052.steamworks.subsystems.light.LightFlasher;
@@ -41,6 +39,8 @@ public class Robot extends IterativeRobot {
     private PowerDistributionPanel pdp;
     private DriveHelper driveHelper;
     private LightFlasher lightFlasher;
+    private boolean visionTurn = false;
+    private Rotation2d visionTurnAngle;
 
 
     @Override
@@ -74,7 +74,7 @@ public class Robot extends IterativeRobot {
         slowerLooper.addLoopable(gearMan);
         slowerLooper.addLoopable(LightFlasherLoopable.getInstance());
 
-        slowerLooper.addLoopable(VisionProcessor.getInstance());
+        //slowerLooper.addLoopable(VisionProcessor.getInstance());
 
         //Logging for auto
         logLooper = new ControlLoop(1.0);
@@ -134,7 +134,21 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         driveTrain.setHighGear(controls.getHighGear());
 
-        driveTrain.setOpenLoop(driveHelper.drive(controls.getTank(), controls.getTurn(), controls.getQuickTurn()));
+        if (controls.wantVisionAlign()) {
+            if(!visionTurn) {
+                VisionTrackingTurnAngleResult latestTargetResult = VisionProcessor.getInstance().getLatestTargetResult();
+                if (latestTargetResult.isValid) {
+                    visionTurn = true;
+                    visionTurnAngle = Rotation2d.fromDegrees(driveTrain.getGyroAngleDegrees() + latestTargetResult.turnAngle);
+                }
+                if(visionTurn) {
+                    driveTrain.setVelocityHeadingSetpoint(10 * controls.getTank(), visionTurnAngle);
+                }
+            }
+        } else {
+            driveTrain.setOpenLoop(driveHelper.drive(controls.getTank(), controls.getTurn(), controls.getQuickTurn()));
+            visionTurn = false;
+        }
 
         gearMan.setWantOpen(controls.getGearManState());
         gearMan.setWantPunch(controls.getWantPunch());

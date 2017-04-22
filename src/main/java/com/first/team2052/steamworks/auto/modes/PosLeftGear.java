@@ -19,7 +19,7 @@ public class PosLeftGear extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
         double fwd = 67.0;
-        double peg = 65.0;
+        double peg = 61.0;
 
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
         forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 80));
