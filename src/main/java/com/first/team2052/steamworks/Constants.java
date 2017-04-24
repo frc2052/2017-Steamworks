@@ -19,30 +19,25 @@ public class Constants {
 
         public static final int kShooterMotorPort = 9;
         public static final int kShooterMotorSlavePort = 10;
-
-        public static int kIntakeMotorPort = 11;
-
         public static final int kClimbId = 12;
-
         public static final int kIndexerId = 13;
+        public static int kIntakeMotorPort = 11;
     }
 
     public static class Drive {
+        public final static double kTrackScrubFactor = 0.6;
+        public final static double kTrackEffectiveDiameter = (27.25 * 27.25 + 13 * 13) / 27.25;
+        private static final int kDriveTicksPerRot = 256;
+        private static final double kDriveThirdStageGearRatio = 54.0 / 30.0;
         //Solenoid Id's for shifting
         public static int kDriveOutSolenoidId = 1;
         public static int kDriveInSolenoidId = 0;
-
         // Default state of the drive train transmission when in teleopInit, autoInit, and robotInit
         public static boolean kDriveDefaultHighGear = false;
-
-        private static final int kDriveTicksPerRot = 256;
-        private static final double kDriveThirdStageGearRatio = 54.0 / 30.0;
         // VEX 3 CIM ball shift with 3rd stage 3 rotations per gearbox output shaft rotation * ratio for gearbox
         // 5529.6 native units per rot
         public static int kDriveEncoderTicksPerRot = (int) (3 * kDriveTicksPerRot * kDriveThirdStageGearRatio);
-
-        public static double kDriveWheelDiameterInches = 3.764;
-
+        public static double kDriveWheelDiameterInches = 4.0;
         public static double kDriveVelocityKp = 0.085;
         public static double kDriveVelocityKi = 0.0;
         public static double kDriveVelocityKd = 1.5;
@@ -50,17 +45,12 @@ public class Constants {
         public static int kDriveVelocityIZone = 0;
         public static double kDriveVelocityRampRate = 0.0;
         public static int kDriveVelocityAllowableError = 0;
-
         public static double kPathFollowingLookahead = 24;
         public static double kPathFollowingMaxAccel = 75;
         public static double kPathFollowingMaxVel = 90;
-
         public static double kDriveHeadingVelocityKp = 5.0;
         public static double kDriveHeadingVelocityKi = 0.1;
         public static double kDriveHeadingVelocityKd = 60.0;
-
-        public final static double kTrackScrubFactor = 0.6;
-        public final static double kTrackEffectiveDiameter = (27.25 * 27.25 + 13 * 13) / 27.25;
     }
 
     public static class GearMan {
@@ -90,15 +80,12 @@ public class Constants {
         public static final double kShooterVelocityKf = 0.03568;
         public static final int kShooterVelocityIZone = 0;
         public static final int kShooterVelocityCloseLoopRampRate = 0;
-
-        //Agitator speed in %
-        public static double kTatorSpeed = 0.70;
-
         //RPM (MAX 4200rpm) Never set above 4200 because we might not get to that exact RPM
         public static final int kShooterKeyVelocity = 3100;
-
         //RPM amount away from the target that the agitators will begin spinning at
         public static final int kShooterVelocityWindow = 300;
+        //Agitator speed in %
+        public static double kTatorSpeed = 0.70;
     }
 
     public static class Climber {
