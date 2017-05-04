@@ -3,15 +3,19 @@ package com.first.team2052.steamworks.subsystems.light;
 import com.first.team2052.steamworks.subsystems.light.runner.FlashBurstRunner;
 import com.first.team2052.steamworks.subsystems.light.runner.FlashNumberRunner;
 import com.first.team2052.steamworks.subsystems.light.runner.FlashSpeedRunner;
-import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Solenoid;
 
 public class LightFlasher {
     private static LightFlasher instance = new LightFlasher();
-    private final Relay lightRelay;
+    private final Solenoid lightRelay;
     private LightFlashRunner runner;
 
     private LightFlasher() {
-        lightRelay = new Relay(0);
+        lightRelay = new Solenoid(6);
+    }
+
+    public static LightFlasher getInstance() {
+        return instance;
     }
 
     public void setLightOnOpen(boolean on) {
@@ -23,7 +27,7 @@ public class LightFlasher {
     }
 
     void setLightOn(boolean on) {
-        lightRelay.set(on ? Relay.Value.kForward : Relay.Value.kOff);
+        lightRelay.set(on);
     }
 
     public void flashTimes(int number) {
@@ -57,9 +61,5 @@ public class LightFlasher {
             runner.stopFlashSequence();
         }
         runner = new FlashBurstRunner(number_burst, number_per_burst, delay_between_burst);
-    }
-
-    public static LightFlasher getInstance() {
-        return instance;
     }
 }

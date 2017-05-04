@@ -22,31 +22,42 @@ import java.util.List;
 public class PosBoilerGearShoot extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
-        double fwd = 67.0;
-        double peg = 65.0;
+        double fwd = 68.0;
+        double peg = 64.5;
+
+        if (isRed()) {
+            fwd = 73.0;
+        }
+
         double turn = Math.toRadians(42.25);
         double distance_backward = 42;
 
+        double cosA = Math.cos(Math.PI / 3);
+        double sinA = Math.sin(Math.PI / 3);
+
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
-        forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 80));
-        forwardPath.add(new Path.Waypoint(new Translation2d(fwd - 30, 0), 50));
-        forwardPath.add(new Path.Waypoint(new Translation2d(fwd, 0), 30));
-        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + (peg / 2) * Math.cos(Math.PI / 3), -((peg / 2) * Math.sin(Math.PI / 3))), 40));
-        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + (peg * Math.cos(Math.PI / 3)), -(peg * Math.sin(Math.PI / 3))), 40));
+        forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 40));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd - 20, 0), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd, -10), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + .5 * peg * cosA, -.5 * peg * sinA), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + peg * cosA, -peg * sinA), 20));
 
         List<Path.Waypoint> backwardPath = Lists.newArrayList();
-        backwardPath.add(new Path.Waypoint(new Translation2d(fwd + peg * Math.cos(Math.PI / 3), -(peg * Math.sin(Math.PI / 3))), 60));
-        backwardPath.add(new Path.Waypoint(new Translation2d(fwd + (peg / 2) * Math.cos(Math.PI / 3), -((peg / 2) * Math.sin(Math.PI / 3))), 60));
-        backwardPath.add(new Path.Waypoint(new Translation2d(fwd, 0), 50, "CloseGearMan"));
-        backwardPath.add(new Path.Waypoint(new Translation2d(distance_backward, 0), 35));
-        backwardPath.add(new Path.Waypoint(new Translation2d(distance_backward - (30 * Math.cos(turn)), 30 * Math.sin(turn)), 25));
+        backwardPath.add(new Path.Waypoint(new Translation2d(fwd + peg * cosA, -peg * sinA), 70));
+        backwardPath.add(new Path.Waypoint(new Translation2d(fwd + .5 * peg * cosA, -.5 * peg * sinA), 40));
+        backwardPath.add(new Path.Waypoint(new Translation2d(fwd, 0), 40, "CloseGearMan"));
+        backwardPath.add(new Path.Waypoint(new Translation2d(distance_backward, 0), 60));
+        backwardPath.add(new Path.Waypoint(new Translation2d(distance_backward - (30 * Math.cos(turn)), 30 * Math.sin(turn)), 60));
 
         if (isRed()) {
             forwardPath = Util.inverseY(forwardPath);
             backwardPath = Util.inverseY(backwardPath);
         }
+
         //Drive up to the peg and drop gear
-        runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(forwardPath), false), new DropGearAction())));
+        runAction(new SeriesAction(Arrays.asList(
+                new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 7.0),
+                new DropGearAction())));
 
         //Start running the shooter, but don't shoot
         Shooter.getInstance().setWantIdleRampUp(true);
@@ -57,8 +68,8 @@ public class PosBoilerGearShoot extends AutoMode {
                 new SeriesAction(Arrays.asList(new WaitForPathMarkerAction("CloseGearMan"), new CloseGearAction()))
         )));
 
-        DriveTrain.getInstance().setOpenLoop(new DriveSignal(-.25, -.25));
-        runAction(new WaitAction(0.25));
+        DriveTrain.getInstance().setOpenLoop(new DriveSignal(-.50, -.50));
+        runAction(new WaitAction(0.50));
         DriveTrain.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
 
         runAction(new SeriesAction(Arrays.asList(new StartShootingAction(), new WaitAction(4))));

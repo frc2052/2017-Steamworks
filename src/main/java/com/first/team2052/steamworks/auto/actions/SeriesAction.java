@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Executes one action at a time. Useful as a member of {@link ParallelAction}
+ * Executes one action at a mStartTime. Useful as a member of {@link ParallelAction}
  */
 public class SeriesAction implements Action {
 
-    private Action mCurAction;
     private final ArrayList<Action> mRemainingActions;
+    private Action mCurAction;
 
     public SeriesAction(List<Action> actions) {
         //We don't want a reference of the list, we a copy

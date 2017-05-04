@@ -25,7 +25,7 @@ public class Constants {
     }
 
     public static class Drive {
-        public final static double kTrackScrubFactor = 0.6;
+        public final static double kTrackScrubFactor = 0.55;
         public final static double kTrackEffectiveDiameter = (27.25 * 27.25 + 13 * 13) / 27.25;
         private static final int kDriveTicksPerRot = 256;
         private static final double kDriveThirdStageGearRatio = 54.0 / 30.0;
@@ -38,15 +38,15 @@ public class Constants {
         // 5529.6 native units per rot
         public static int kDriveEncoderTicksPerRot = (int) (3 * kDriveTicksPerRot * kDriveThirdStageGearRatio);
         public static double kDriveWheelDiameterInches = 4.0;
-        public static double kDriveVelocityKp = 0.085;
+        public static double kDriveVelocityKp = 0.2;
         public static double kDriveVelocityKi = 0.0;
-        public static double kDriveVelocityKd = 1.5;
-        public static double kDriveVelocityKf = 0.258;
+        public static double kDriveVelocityKd = 2.0;
+        public static double kDriveVelocityKf = 0.3;
         public static int kDriveVelocityIZone = 0;
         public static double kDriveVelocityRampRate = 0.0;
         public static int kDriveVelocityAllowableError = 0;
         public static double kPathFollowingLookahead = 24;
-        public static double kPathFollowingMaxAccel = 75;
+        public static double kPathFollowingMaxAccel = 50;
         public static double kPathFollowingMaxVel = 90;
         public static double kDriveHeadingVelocityKp = 5.0;
         public static double kDriveHeadingVelocityKi = 0.1;

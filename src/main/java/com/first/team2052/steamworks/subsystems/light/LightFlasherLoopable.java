@@ -7,17 +7,12 @@ import com.first.team2052.steamworks.subsystems.GearMan;
 import com.first.team2052.steamworks.subsystems.shooter.Shooter;
 
 public class LightFlasherLoopable implements Loopable {
+    private static LightFlasherLoopable instance = new LightFlasherLoopable();
     private final Controls controls;
     private Shooter shooter;
     private LightFlasher lightFlasher;
     private GearMan gearMan;
     private Climber climber;
-
-    private static LightFlasherLoopable instance = new LightFlasherLoopable();
-
-    public static LightFlasherLoopable getInstance() {
-        return instance;
-    }
 
     private LightFlasherLoopable() {
         lightFlasher = LightFlasher.getInstance();
@@ -25,6 +20,10 @@ public class LightFlasherLoopable implements Loopable {
         gearMan = GearMan.getInstance();
         climber = Climber.getInstance();
         controls = Controls.getInstance();
+    }
+
+    public static LightFlasherLoopable getInstance() {
+        return instance;
     }
 
     @Override
@@ -41,8 +40,10 @@ public class LightFlasherLoopable implements Loopable {
             lightFlasher.flashSpeed(0.5);
         } else if (controls.isClimberAmpLimitReached()) {
             lightFlasher.flashSpeed(0.125);
+        } else if (!GearMan.getInstance().getSolenoidState()) {
+            lightFlasher.flashSpeed(.125);
         } else {
-            lightFlasher.setLightOnOpen(!GearMan.getInstance().getSolenoidState());
+            lightFlasher.setLightOnOpen(false);
         }
     }
 

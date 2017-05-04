@@ -1,9 +1,7 @@
 package com.first.team2052.steamworks;
 
 import com.first.team2052.lib.ControlLoop;
-import com.first.team2052.lib.Loopable;
 import com.first.team2052.lib.RevRoboticsPressureSensor;
-import com.first.team2052.lib.interpolables.InterpolatingDouble;
 import com.first.team2052.lib.vec.RigidTransform2d;
 import com.first.team2052.lib.vec.Rotation2d;
 import com.first.team2052.steamworks.auto.AutoModeRunner;
@@ -19,14 +17,11 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import java.util.Map;
-
 public class Robot extends IterativeRobot {
+    private static DriveTrain driveTrain;
     private ControlLoop controlLoop;
     private ControlLoop logLooper;
     private ControlLoop slowerLooper;
-
-    private static DriveTrain driveTrain;
     private Controls controls;
     private GearMan gearMan;
     private Pickup pickup;
@@ -88,18 +83,19 @@ public class Robot extends IterativeRobot {
 
     @Override
     public void autonomousInit() {
-        robotState.reset(Timer.getFPGATimestamp(), new RigidTransform2d());
+        zeroAllSensors();
+        Timer.delay(.25);
+
 
         driveTrain.setHighGear(Constants.Drive.kDriveDefaultHighGear);
         driveTrain.setOpenLoop(DriveSignal.NEUTRAL);
         driveTrain.setBrakeMode(false);
 
         gearMan.setWantOpen(false);
-
+        shooter.setWantIdleRampUp(false);
         shooter.setWantShoot(false);
 
-        zeroAllSensors();
-
+        robotState.reset(Timer.getFPGATimestamp(), new RigidTransform2d());
         logLooper.start();
         controlLoop.start();
         slowerLooper.start();
@@ -116,13 +112,14 @@ public class Robot extends IterativeRobot {
         autoModeRunner.stop();
 
         shooter.setWantShoot(false);
+        shooter.setWantIdleRampUp(false);
 
         controlLoop.start();
         slowerLooper.start();
 
         driveTrain.setOpenLoop(DriveSignal.NEUTRAL);
         driveTrain.setHighGear(Constants.Drive.kDriveDefaultHighGear);
-        driveTrain.setBrakeMode(false);
+        driveTrain.setBrakeMode(true);
 
         gearMan.setWantOpen(false);
         pickup.setIntakeState(Pickup.PickupState.STOP);
@@ -155,7 +152,7 @@ public class Robot extends IterativeRobot {
         pickup.setIntakeState(controls.getIntakeState());
 
         shooter.setWantShoot(controls.getWantShoot());
-        shooter.setWantIdleRampUp(controls.getWantShooterIdle());
+        //shooter.setWantIdleRampUp(controls.getWantShooterIdle());
         shooter.setWantReverseAgitator(controls.getWantReverseAgitator());
 
         climber.setClimberState(controls.getClimberState(pdp.getCurrent(2)));

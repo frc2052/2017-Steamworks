@@ -18,19 +18,23 @@ import java.util.List;
 public class PosRightGear extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
-        double fwd = 67.0;
-        double peg = 65.0;
+        //Turning right has a small undershoot for driving forward - we have it 3 inches greater than the drive right path
+        double fwd = 73.0;
+        double peg = 64.5;
+
+        double cosA = Math.cos(Math.PI / 3);
+        double sinA = Math.sin(Math.PI / 3);
 
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
-        forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 80));
-        forwardPath.add(new Path.Waypoint(new Translation2d(fwd - 30, 0), 50));
-        forwardPath.add(new Path.Waypoint(new Translation2d(fwd, 0), 30));
-        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + (peg / 2) * Math.cos(Math.PI / 3), peg / 2 * Math.sin(Math.PI / 3)), 40));
-        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + (peg * Math.cos(Math.PI / 3)), peg * Math.sin(Math.PI / 3)), 40));
+        forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 40));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd - 20, 0), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd, 10), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + .5 * peg * cosA, .5 * peg * sinA), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + peg * cosA, peg * sinA), 20));
 
         List<Path.Waypoint> backwardPath = Lists.newArrayList();
-        backwardPath.add(new Path.Waypoint(new Translation2d(fwd + peg * Math.cos(Math.PI / 3), peg * Math.sin(Math.PI / 3)), 60));
-        backwardPath.add(new Path.Waypoint(new Translation2d(fwd + (peg / 2) * Math.cos(Math.PI / 3), peg / 2 * Math.sin(Math.PI / 3)), 40));
+        backwardPath.add(new Path.Waypoint(new Translation2d(fwd + peg * cosA, peg * sinA), 60));
+        backwardPath.add(new Path.Waypoint(new Translation2d(fwd + .5 * peg * cosA, .5 * peg * sinA), 40));
         backwardPath.add(new Path.Waypoint(new Translation2d(fwd, 0), 30, "CloseGearMan"));
         backwardPath.add(new Path.Waypoint(new Translation2d(fwd - 20, 0), 30));
 
@@ -39,7 +43,9 @@ public class PosRightGear extends AutoMode {
         middleFieldPath.add(new Path.Waypoint(new Translation2d(fwd + 50, 0), 60));
 
         //Drive up to the peg and drop gear
-        runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(forwardPath), false), new DropGearAction())));
+        runAction(new SeriesAction(Arrays.asList(
+                new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 7.0),
+                new DropGearAction())));
 
         //Drive back and drive towards center of field
         runAction(new ParallelAction(Arrays.asList(

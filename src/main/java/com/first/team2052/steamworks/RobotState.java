@@ -16,6 +16,10 @@ public class RobotState {
         reset(0, new RigidTransform2d());
     }
 
+    public static RobotState getInstance() {
+        return instance;
+    }
+
     /**
      * Resets robot position
      * @param start_time the time to start (usually the current time)
@@ -30,9 +34,9 @@ public class RobotState {
      * Generate Odometry (robot position) from sensors
      * @return an updated position of the robot
      */
-    public RigidTransform2d generateOdometryFromSensors(double left_encoder_delta_distance,
-                                                        double right_encoder_delta_distance,
-                                                        Rotation2d current_gyro_angle) {
+    public synchronized RigidTransform2d generateOdometryFromSensors(double left_encoder_delta_distance,
+                                                                     double right_encoder_delta_distance,
+                                                                     Rotation2d current_gyro_angle) {
         RigidTransform2d last_measurement = getLatestFieldToVehicle().getValue();
         return Kinematics.integrateForwardKinematics(last_measurement, left_encoder_delta_distance,
                 right_encoder_delta_distance, current_gyro_angle);
@@ -57,9 +61,5 @@ public class RobotState {
         SmartDashboard.putNumber("robot_pose_x", odometry.getTranslation().getX());
         SmartDashboard.putNumber("robot_pose_y", odometry.getTranslation().getY());
         SmartDashboard.putNumber("robot_pose_theta", odometry.getRotation().getDegrees());
-    }
-
-    public static RobotState getInstance() {
-        return instance;
     }
 }
