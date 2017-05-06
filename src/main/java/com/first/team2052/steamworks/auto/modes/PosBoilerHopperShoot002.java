@@ -2,6 +2,7 @@ package com.first.team2052.steamworks.auto.modes;
 
 import com.first.team2052.lib.path.Path;
 import com.first.team2052.lib.vec.Translation2d;
+import com.first.team2052.steamworks.Util;
 import com.first.team2052.steamworks.auto.AutoMode;
 import com.first.team2052.steamworks.auto.AutoModeEndedException;
 import com.first.team2052.steamworks.auto.actions.FollowPathAction;
@@ -51,6 +52,12 @@ public class PosBoilerHopperShoot002 extends AutoMode {
         backwardPath.add(new Path.Waypoint(new Translation2d(100, 15 * sinA), 50));
         backwardPath.add(new Path.Waypoint(new Translation2d(42-15 * cosA, 15 * sinA), 30));
         backwardPath.add(new Path.Waypoint(new Translation2d(42-39 * cosA, 39 * sinA), 30));
+
+        if (isRed()) {
+            forwardPath = Util.inverseY(forwardPath);
+            middlePath = Util.inverseY(middlePath);
+            backwardPath = Util.inverseY(backwardPath);
+        }
 
         //Drive up to the hopper and wait to load balls
         runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(forwardPath), true))));
