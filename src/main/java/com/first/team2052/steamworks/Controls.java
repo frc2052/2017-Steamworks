@@ -18,6 +18,7 @@ public class Controls {
     FlipFlopLatch gearManLatch = new FlipFlopLatch();
     FlipFlopLatch wantIdleLatch = new FlipFlopLatch();
     private boolean climberAmpLimitReached = false;
+    private boolean wantOverride = false;
 
     private Controls() {
     }
@@ -76,8 +77,14 @@ public class Controls {
             }
         }
 
-        if (secondaryStick.getRawButton(11)) //the override works regardless if limit has been reached or not
+        if (climberAmpLimitReached) //the override works regardless if limit has been reached or not
         {
+            if(!secondaryStick.getRawButton(5)){ //triggers when the climb button is released AFTER amp limit reached
+                wantOverride = true;
+            }
+        }
+
+        if(secondaryStick.getRawButton(5) && wantOverride){ //sets a repress of the climb button to always override
             return Climber.ClimberState.SLOW_UP;
         }
         return Climber.ClimberState.STOP;
