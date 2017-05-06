@@ -4,7 +4,11 @@ import com.first.team2052.lib.path.Path;
 import com.first.team2052.lib.vec.Translation2d;
 import com.first.team2052.steamworks.auto.AutoMode;
 import com.first.team2052.steamworks.auto.AutoModeEndedException;
-import com.first.team2052.steamworks.auto.actions.*;
+import com.first.team2052.steamworks.auto.actions.FollowPathAction;
+import com.first.team2052.steamworks.auto.actions.SeriesAction;
+import com.first.team2052.steamworks.auto.actions.StartShootingAction;
+import com.first.team2052.steamworks.auto.actions.WaitAction;
+import com.first.team2052.steamworks.subsystems.Pickup;
 import com.first.team2052.steamworks.subsystems.drive.DriveSignal;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 import com.first.team2052.steamworks.subsystems.shooter.Shooter;
@@ -18,7 +22,7 @@ import java.util.List;
  * Desc: triggers a hopper and then shoots
  * Ends: boiler
  */
-public class PosBoilerHopperShoot extends AutoMode {
+public class PosBoilerHopperShoot002 extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
         double fwd = 200.0;
@@ -34,23 +38,37 @@ public class PosBoilerHopperShoot extends AutoMode {
         forwardPath.add(new Path.Waypoint(new Translation2d(fwd, 20), 30));
         forwardPath.add(new Path.Waypoint(new Translation2d(fwd, 55), 30));
 
+        List<Path.Waypoint> middlePath = Lists.newArrayList();
+        middlePath.add(new Path.Waypoint(new Translation2d(fwd, 55), 30));
+        middlePath.add(new Path.Waypoint(new Translation2d(fwd, 40), 30));
+        middlePath.add(new Path.Waypoint(new Translation2d(fwd + 10, 30), 30));
+        middlePath.add(new Path.Waypoint(new Translation2d(fwd + 30, 20), 30));
+        middlePath.add(new Path.Waypoint(new Translation2d(fwd + 40, 20), 30));
 
         List<Path.Waypoint> backwardPath = Lists.newArrayList();
-        backwardPath.add(new Path.Waypoint(new Translation2d(fwd, 55), 30));
-        backwardPath.add(new Path.Waypoint(new Translation2d(fwd, 20 ), 40));
-        backwardPath.add(new Path.Waypoint(new Translation2d(fwd - 10,5 ), 30));
-        backwardPath.add(new Path.Waypoint(new Translation2d(fwd - 20, 0), 30));
+        backwardPath.add(new Path.Waypoint(new Translation2d(fwd + 40, 20), 60));
+        backwardPath.add(new Path.Waypoint(new Translation2d(150, 20 ), 60));
+        backwardPath.add(new Path.Waypoint(new Translation2d(100, 15 * sinA), 50));
         backwardPath.add(new Path.Waypoint(new Translation2d(42-15 * cosA, 15 * sinA), 30));
         backwardPath.add(new Path.Waypoint(new Translation2d(42-39 * cosA, 39 * sinA), 30));
 
         //Drive up to the hopper and wait to load balls
-        runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(forwardPath), false), new WaitAction(4))));
+        runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(forwardPath), true))));
+
+        //reverse into a postion to pick up balls
+        runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(backwardPath), true))));
 
         //Start running the shooter, but don't shoot
         Shooter.getInstance().setWantIdleRampUp(true);
 
+        //turn on intake
+        Pickup.getInstance().setIntakeState(Pickup.PickupState.IN);
+
         //Drive back and drive towards boiler
         runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(backwardPath), true))));
+
+        //turn off intake
+        Pickup.getInstance().setIntakeState(Pickup.PickupState.STOP);
 
         DriveTrain.getInstance().setOpenLoop(new DriveSignal(-.25, -.25));
         runAction(new WaitAction(0.25));
