@@ -26,7 +26,7 @@ public class PosBoilerGearShoot extends AutoMode {
         double peg = 64.5;
 
         if (isRed()) {
-            fwd = 73.0;
+            fwd = 73.0;  
         }
 
         double turn = Math.toRadians(42.25);

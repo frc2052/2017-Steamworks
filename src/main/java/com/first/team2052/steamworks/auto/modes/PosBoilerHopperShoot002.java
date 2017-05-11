@@ -26,7 +26,7 @@ import java.util.List;
 public class PosBoilerHopperShoot002 extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
-        double fwd = 200.0;
+        double fwd = 100.5;
 
         double cosA = Math.cos(Math.PI / 3);
         double sinA = Math.sin(Math.PI / 3);
@@ -63,7 +63,7 @@ public class PosBoilerHopperShoot002 extends AutoMode {
         runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(forwardPath), true))));
 
         //reverse into a postion to pick up balls
-        runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(backwardPath), true))));
+        runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(middlePath), false))));
 
         //Start running the shooter, but don't shoot
         Shooter.getInstance().setWantIdleRampUp(true);

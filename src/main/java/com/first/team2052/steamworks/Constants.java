@@ -5,6 +5,7 @@ public class Constants {
     public static final double kSlowControlLoopPeriod = 1.0 / 10.0;
 
     public static class CAN {
+        //L/R in respect to the gearman being the "front"
         public static final int kDriveLeft1Id = 4;
         public static final int kDriveLeft2Id = 5;
         public static final int kDriveLeft3Id = 6;
