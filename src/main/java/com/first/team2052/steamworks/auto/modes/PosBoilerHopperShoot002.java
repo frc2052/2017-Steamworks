@@ -42,12 +42,12 @@ public class PosBoilerHopperShoot002 extends AutoMode {
         List<Path.Waypoint> middlePath = Lists.newArrayList();
         middlePath.add(new Path.Waypoint(new Translation2d(fwd, 55), 30));
         middlePath.add(new Path.Waypoint(new Translation2d(fwd, 40), 30));
-        middlePath.add(new Path.Waypoint(new Translation2d(fwd + 10, 30), 30));
-        middlePath.add(new Path.Waypoint(new Translation2d(fwd + 30, 20), 30));
-        middlePath.add(new Path.Waypoint(new Translation2d(fwd + 40, 20), 30));
+        middlePath.add(new Path.Waypoint(new Translation2d(fwd + 5, 30), 30));
+        middlePath.add(new Path.Waypoint(new Translation2d(fwd + 15, 20), 30));
+        middlePath.add(new Path.Waypoint(new Translation2d(fwd + 20, 20), 30));
 
         List<Path.Waypoint> backwardPath = Lists.newArrayList();
-        backwardPath.add(new Path.Waypoint(new Translation2d(fwd + 40, 20), 60));
+        backwardPath.add(new Path.Waypoint(new Translation2d(fwd + 20, 20), 60));
         backwardPath.add(new Path.Waypoint(new Translation2d(150, 20 ), 60));
         backwardPath.add(new Path.Waypoint(new Translation2d(100, 15 * sinA), 50));
         backwardPath.add(new Path.Waypoint(new Translation2d(42-15 * cosA, 15 * sinA), 30));
@@ -61,6 +61,10 @@ public class PosBoilerHopperShoot002 extends AutoMode {
 
         //Drive up to the hopper and wait to load balls
         runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(forwardPath), true))));
+
+        DriveTrain.getInstance().setOpenLoop(new DriveSignal(-.25, -.25));
+        runAction(new WaitAction(0.25));
+        DriveTrain.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
 
         //reverse into a postion to pick up balls
         runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(middlePath), false))));
