@@ -27,9 +27,9 @@ public class PosRightGear extends AutoMode {
 
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
         forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 40));
-        forwardPath.add(new Path.Waypoint(new Translation2d(fwd - 20, 0), 20));
-        forwardPath.add(new Path.Waypoint(new Translation2d(fwd, 10), 20));
-        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + .5 * peg * cosA, .5 * peg * sinA), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd - 20, 0), 40));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd, 10), 30));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + .5 * peg * cosA, .5 * peg * sinA), 30));
         forwardPath.add(new Path.Waypoint(new Translation2d(fwd + peg * cosA, peg * sinA), 20));
 
         List<Path.Waypoint> backwardPath = Lists.newArrayList();
@@ -40,7 +40,7 @@ public class PosRightGear extends AutoMode {
 
         List<Path.Waypoint> middleFieldPath = Lists.newArrayList();
         middleFieldPath.add(new Path.Waypoint(new Translation2d(fwd - 20, 0), 60));
-        middleFieldPath.add(new Path.Waypoint(new Translation2d(fwd + 50, 0), 60));
+        middleFieldPath.add(new Path.Waypoint(new Translation2d(fwd + 260, 0), 60));
 
         //Drive up to the peg and drop gear
         runAction(new SeriesAction(Arrays.asList(

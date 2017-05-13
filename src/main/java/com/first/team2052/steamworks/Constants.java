@@ -26,7 +26,7 @@ public class Constants {
     }
 
     public static class Drive {
-        public final static double kTrackScrubFactor = 0.55;
+        public final static double kTrackScrubFactor = 0.65;
         public final static double kTrackEffectiveDiameter = (27.25 * 27.25 + 13 * 13) / 27.25;
         private static final int kDriveTicksPerRot = 256;
         private static final double kDriveThirdStageGearRatio = 54.0 / 30.0;
@@ -82,6 +82,7 @@ public class Constants {
         public static final int kShooterVelocityIZone = 0;
         public static final int kShooterVelocityCloseLoopRampRate = 0;
         //RPM (MAX 4200rpm) Never set above 4200 because we might not get to that exact RPM
+        //2900 not 3000 ;)
         public static final int kShooterKeyVelocity = 3100;
         //RPM amount away from the target that the agitators will begin spinning at
         public static final int kShooterVelocityWindow = 300;

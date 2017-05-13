@@ -37,9 +37,9 @@ public class PosBoilerGearShoot extends AutoMode {
 
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
         forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 40));
-        forwardPath.add(new Path.Waypoint(new Translation2d(fwd - 20, 0), 20));
-        forwardPath.add(new Path.Waypoint(new Translation2d(fwd, -10), 20));
-        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + .5 * peg * cosA, -.5 * peg * sinA), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd - 20, 0), 40));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd, -10), 40));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + .5 * peg * cosA, -.5 * peg * sinA), 30));
         forwardPath.add(new Path.Waypoint(new Translation2d(fwd + peg * cosA, -peg * sinA), 20));
 
         List<Path.Waypoint> backwardPath = Lists.newArrayList();

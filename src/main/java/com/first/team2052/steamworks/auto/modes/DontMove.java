@@ -14,5 +14,7 @@ public class DontMove extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
         DriveTrain.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
+        DriveTrain.getInstance().setBrakeMode(false);
+        DriveTrain.getInstance().setHighGear(true);
     }
 }
