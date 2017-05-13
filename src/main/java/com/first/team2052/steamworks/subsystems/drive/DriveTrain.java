@@ -23,6 +23,7 @@ public class DriveTrain extends DriveTrainHardware {
     private AdaptivePurePursuitController pathFollowingController;
     private VelocityHeadingSetpoint velocityHeadingSetpoint;
     private SynchronousPID velocityHeadingPid;
+    private double visionForward;
     private final Loopable loopable = new Loopable() {
         @Override
         public void onStart() {
@@ -32,6 +33,7 @@ public class DriveTrain extends DriveTrainHardware {
 
         @Override
         public void update() {
+
             if (getDriveControlState() == DriveControlState.OPEN_LOOP) {
                 return;
             }
@@ -60,7 +62,6 @@ public class DriveTrain extends DriveTrainHardware {
             setOpenLoop(DriveSignal.NEUTRAL);
         }
     };
-    private double visionForward;
 
     private DriveTrain() {
         setHighGear(Constants.Drive.kDriveDefaultHighGear);
@@ -73,6 +74,22 @@ public class DriveTrain extends DriveTrainHardware {
 
     public synchronized static DriveTrain getInstance() {
         return instance;
+    }
+
+    private static double rotationsToInches(double rotations) {
+        return rotations * (Constants.Drive.kDriveWheelDiameterInches * Math.PI);
+    }
+
+    private static double rpmToInchesPerSecond(double rpm) {
+        return rotationsToInches(rpm) / 60.0;
+    }
+
+    private static double inchesToRotations(double inches) {
+        return inches / (Constants.Drive.kDriveWheelDiameterInches * Math.PI);
+    }
+
+    private static double inchesPerSecondToRpm(double inches_per_second) {
+        return inchesToRotations(inches_per_second) * 60;
     }
 
     /**
@@ -173,7 +190,6 @@ public class DriveTrain extends DriveTrainHardware {
             rightMaster.set(0);
         }
     }
-
 
     /**
      * Updates the velocity heading value for turning, this is used to drive a set angle at a desired speed. We use a PID loop to do the turning
@@ -329,21 +345,5 @@ public class DriveTrain extends DriveTrainHardware {
 
     public enum DriveControlState {
         OPEN_LOOP, VELOCITY_HEADING_CONTROL, PATH_FOLLOWING_CONTROL, VISION_FOLLOW;
-    }
-
-    private static double rotationsToInches(double rotations) {
-        return rotations * (Constants.Drive.kDriveWheelDiameterInches * Math.PI);
-    }
-
-    private static double rpmToInchesPerSecond(double rpm) {
-        return rotationsToInches(rpm) / 60.0;
-    }
-
-    private static double inchesToRotations(double inches) {
-        return inches / (Constants.Drive.kDriveWheelDiameterInches * Math.PI);
-    }
-
-    private static double inchesPerSecondToRpm(double inches_per_second) {
-        return inchesToRotations(inches_per_second) * 60;
     }
 }
