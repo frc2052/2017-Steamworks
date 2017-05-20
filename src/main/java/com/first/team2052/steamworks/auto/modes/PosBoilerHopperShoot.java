@@ -26,14 +26,8 @@ import java.util.List;
 public class PosBoilerHopperShoot extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
-        double fwd = 200.0;
-
-        double cosA = Math.cos(Math.PI / 3);
-        double sinA = Math.sin(Math.PI / 3);
-
         double turn = Math.toRadians(42.25);
         double distance_backward = 35;
-
 
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
         forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 80));
@@ -47,7 +41,6 @@ public class PosBoilerHopperShoot extends AutoMode {
         backwardPath.add(new Path.Waypoint(new Translation2d(-123, -19.5), 60));
         backwardPath.add(new Path.Waypoint(new Translation2d(-130, 4), 60));
 
-
         List<Path.Waypoint> boilerPath = Lists.newArrayList();
         boilerPath.add(new Path.Waypoint(new Translation2d(-130, 4), 80));
         boilerPath.add(new Path.Waypoint(new Translation2d(-77, -20), 80));
@@ -59,24 +52,24 @@ public class PosBoilerHopperShoot extends AutoMode {
             backwardPath = Util.inverseY(backwardPath);
             boilerPath = Util.inverseY(boilerPath);
         }
+
         Pickup.getInstance().setIntakeState(Pickup.PickupState.IN);
 
         //Drive up to the hopper and wait to load balls
         runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(forwardPath), true))));
 
+        //Bump into the boiler
         DriveTrain.getInstance().setOpenLoop(new DriveSignal(-.50, -.50));
         runAction(new WaitAction(0.25));
         DriveTrain.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
-
-        //Start running the shooter, but don't shoot
-        //Shooter.getInstance().setWantIdleRampUp(true);
-
         //Drive back and drive towards boiler
-        runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(backwardPath), false))));
-        runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(boilerPath), true))));
+        runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(backwardPath), false),
+                new FollowPathAction(new Path(boilerPath), true))));
 
 
         runAction(new StartShootingAction());
+
+        //Bumps into boiler to make sure we are square with the boiler
         DriveTrain.getInstance().setOpenLoop(new DriveSignal(-.50, -.50));
         runAction(new WaitAction(0.5));
         DriveTrain.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
@@ -84,7 +77,7 @@ public class PosBoilerHopperShoot extends AutoMode {
         runAction(new WaitAction(4));
 
         Pickup.getInstance().setIntakeState(Pickup.PickupState.STOP);
-        //Start shooting
+        //Stop shooting
         Shooter.getInstance().setWantIdleRampUp(false);
         Shooter.getInstance().setWantShoot(false);
     }
