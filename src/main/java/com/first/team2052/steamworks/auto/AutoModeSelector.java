@@ -1,49 +1,12 @@
 package com.first.team2052.steamworks.auto;
 
 import com.first.team2052.steamworks.auto.modes.*;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoModeSelector {
     private static SendableChooser<AutoModeDefinition> sendableChooserAutoMode;
     private static SendableChooser<Side> sendableChooserSide;
-
-    public enum AutoModeDefinition {
-        DONT_MOVE("Don't Move", DontMove.class),
-        POS_LEFT_GEAR("Left Gear", PosLeftGear.class),
-        POS_RIGHT_GEAR("Right Gear", PosRightGear.class),
-        POS_CENTER_GEAR("Center Gear", PosCenterGear.class),
-        POS_BOILER_SHOOT("Boiler Shoot Baseline", PosBoilerShoot.class),
-        POS_GEAR_BOILER("Gear Boiler", PosBoilerGearShoot.class),
-        POS_CENTER_GEAR_BOILER("Center Gear Boiler", PosCenterGearShoot.class),
-        POS_BOILER_HOPPER_SHOOT("Boiler Hopper Wait Shoot", PosBoilerHopperShoot.class),
-        POS_BOILER_HOPPER_SHOOT002("Boiler Hopper PickUp Shoot", PosBoilerHopperShoot002.class);
-
-        private final Class<? extends AutoMode> clazz;
-        private final String name;
-
-
-        AutoModeDefinition(String name, Class<? extends AutoMode> clazz) {
-            this.clazz = clazz;
-            this.name = name;
-        }
-
-        public AutoModeBase getInstance() {
-            AutoModeBase instance;
-            try {
-                instance = clazz.newInstance();
-            } catch (InstantiationException | IllegalAccessException e) {
-                return null;
-            }
-            return instance;
-        }
-    }
-
-
-    public enum Side {
-        RED, BLUE
-    }
 
     public static void putToSmartDashboard() {
         sendableChooserAutoMode = new SendableChooser<AutoModeDefinition>();
@@ -70,5 +33,38 @@ public class AutoModeSelector {
 
     public static Side getSide() {
         return sendableChooserSide.getSelected();
+    }
+
+    public enum AutoModeDefinition {
+        DONT_MOVE("Don't Move", DontMove.class),
+        POS_LEFT_GEAR("Left Gear", LeftSideGear.class),
+        POS_RIGHT_GEAR("Right Gear", RightSideGear.class),
+        POS_CENTER_GEAR("Center Gear", CenterGear.class),
+        POS_GEAR_BOILER("Side Gear -> Boiler -> Shoot", SideGearBoilerShoot.class),
+        POS_CENTER_GEAR_BOILER("Center Gear -> Boiler -> Shoot", CenterGearShoot.class),
+        POS_BOILER_HOPPER_SHOOT("Hopper -> Boiler -> Shoot", HopperBoilerShoot.class);
+
+        private final Class<? extends AutoMode> clazz;
+        private final String name;
+
+
+        AutoModeDefinition(String name, Class<? extends AutoMode> clazz) {
+            this.clazz = clazz;
+            this.name = name;
+        }
+
+        public AutoModeBase getInstance() {
+            AutoModeBase instance;
+            try {
+                instance = clazz.newInstance();
+            } catch (InstantiationException | IllegalAccessException e) {
+                return null;
+            }
+            return instance;
+        }
+    }
+
+    public enum Side {
+        RED, BLUE
     }
 }

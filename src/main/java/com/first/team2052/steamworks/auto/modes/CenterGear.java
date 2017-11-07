@@ -15,7 +15,7 @@ import java.util.List;
  * Desc: Brings a gear to the airship
  * Ends: Airship
  */
-public class PosCenterGear extends AutoMode {
+public class CenterGear extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
         //Generate path waypoints
@@ -26,7 +26,7 @@ public class PosCenterGear extends AutoMode {
 
         List<Path.Waypoint> backwardPath = Lists.newArrayList();
         backwardPath.add(new Path.Waypoint(new Translation2d(72, 0), 50));
-        backwardPath.add(new Path.Waypoint(new Translation2d(40, 0), 60,  "CloseGearMan"));
+        backwardPath.add(new Path.Waypoint(new Translation2d(40, 0), 60, "CloseGearMan"));
         backwardPath.add(new Path.Waypoint(new Translation2d(35, 0), 60));
 
         //Drive up to the peg and drop gear

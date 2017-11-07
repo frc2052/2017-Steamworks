@@ -23,11 +23,12 @@ import java.util.List;
  * Desc: triggers a hopper and then shoots
  * Ends: boiler
  */
-public class PosBoilerHopperShoot extends AutoMode {
+public class HopperBoilerShoot extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
         double turn = Math.toRadians(42.25);
         double distance_backward = 35;
+
 
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
         forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 80));
@@ -41,6 +42,7 @@ public class PosBoilerHopperShoot extends AutoMode {
         backwardPath.add(new Path.Waypoint(new Translation2d(-123, -19.5), 60));
         backwardPath.add(new Path.Waypoint(new Translation2d(-130, 4), 60));
 
+
         List<Path.Waypoint> boilerPath = Lists.newArrayList();
         boilerPath.add(new Path.Waypoint(new Translation2d(-130, 4), 80));
         boilerPath.add(new Path.Waypoint(new Translation2d(-77, -20), 80));
@@ -53,31 +55,34 @@ public class PosBoilerHopperShoot extends AutoMode {
             boilerPath = Util.inverseY(boilerPath);
         }
 
+        //Start intake
         Pickup.getInstance().setIntakeState(Pickup.PickupState.IN);
 
-        //Drive up to the hopper and wait to load balls
         runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(forwardPath), true))));
 
-        //Bump into the boiler
+        //Bump into hopper
         DriveTrain.getInstance().setOpenLoop(new DriveSignal(-.50, -.50));
         runAction(new WaitAction(0.25));
         DriveTrain.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
-        //Drive back and drive towards boiler
-        runAction(new SeriesAction(Arrays.asList(new FollowPathAction(new Path(backwardPath), false),
-                new FollowPathAction(new Path(boilerPath), true))));
 
+        //Backoff then go to boiler
+        runAction(new SeriesAction(Arrays.asList(
+                new FollowPathAction(new Path(backwardPath), false),
+                new FollowPathAction(new Path(boilerPath), true))
+        ));
 
+        //Start shooting
         runAction(new StartShootingAction());
 
-        //Bumps into boiler to make sure we are square with the boiler
+        //Square up with boiler
         DriveTrain.getInstance().setOpenLoop(new DriveSignal(-.50, -.50));
         runAction(new WaitAction(0.5));
         DriveTrain.getInstance().setOpenLoop(DriveSignal.NEUTRAL);
 
-        runAction(new WaitAction(4));
+        //Wait 10 seconds to shoot
+        runAction(new WaitAction(10));
 
         Pickup.getInstance().setIntakeState(Pickup.PickupState.STOP);
-        //Stop shooting
         Shooter.getInstance().setWantIdleRampUp(false);
         Shooter.getInstance().setWantShoot(false);
     }

@@ -2,7 +2,6 @@ package com.first.team2052.steamworks;
 
 import com.first.team2052.lib.FlipFlopLatch;
 import com.first.team2052.steamworks.subsystems.Climber;
-import com.first.team2052.steamworks.subsystems.GearMan;
 import com.first.team2052.steamworks.subsystems.Pickup;
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -12,15 +11,19 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class Controls {
     public static Controls instance = new Controls();
+    FlipFlopLatch gearManLatch = new FlipFlopLatch();
+    FlipFlopLatch wantIdleLatch = new FlipFlopLatch();
     private Joystick joystick0 = new Joystick(0);
     private Joystick joystick1 = new Joystick(1);
     private Joystick secondaryStick = new Joystick(2);
-    FlipFlopLatch gearManLatch = new FlipFlopLatch();
-    FlipFlopLatch wantIdleLatch = new FlipFlopLatch();
     private boolean climberAmpLimitReached = false;
     private boolean wantOverride = false;
 
     private Controls() {
+    }
+
+    public static Controls getInstance() {
+        return instance;
     }
 
     public double getTank() {
@@ -35,7 +38,7 @@ public class Controls {
         return joystick1.getX();
     }
 
-    public boolean getQuickTurn(){
+    public boolean getQuickTurn() {
         return joystick1.getRawButton(3);
     }
 
@@ -48,7 +51,7 @@ public class Controls {
         return gearManLatch.get();
     }
 
-    public boolean getWantShooterIdle(){
+    public boolean getWantShooterIdle() {
         wantIdleLatch.update(secondaryStick.getRawButton(8));
         return wantIdleLatch.get();
     }
@@ -64,7 +67,6 @@ public class Controls {
     }
 
     public Climber.ClimberState getClimberState(double current) {
-
         if (!climberAmpLimitReached) { //if the voltage is ok, run normally
             if (current < Constants.Climber.kClimberAmpMax) {
                 if (secondaryStick.getRawButton(5)) {
@@ -77,30 +79,19 @@ public class Controls {
             }
         }
 
-        if (climberAmpLimitReached) //the override works regardless if limit has been reached or not
+        if (secondaryStick.getRawButton(11)) //the override works regardless if limit has been reached or not
         {
-            if(!secondaryStick.getRawButton(5)){ //triggers when the climb button is released AFTER amp limit reached
-                wantOverride = true;
-            }
-        }
-
-        if(secondaryStick.getRawButton(5) && wantOverride){ //sets a repress of the climb button to always override
             return Climber.ClimberState.SLOW_UP;
         }
         return Climber.ClimberState.STOP;
-
     }
 
-    public boolean wantVisionAlign(){
+    public boolean wantVisionAlign() {
         return joystick1.getRawButton(5);
     }
 
     public boolean isClimberAmpLimitReached() {
         return climberAmpLimitReached;
-    }
-
-    public static Controls getInstance() {
-        return instance;
     }
 
     public boolean getWantShoot() {

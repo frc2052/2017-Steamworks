@@ -12,14 +12,13 @@ import java.util.List;
 
 /**
  * Starts: Boiler
- * Desc: Places the gear on the right side of Airship
+ * Desc: Places the gear on the left side of Airship
  * Ends: Airship
  */
-public class PosRightGear extends AutoMode {
+public class LeftSideGear extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
-        //Turning right has a small undershoot for driving forward - we have it 3 inches greater than the drive right path
-        double fwd = 73.0;
+        double fwd = 68.0;
         double peg = 64.5;
 
         double cosA = Math.cos(Math.PI / 3);
@@ -28,19 +27,19 @@ public class PosRightGear extends AutoMode {
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
         forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 40));
         forwardPath.add(new Path.Waypoint(new Translation2d(fwd - 20, 0), 40));
-        forwardPath.add(new Path.Waypoint(new Translation2d(fwd, 10), 30));
-        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + .5 * peg * cosA, .5 * peg * sinA), 30));
-        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + peg * cosA, peg * sinA), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd, -10), 30));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + .5 * peg * cosA, -.5 * peg * sinA), 30));
+        forwardPath.add(new Path.Waypoint(new Translation2d(fwd + peg * cosA, -peg * sinA), 20));
 
         List<Path.Waypoint> backwardPath = Lists.newArrayList();
-        backwardPath.add(new Path.Waypoint(new Translation2d(fwd + peg * cosA, peg * sinA), 60));
-        backwardPath.add(new Path.Waypoint(new Translation2d(fwd + .5 * peg * cosA, .5 * peg * sinA), 40));
+        backwardPath.add(new Path.Waypoint(new Translation2d(fwd + peg * cosA, -peg * sinA), 60));
+        backwardPath.add(new Path.Waypoint(new Translation2d(fwd + .5 * peg * cosA, -.5 * peg * sinA), 40));
         backwardPath.add(new Path.Waypoint(new Translation2d(fwd, 0), 30, "CloseGearMan"));
         backwardPath.add(new Path.Waypoint(new Translation2d(fwd - 20, 0), 30));
 
         List<Path.Waypoint> middleFieldPath = Lists.newArrayList();
-        middleFieldPath.add(new Path.Waypoint(new Translation2d(fwd - 20, 0), 60));
-        middleFieldPath.add(new Path.Waypoint(new Translation2d(fwd + 260, 0), 60));
+        middleFieldPath.add(new Path.Waypoint(new Translation2d(fwd - 20, 0), 80));
+        middleFieldPath.add(new Path.Waypoint(new Translation2d(fwd + 260, 0), 80));
 
         //Drive up to the peg and drop gear
         runAction(new SeriesAction(Arrays.asList(

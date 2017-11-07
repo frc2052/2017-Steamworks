@@ -83,7 +83,7 @@ public class Constants {
         public static final int kShooterVelocityCloseLoopRampRate = 0;
         //RPM (MAX 4200rpm) Never set above 4200 because we might not get to that exact RPM
         //2900 not 3000 ;)
-        public static final int kShooterKeyVelocity = 3100;
+        public static final int kShooterKeyVelocity = 3150;
         //RPM amount away from the target that the agitators will begin spinning at
         public static final int kShooterVelocityWindow = 300;
         //Agitator speed in %

@@ -5,10 +5,8 @@ import com.first.team2052.lib.vec.Rotation2d;
 import com.first.team2052.lib.vec.Translation2d;
 import com.first.team2052.steamworks.auto.AutoMode;
 import com.first.team2052.steamworks.auto.AutoModeEndedException;
-import com.first.team2052.steamworks.auto.AutoModeSelector;
 import com.first.team2052.steamworks.auto.actions.FollowPathAction;
 import com.first.team2052.steamworks.auto.actions.SeriesAction;
-import com.first.team2052.steamworks.auto.actions.StartShootingAction;
 import com.first.team2052.steamworks.auto.actions.WaitAction;
 import com.first.team2052.steamworks.subsystems.drive.DriveTrain;
 import com.first.team2052.steamworks.subsystems.shooter.Shooter;
@@ -22,7 +20,7 @@ import java.util.List;
  * Desc: Turns and shoots
  * Ends: Back at the Boiler
  */
-public class PosBoilerShoot extends AutoMode {
+public class BoilerShoot extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
         double distance_forward = 42;
