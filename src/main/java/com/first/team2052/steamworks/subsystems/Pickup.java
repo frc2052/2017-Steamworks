@@ -1,6 +1,6 @@
 package com.first.team2052.steamworks.subsystems;
 
-import com.ctre.CANTalon;
+import com.ctre.MotorControl.CANTalon;
 import com.first.team2052.steamworks.Constants;
 
 /**

@@ -1,11 +1,11 @@
 package com.first.team2052.steamworks.subsystems.shooter;
 
-import com.ctre.CANTalon;
+import com.ctre.MotorControl.CANTalon;
 import com.first.team2052.steamworks.Constants;
 
 class Flywheel {
-    private final CANTalon master_motor;
     private static Flywheel instance = new Flywheel();
+    private final CANTalon master_motor;
 
     private Flywheel() {
         master_motor = new CANTalon(Constants.CAN.kShooterMotorPort);
@@ -52,11 +52,8 @@ class Flywheel {
         master_motor.set(0.0);
     }
 
-    /**
-     * @param speed in RPM you want the RPM to go
-     */
-    public void setRpm(double speed) {
-        master_motor.set(speed);
+    public static Flywheel getInstance() {
+        return instance;
     }
 
     /**
@@ -74,13 +71,16 @@ class Flywheel {
     }
 
     /**
+     * @param speed in RPM you want the RPM to go
+     */
+    public void setRpm(double speed) {
+        master_motor.set(speed);
+    }
+
+    /**
      * @return the current goal for RPM
      */
     public synchronized double getSetpoint() {
         return master_motor.getSetpoint();
-    }
-
-    public static Flywheel getInstance() {
-        return instance;
     }
 }

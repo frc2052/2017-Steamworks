@@ -1,6 +1,6 @@
 package com.first.team2052.steamworks.subsystems.drive;
 
-import com.ctre.CANTalon;
+import com.ctre.MotorControl.CANTalon;
 import com.first.team2052.lib.Loopable;
 import com.first.team2052.lib.SynchronousPID;
 import com.first.team2052.lib.path.AdaptivePurePursuitController;
@@ -282,8 +282,8 @@ public class DriveTrain extends DriveTrainHardware {
      */
     public void resetEncoders() {
         //Set the rotations to zero
-        rightMaster.setPosition(0.0);
-        leftMaster.setPosition(0.0);
+        rightMaster.setPosition(0);
+        leftMaster.setPosition(0);
 
         //Set the encoder position to zero (ticks)
         rightMaster.setEncPosition(0);

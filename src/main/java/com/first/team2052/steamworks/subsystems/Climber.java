@@ -1,12 +1,12 @@
 package com.first.team2052.steamworks.subsystems;
 
-import com.ctre.CANTalon;
+
+import com.ctre.MotorControl.CANTalon;
 import com.first.team2052.steamworks.Constants;
 
 public class Climber {
-    private CANTalon climbing_motor = new CANTalon(Constants.CAN.kClimbId);
-
     private static Climber instance = new Climber();
+    private CANTalon climbing_motor = new CANTalon(Constants.CAN.kClimbId);
     private ClimberState currentState = ClimberState.STOP;
 
     private Climber() {
@@ -14,6 +14,10 @@ public class Climber {
         climbing_motor.configPeakOutputVoltage(+12.0f, 0.0f);
         //Set the ramp rate to really low so we don't go over our amp limit in code so we can climb in a continuous motion
         climbing_motor.setVoltageRampRate(15.0);
+    }
+
+    public static Climber getInstance() {
+        return instance;
     }
 
     /**
@@ -49,9 +53,5 @@ public class Climber {
         public double getSpeed() {
             return speed;
         }
-    }
-
-    public static Climber getInstance() {
-        return instance;
     }
 }

@@ -12,6 +12,10 @@ allprojects {
         team = 2052
         deploy = false
     }
+
+    wpi {
+        opencvVersion  = "3.1.0"
+    }
 }
 
 repositories {
@@ -24,6 +28,9 @@ frc {
     /*bypass mDNS*/
     //rioHost = "10.20.52.2"
 }
+
+
+
 
 dependencies {
     compile wpilib()
