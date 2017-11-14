@@ -98,6 +98,6 @@ public class Constants {
 
     public static class LightFlasher {
         public static final int kLightFlasherChannel = 7;
-        //channel for light ring over intake
+        //channel for light ring over intake, channel 6 dead
     }
 }
