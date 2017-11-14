@@ -1,5 +1,6 @@
 package com.first.team2052.steamworks.subsystems.light;
 
+import com.first.team2052.steamworks.Constants;
 import com.first.team2052.steamworks.subsystems.light.runner.FlashBurstRunner;
 import com.first.team2052.steamworks.subsystems.light.runner.FlashNumberRunner;
 import com.first.team2052.steamworks.subsystems.light.runner.FlashSpeedRunner;
@@ -11,7 +12,7 @@ public class LightFlasher {
     private LightFlashRunner runner;
 
     private LightFlasher() {
-        lightRelay = new Solenoid(6);
+        lightRelay = new Solenoid(Constants.LightFlasher.kLightFlasherChannel);
     }
 
     public static LightFlasher getInstance() {
