@@ -95,4 +95,9 @@ public class Constants {
         public static final double kClimberMotorSlowSpeed = 0.7;
         public static final double kClimberAmpMax = 40;
     }
+
+    public static class LightFlasher {
+        public static final int kLightFlasherChannel = 7;
+        //channel for light ring over intake
+    }
 }
