@@ -1,5 +1,5 @@
 plugins {
-    id "jaci.openrio.gradle.GradleRIO" version "2017.1.5" apply false
+    id "jaci.openrio.gradle.GradleRIO" version "2017.11.17" apply false
 }
 
 allprojects {
@@ -8,13 +8,9 @@ allprojects {
     apply plugin: "idea"
     apply plugin: "jaci.openrio.gradle.GradleRIO"
 
-    frc {
-        team = 2052
-        deploy = false
-    }
-
     wpi {
         opencvVersion  = "3.1.0"
+        ctreVersion = "4.4.1.14"
     }
 }
 
@@ -22,32 +18,31 @@ repositories {
     mavenCentral()
 }
 
-frc {
-    deploy = true
-    robotClass = "com.first.team2052.steamworks.Robot"
-    /*bypass mDNS*/
-    //rioHost = "10.20.52.2"
+deploy {
+    targets {
+        target("roborio", jaci.openrio.gradle.frc.RoboRIO) {
+            team = 2052
+        }
+    }
+    artifacts {
+        artifact('frcJava', jaci.openrio.gradle.frc.FRCJavaArtifact) {
+            targets << "roborio"
+        }
+    }
 }
-
-
-
 
 dependencies {
     compile wpilib()
-    compile talonSrx()
+    compile ctre()
 
     compile project(":KnightLib")
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-def robotManifest = {
-    attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
-    attributes 'Robot-Class': frc.robotClass
-}
 
 jar {
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    manifest robotManifest
+    manifest jaci.openrio.gradle.GradleRIOPlugin.javaManifest("com.first.team2052.steamworks.Robot")
 }
 
 task wrapper(type: Wrapper) {

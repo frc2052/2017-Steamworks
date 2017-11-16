@@ -18,8 +18,13 @@ public class Shooter implements Loopable {
         flywheel = Flywheel.getInstance();
     }
 
+    public static Shooter getInstance() {
+        return instance;
+    }
+
     @Override
     public void update() {
+        System.out.println("RPM: " + flywheel.getRpm());
         ShooterState newState = shooterState;
         switch (shooterState) {
             case STOP:
@@ -91,7 +96,6 @@ public class Shooter implements Loopable {
         //System.out.println("rpm: " + shootMotor.getSpeed());
     }
 
-
     @Override
     public void onStart() {
         flywheel.setRpm(0);
@@ -145,9 +149,5 @@ public class Shooter implements Loopable {
         SHOOTING,
         STOP,
         REVERSE_AGITATOR
-    }
-
-    public static Shooter getInstance() {
-        return instance;
     }
 }
