@@ -15,13 +15,14 @@ import java.util.List;
 public class ReneeAuto extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
-    List<Path.Waypoint> ForwardPath = Lists.newArrayList();
-    ForwardPath.add(new Path.Waypoint(new Translation2d(0,0),30));
-    ForwardPath.add(new Path.Waypoint(new Translation2d(153.5,0),30));
-    ForwardPath.add(new Path.Waypoint(new Translation2d(153.5+(30*Math.cos(Math.toRadians(45))),(30*Math.sin(Math.toRadians(45)))),30));
-    ForwardPath.add(new Path.Waypoint(new Translation2d(153.5+(30*Math.cos(Math.toRadians(45))),(30*Math.sin(Math.toRadians(45))+50)),30));
+        List<Path.Waypoint> ForwardPath = Lists.newArrayList();
+        ForwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 30));
+        ForwardPath.add(new Path.Waypoint(new Translation2d(153.5, 0), 30));
+        ForwardPath.add(new Path.Waypoint(new Translation2d(153.5 + (30 * Math.cos(Math.toRadians(45))), (30 * Math.sin(Math.toRadians(45)))), 30));
+        ForwardPath.add(new Path.Waypoint(new Translation2d(153.5 + (30 * Math.cos(Math.toRadians(45))), (30 * Math.sin(Math.toRadians(45)) + 50)), 30));
 
 
-        runAction (new SeriesAction(Arrays.asList()));
-        new FollowPathAction(new Path(ForwardPath),false);
+        runAction(new SeriesAction(Arrays.asList()));
+        new FollowPathAction(new Path(ForwardPath), false);
+    }
 }
