@@ -44,7 +44,7 @@ public class AutoModeSelector {
         POS_GEAR_BOILER("Side Gear -> Boiler -> Shoot", SideGearBoilerShoot.class),
         POS_CENTER_GEAR_BOILER("Center Gear -> Boiler -> Shoot", CenterGearShoot.class),
         POS_BOILER_HOPPER_SHOOT("Hopper -> Boiler -> Shoot", HopperBoilerShoot.class),
-        POS_RENNE_AUTO("Move", ReneeAuto.class);
+        POS_RENNE_AUTO("Fun Things :D", ReneeAuto.class);
 
         private final Class<? extends AutoMode> clazz;
         private final String name;
