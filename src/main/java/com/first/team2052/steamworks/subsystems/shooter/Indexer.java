@@ -1,6 +1,5 @@
-package com.first.team2052.steamworks.subsystems.shooter;
-
-import com.ctre.MotorControl.CANTalon;
+package com.first.team2052.steamworks.subsystems.shooter;;
+import com.ctre.CANTalon;
 import com.first.team2052.steamworks.Constants;
 
 class Indexer {

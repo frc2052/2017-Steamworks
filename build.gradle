@@ -1,57 +1,50 @@
 plugins {
-    id "jaci.openrio.gradle.GradleRIO" version "2017.1.5" apply false
+    id "java"
+    id "eclipse"
+    id "idea"
+    id "jaci.openrio.gradle.GradleRIO" version "2017.10.30"
 }
 
-allprojects {
-    apply plugin: "java"
-    apply plugin: "eclipse"
-    apply plugin: "idea"
-    apply plugin: "jaci.openrio.gradle.GradleRIO"
+def TEAM = 2052
+def ROBOT_CLASS = "com.first.team2052.steamworks.Robot"
 
-    frc {
-        team = 2052
-        deploy = false
+// Define my targets (RoboRIO) and artifacts (deployable files)
+// This is added by GradleRIO's backing project EmbeddedTools.
+deploy {
+    targets {
+        target("roborio", jaci.openrio.gradle.frc.RoboRIO) {
+            team = TEAM
+        }
     }
-
-    wpi {
-        opencvVersion  = "3.1.0"
+    artifacts {
+        artifact('frcJava', jaci.openrio.gradle.frc.FRCJavaArtifact) {
+            targets << "roborio"
+        }
     }
 }
 
-repositories {
-    mavenCentral()
+wpi {
+    ctreVersion = '4.4.1.14'
 }
 
-compileJava {
-    sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-}
-
-frc {
-    deploy = true
-    robotClass = "com.first.team2052.steamworks.Robot"
-    /*bypass mDNS*/
-    //rioHost = "10.20.52.2"
-}
-
+// Defining my dependencies. In this case, WPILib (+ friends), CTRE Toolsuite (Talon SRX)
+// and NavX.
 dependencies {
     compile wpilib()
-    compile talonSrx()
+    compile ctre()
 
     compile project(":KnightLib")
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
 
-def robotManifest = {
-    attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
-    attributes 'Robot-Class': frc.robotClass
-}
-
+// Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
+// in order to make them all available at runtime. Also adding the manifest so WPILib
+// knows where to look for our Robot Class.
 jar {
     from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    manifest robotManifest
+    manifest jaci.openrio.gradle.GradleRIOPlugin.javaManifest(ROBOT_CLASS)
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '3.2.1'
+    gradleVersion = '4.4'
 }
