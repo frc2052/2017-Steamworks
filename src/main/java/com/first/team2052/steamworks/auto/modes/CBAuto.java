@@ -29,9 +29,9 @@ public class CBAuto extends AutoMode {
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
         //loops a hecking ton. (15 times exactly) spicy prank im sure you cant read this code because its so advanced. #giveMeMoneyPls
         forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 20));
-        forwardPath.add(new Path.Waypoint(new Translation2d(20, 0), 20));
-        forwardPath.add(new Path.Waypoint(new Translation2d(20, 20), 20));
-        forwardPath.add(new Path.Waypoint(new Translation2d(0, 20), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(50, 0), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(50, 50), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(0, 50), 20));
         forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 20));
 
         /*List<Path.Waypoint> anglePath = Lists.newArrayList();
@@ -49,13 +49,15 @@ public class CBAuto extends AutoMode {
 */
         //Drive up to the peg and drop gear
         runAction(new SeriesAction(Arrays.asList(
-                new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 10.0),
-                new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 10.0),
-                new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 10.0),
-                new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 10.0),
-                new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 10.0),
                 new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 10.0))));
 
+//        runAction(new SeriesAction(Arrays.asList(
+//                new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 10.0),
+//                new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 10.0),
+//                new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 10.0),
+//                new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 10.0),
+//                new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 10.0),
+//                new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 10.0))));
 
 
 /*        //Drive back and drive towards center of field
