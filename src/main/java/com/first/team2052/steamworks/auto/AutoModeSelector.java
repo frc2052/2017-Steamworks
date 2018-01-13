@@ -3,6 +3,7 @@ package com.first.team2052.steamworks.auto;
 import com.first.team2052.steamworks.auto.modes.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import javafx.geometry.Pos;
 
 public class AutoModeSelector {
     private static SendableChooser<AutoModeDefinition> sendableChooserAutoMode;
@@ -42,7 +43,8 @@ public class AutoModeSelector {
         POS_CENTER_GEAR("Center Gear", CenterGear.class),
         POS_GEAR_BOILER("Side Gear -> Boiler -> Shoot", SideGearBoilerShoot.class),
         POS_CENTER_GEAR_BOILER("Center Gear -> Boiler -> Shoot", CenterGearShoot.class),
-        POS_BOILER_HOPPER_SHOOT("Hopper -> Boiler -> Shoot", HopperBoilerShoot.class);
+        POS_BOILER_HOPPER_SHOOT("Hopper -> Boiler -> Shoot", HopperBoilerShoot.class),
+        POS_RENNE_AUTO("Move", ReneeAuto.class);
 
         private final Class<? extends AutoMode> clazz;
         private final String name;
