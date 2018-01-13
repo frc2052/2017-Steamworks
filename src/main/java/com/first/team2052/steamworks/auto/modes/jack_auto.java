@@ -25,12 +25,12 @@ public class jack_auto extends AutoMode {
         backwardPath.add(new Path.Waypoint(new Translation2d(35, 0), 60));*/
 
         //Drive up to the peg and drop gear
-        /*runAction(new SeriesAction(Arrays.asList(
-                new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 8.0),
-                new DropGearAction())));
+        runAction(new SeriesAction(Arrays.asList(
+                new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 8.0))));
+
 
         //Drive back, when we pass a waypoint close the gear manipulator
-        runAction(new ParallelAction(Arrays.asList(
+        /*runAction(new ParallelAction(Arrays.asList(
                 new FollowPathAction(new Path(backwardPath), true),
                 new SeriesAction(Arrays.asList(new WaitForPathMarkerAction("CloseGearMan"), new CloseGearAction())))));*/
     }

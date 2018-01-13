@@ -16,17 +16,20 @@ public class circle_try extends AutoMode {
         //Generate path waypoints
         List<Path.Waypoint> forwardPath = Lists.newArrayList();
         forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 20));
-        forwardPath.add(new Path.Waypoint(new Translation2d(25, 25), 20));
-        forwardPath.add(new Path.Waypoint(new Translation2d(0, 50), 20));
-        forwardPath.add(new Path.Waypoint(new Translation2d(-25, 25), 20));
-        forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 40));
-        forwardPath.add(new Path.Waypoint(new Translation2d(25, 25), 40));
-        forwardPath.add(new Path.Waypoint(new Translation2d(0, 50), 40));
-        forwardPath.add(new Path.Waypoint(new Translation2d(-25, 25), 40));
+        forwardPath.add(new Path.Waypoint(new Translation2d(30, 30), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(0, 60), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(-30, 30), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(0, 0), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(30, 30), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(0, 60), 20));
+        forwardPath.add(new Path.Waypoint(new Translation2d(-30, 30), 20));
+
 
 
         runAction(new SeriesAction(Arrays.asList(
-                new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 20.00))));
+                new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 20.0),
+                new DropGearAction())));
+
         {
         }
     }}

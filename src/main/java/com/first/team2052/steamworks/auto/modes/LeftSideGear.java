@@ -15,7 +15,7 @@ import java.util.List;
  * Desc: Places the gear on the left side of Airship
  * Ends: Airship
  */
-public class LeftSideGear extends AutoMode {
+public class  LeftSideGear extends AutoMode {
     @Override
     protected void init() throws AutoModeEndedException {
         double fwd = 68.0;
