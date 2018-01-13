@@ -140,7 +140,7 @@ public class GearMan implements Loopable {
         }
         punchInSolenoid.set(!push);
         punchOutSolenoid.set(push);
-    }
+}
 
     public void setWantPunch(boolean wantPunch) {
         this.wantPunch = wantPunch;
