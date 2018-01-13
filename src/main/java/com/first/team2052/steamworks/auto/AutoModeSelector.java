@@ -42,7 +42,9 @@ public class AutoModeSelector {
         POS_CENTER_GEAR("Center Gear", CenterGear.class),
         POS_GEAR_BOILER("Side Gear -> Boiler -> Shoot", SideGearBoilerShoot.class),
         POS_CENTER_GEAR_BOILER("Center Gear -> Boiler -> Shoot", CenterGearShoot.class),
-        POS_BOILER_HOPPER_SHOOT("Hopper -> Boiler -> Shoot", HopperBoilerShoot.class);
+        POS_BOILER_HOPPER_SHOOT("Hopper -> Boiler -> Shoot", HopperBoilerShoot.class),
+        POS_CBAUTO("Cole Calls For Circles.", CBAuto.class),
+        POS_LHAUTO("Loyd si wierd.", LHAuto.class);
 
         private final Class<? extends AutoMode> clazz;
         private final String name;
