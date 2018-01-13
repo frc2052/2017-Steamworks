@@ -5,6 +5,11 @@ plugins {
     id "jaci.openrio.gradle.GradleRIO" version "2017.10.30"
 }
 
+compileJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+
 def TEAM = 2052
 def ROBOT_CLASS = "com.first.team2052.steamworks.Robot"
 
