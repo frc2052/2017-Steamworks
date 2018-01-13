@@ -1,6 +1,6 @@
 package com.first.team2052.steamworks.subsystems.drive;
 
-import com.ctre.MotorControl.CANTalon;
+import com.ctre.CANTalon;
 import com.first.team2052.lib.ADIS16448_IMU;
 import com.first.team2052.steamworks.Constants;
 import edu.wpi.first.wpilibj.Solenoid;
