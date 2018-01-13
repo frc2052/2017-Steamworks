@@ -1,6 +1,6 @@
 package com.first.team2052.steamworks.subsystems.drive;
 
-import com.ctre.MotorControl.CANTalon;
+import com.ctre.CANTalon;
 import com.first.team2052.lib.Loopable;
 import com.first.team2052.lib.SynchronousPID;
 import com.first.team2052.lib.path.AdaptivePurePursuitController;

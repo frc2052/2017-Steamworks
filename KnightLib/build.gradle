@@ -1,4 +1,9 @@
+plugins {
+    id "jaci.openrio.gradle.GradleRIO"
+}
+
 project(":KnightLib") {
+
     apply plugin: 'java'
 
     dependencies {
