@@ -30,6 +30,7 @@ public class circle_try extends AutoMode {
                 new TimeoutAction(new FollowPathAction(new Path(forwardPath), false), 20.0),
                 new DropGearAction())));
 
-        {
+
+
         }
-    }}
+    }

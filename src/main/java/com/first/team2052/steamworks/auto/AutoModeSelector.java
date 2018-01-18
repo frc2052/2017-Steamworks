@@ -41,6 +41,7 @@ public class AutoModeSelector {
         POS_RIGHT_GEAR("Right Gear", RightSideGear.class),
         POS_JACK_AUTO("Jack Auto", jack_auto.class),
         POS_CIRCLE("Circle", circle_try.class),
+        POS_AUTO2("Auto number 2", auto2.class),
         POS_GEAR_BOILER("Side Gear -> Boiler -> Shoot", SideGearBoilerShoot.class),
         POS_CENTER_GEAR_BOILER("Center Gear -> Boiler -> Shoot", CenterGearShoot.class),
         POS_BOILER_HOPPER_SHOOT("Hopper -> Boiler -> Shoot", HopperBoilerShoot.class);
