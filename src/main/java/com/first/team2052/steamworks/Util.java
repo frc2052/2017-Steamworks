@@ -12,11 +12,20 @@ public class Util {
             return 0;
         return value;
     }
-
+    
+   /** Get the difference in angle between two angles. 
+   *From https://github.com/Team254/TrajectoryLib/blob/master/src/com/team254/lib/util/ChezyMath.java
+   *
+   * @param from The first angle
+   * @param to The second angle
+   * @return The change in angle from the first argument necessary to line up
+   * with the second. Always between -Pi and Pi
+   */
     public static double getDifferenceInAngleRadians(double from, double to) {
         return boundAngleNegPiToPiRadians(to - from);
     }
-
+    
+    //Defines that angles used must be between -pi and pi radians 
     public static double boundAngleNegPiToPiRadians(double angle) {
         while (angle >= Math.PI) {
             angle -= 2.0 * Math.PI;
